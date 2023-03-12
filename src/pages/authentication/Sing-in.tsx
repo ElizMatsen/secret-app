@@ -1,6 +1,7 @@
 import React from 'react';
 import {useForm} from 'react-hook-form'
 import {style} from "../../assets/formErrorStyle";
+import FormErrorField from "../../components/form-error-field/FormErrorField";
 
 export interface FormLoginTypes {
     email: string,
@@ -41,14 +42,7 @@ function SingIn() {
                     <form className="form" onSubmit={onSubmit}>
                         <div className="form__input-container">
                             <div className="form__input-item">
-                                {
-                                    errors.email && (
-                                        <div className="form__error-container">
-                                            <p className="form__error-text">{errors.email?.message}</p>
-                                        </div>
-                                    )
-
-                                }
+                                <FormErrorField error={errors.email}/>
                                 <input
                                     {...register('email', {
                                         required: 'Обязательное поле',
@@ -59,14 +53,7 @@ function SingIn() {
                                     type="text"/>
                             </div>
                             <div className="form__input-item">
-                                {
-                                    errors.password && (
-                                        <div className="form__error-container">
-                                            <p className="form__error-text">{errors.password?.message}</p>
-                                        </div>
-                                    )
-
-                                }
+                                <FormErrorField error={errors.password}/>
                                 <input
                                     {...register('password', {
                                         required: 'Обязательное поле',
