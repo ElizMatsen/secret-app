@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import {render} from '@testing-library/react';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
 
@@ -7,7 +7,7 @@ import {BrowserRouter} from "react-router-dom";
 test('render app component', () => {
     render(
         <BrowserRouter>
-                <App/>
+            <App/>
         </BrowserRouter>
     );
 });
