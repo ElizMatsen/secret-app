@@ -1,6 +1,6 @@
 import React from 'react';
 import {useForm} from 'react-hook-form'
-import {style} from "../../assets/formErrorStyle";
+import {style} from "../../assets/form-styles/formErrorStyle";
 import FormErrorField from "../../components/form-error-field/FormErrorField";
 
 export interface FormLoginTypes {
