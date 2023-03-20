@@ -50,7 +50,8 @@ function SingIn() {
                                     className="form__input"
                                     style={style(errors?.email)}
                                     placeholder='E-mail'
-                                    type="text"/>
+                                    type="text"
+                                    data-testid={'email'}/>
                             </div>
                             <div className="form__input-item">
                                 <FormErrorField error={errors.password}/>
@@ -61,7 +62,8 @@ function SingIn() {
                                     className="form__input"
                                     style={style(errors?.password)}
                                     placeholder='Ведите пароль'
-                                    type="password"/>
+                                    type="password"
+                                    data-testid={'password'}/>
                             </div>
                         </div>
                         <div className="login__btn-container mt-1">
@@ -69,6 +71,7 @@ function SingIn() {
                                 type="submit"
                                 className="button w-100"
                                 disabled={!isValid}
+                                data-testid={'submit-button'}
                             >
                                 Войти
                             </button>
