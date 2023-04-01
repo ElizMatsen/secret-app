@@ -2,37 +2,34 @@ import React, {useState} from 'react';
 import {useForm} from 'react-hook-form'
 import {style} from "../../assets/form-styles/formErrorStyle";
 import FormErrorField from "../../components/form-error-field/FormErrorField";
-
-export interface FormLoginTypes {
-    email: string,
-    password: string
-}
+import {LoginState, setAccessToken} from "../../app/authSlice";
+import {useAppDispatch} from "../../app/hooks";
+import {toast} from "react-toastify";
 
 function SingIn() {
     const currentYear = new Date().getFullYear();
-    const [userData, setUserData] = useState<FormLoginTypes | null>(null);
+    const [userData, setUserData] = useState<LoginState | null>(null);
+    const dispatch = useAppDispatch();
     const {
         register,
         handleSubmit,
         formState: {errors, isValid}
-    } = useForm<FormLoginTypes>({mode: "all"})
+    } = useForm<LoginState>({mode: "all"})
 
-    const onSubmit = handleSubmit((data: FormLoginTypes) => {
+    const onSubmit = handleSubmit((data: LoginState) => {
         setUserData(data)
         fetch('http://localhost:8080/v1/login', {
             method: 'POST',
             body: JSON.stringify(data),
-            // headers: {
-            //     'Content-type': 'application/json; charset=UTF-8',
-            // },
         })
             .then((response) => response.json())
             .then((data) => {
+                dispatch(setAccessToken(data.accessToken))
                 console.log(data)
-                // setUserData(data)
             })
             .catch((err) => {
                 console.log(err.message);
+                toast.error(err.message)
             });
     })
 
