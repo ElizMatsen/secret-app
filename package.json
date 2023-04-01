@@ -10,6 +10,7 @@
     "@types/node": "^16.18.14",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "jest-fetch-mock": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -42,8 +43,11 @@
     ]
   },
   "devDependencies": {
+    "@types/redux-mock-store": "^1.0.3",
     "classnames": "^2.3.2",
     "react-hook-form": "^7.43.5",
-    "react-router-dom": "^6.9.0"
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.9.0",
+    "redux-mock-store": "^1.5.4"
   }
 }

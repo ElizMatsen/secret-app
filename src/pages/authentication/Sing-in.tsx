@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useForm} from 'react-hook-form'
 import {style} from "../../assets/form-styles/formErrorStyle";
 import FormErrorField from "../../components/form-error-field/FormErrorField";
@@ -10,7 +10,7 @@ export interface FormLoginTypes {
 
 function SingIn() {
     const currentYear = new Date().getFullYear();
-
+    const [userData, setUserData] = useState<FormLoginTypes | null>(null);
     const {
         register,
         handleSubmit,
@@ -18,6 +18,7 @@ function SingIn() {
     } = useForm<FormLoginTypes>({mode: "all"})
 
     const onSubmit = handleSubmit((data: FormLoginTypes) => {
+        setUserData(data)
         fetch('http://localhost:8080/v1/login', {
             method: 'POST',
             body: JSON.stringify(data),
@@ -28,6 +29,7 @@ function SingIn() {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data)
+                // setUserData(data)
             })
             .catch((err) => {
                 console.log(err.message);
@@ -36,7 +38,10 @@ function SingIn() {
 
     return (
         <div className="login wh-100">
-            <span> </span>
+            <div>
+                <span data-testid={'dataEmail'}> {userData?.email}</span>
+            </div>
+
             <div className="login__container">
                 <div className="login__body">
                     <form className="form" onSubmit={onSubmit}>

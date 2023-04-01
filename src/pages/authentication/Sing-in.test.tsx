@@ -7,11 +7,10 @@ test('render test component', () => {
     render(
         <SingIn/>
     )
-
     const enterButton = screen.getByTestId('submit-button');
-    const loginInput = screen.getByTestId('email');
+    const emailInput = screen.getByTestId('email');
     const passwordInput = screen.getByTestId('password');
-    userEvent.type(loginInput, 'eliz_matsen@gmail.com');
+    userEvent.type(emailInput, 'eliz_matsen@gmail.com');
     userEvent.type(passwordInput, '0987654321');
 
     userEvent.click(enterButton);
