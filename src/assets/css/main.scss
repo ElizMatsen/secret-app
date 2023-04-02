@@ -203,8 +203,98 @@ input {
   background: $main_dark_clr;
 }
 
-
 ////////////////////
+
+.icon_wh-20 {
+  width: 20px;
+  height: 20px;
+}
+
+.header {
+  padding: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 50px;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.5s ease;
+  z-index: 1;
+
+  &:before {
+    position: absolute;
+    height: 30%;
+    content: '';
+    left: -100%;
+    right: -100%;
+    top: -1.25rem;
+    background: $main_clr;
+    z-index: -1;
+  }
+}
+
+.main__container {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  @extend .main-border-radius;
+  height: 100%;
+}
+
+.dropdown__body {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: $primary_clr;
+  max-height: 0;
+  min-width: 100%;
+  overflow: hidden;
+  @extend .transition;
+  display: flex;
+  flex-direction: column;
+  @include main-box-shadow;
+  z-index: 2;
+}
+
+
+.user__dropdown-item {
+  padding: 0.625rem;
+  @extend .secondary-border-radius;
+  display: flex;
+  align-items: center;
+  gap: 0.31rem;
+
+
+  &:hover {
+    transition: background-color 0.5s ease;
+    background: $main_clr_light;
+  }
+}
+
+.user__info {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 100%;
+
+  &:hover {
+    .dropdown__body {
+      max-height: 500px;
+      padding: 0.3rem 0;
+    }
+  }
+}
+
+.user__name {
+  @include font(1.25rem, 600, $clr_1);
+}
 
 /* FORM */
 
@@ -238,6 +328,7 @@ input {
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+  background: $primary_clr;
 }
 
 .form__input-container {
@@ -245,6 +336,7 @@ input {
   flex-direction: column;
   gap: 1rem;
 }
+
 .form__input-item {
   display: flex;
   flex-direction: column;

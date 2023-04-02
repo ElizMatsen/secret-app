@@ -19,6 +19,9 @@ const authSlice = createSlice({
     reducers: {
         setAccessToken: (state: AccessTokenState, action: PayloadAction<string | null>) => {
             state.access_token = action.payload;
+            // if (action.payload) {
+            //     localStorage.setItem('access_token', action.payload);
+            // }
         }
     }
 })
