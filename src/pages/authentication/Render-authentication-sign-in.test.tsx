@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, screen, waitFor} from "@testing-library/react";
-import SingIn from "./Sing-in";
+import SingIn from "./SingIn";
 import '@testing-library/jest-dom'
 import userEvent from "@testing-library/user-event";
 require('jest-fetch-mock').enableMocks()

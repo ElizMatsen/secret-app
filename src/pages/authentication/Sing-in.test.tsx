@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, screen, waitFor} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import SingIn from "./Sing-in";
+import SingIn from "./SingIn";
 
 test('render test component', () => {
     render(

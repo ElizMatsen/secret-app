@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import SingIn from "./pages/authentication/Sing-in";
+import SingIn from "./pages/authentication/SingIn";
 import {Navigate, Route, Routes} from "react-router-dom";
 import "./assets/css/main.scss";
 import Layout from "./pages/layout/Layout";
@@ -9,6 +9,7 @@ import SecretCreate from "./pages/secrets-list/SecretCreate";
 import Secrets from "./pages/secrets-list/Secrets";
 import {useAppSelector} from "./app/hooks";
 import {RootState} from "./app/store";
+import SingUp from "./pages/authentication/SingUp";
 
 function App() {
     const token = useAppSelector((state: RootState) => state.auth.access_token);
@@ -32,6 +33,7 @@ function App() {
                 !token && (
                     <Routes>
                         <Route path="sing-in" element={<SingIn/>}/>
+                        <Route path="sing-up" element={<SingUp/>}/>
                         <Route path="*" element={<Navigate replace to="/sing-in"/>}/>
                     </Routes>
                 )

@@ -5,11 +5,11 @@ import FormErrorField from "../../components/form-error-field/FormErrorField";
 import {LoginState, setAccessToken} from "../../app/authSlice";
 import {useAppDispatch} from "../../app/hooks";
 import {toast} from "react-toastify";
+import {NavLink, useNavigate} from "react-router-dom";
 
-function SingIn() {
+function SingUp() {
     const currentYear = new Date().getFullYear();
-    const [userData, setUserData] = useState<LoginState | null>(null);
-    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -17,15 +17,14 @@ function SingIn() {
     } = useForm<LoginState>({mode: "all"})
 
     const onSubmit = handleSubmit((data: LoginState) => {
-        setUserData(data)
-        fetch('http://localhost:8080/v1/login', {
+        fetch('http://localhost:8080/v1/create-user', {
             method: 'POST',
             body: JSON.stringify(data),
         })
             .then((response) => response.json())
             .then((data) => {
-                dispatch(setAccessToken(data.accessToken))
-                console.log(data)
+                toast.error(data.message)
+                navigate('/sing-in')
             })
             .catch((err) => {
                 console.log(err.message);
@@ -35,10 +34,7 @@ function SingIn() {
 
     return (
         <div className="login wh-100">
-            <div>
-                <span data-testid={'dataEmail'}> {userData?.email}</span>
-            </div>
-
+            <span></span>
             <div className="login__container">
                 <div className="login__body">
                     <form className="form" onSubmit={onSubmit}>
@@ -48,6 +44,10 @@ function SingIn() {
                                 <input
                                     {...register('email', {
                                         required: 'Обязательное поле',
+                                        pattern: {
+                                            value: /\S+@\S+\.\S+/,
+                                            message: 'Некорректный email адрес'
+                                        }
                                     })}
                                     className="form__input"
                                     style={style(errors?.email)}
@@ -80,11 +80,16 @@ function SingIn() {
                         </div>
                     </form>
                 </div>
+                <div className="login__footer">
+                    <p className="login__footer-text"> У Вас есть акаунт?</p>
+                    <NavLink className="login__footer-link pointer" to="/sing-in">Войти</NavLink>
+                </div>
+
             </div>
             <div className="copyright mt-1">{currentYear} &#169; Solomon</div>
         </div>
     )
 }
 
-export default SingIn;
+export default SingUp;
 
