@@ -1,4 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {environment} from "../environments/environment";
 
 export interface AccessTokenState {
     access_token: string | null
@@ -13,10 +14,10 @@ const initialState = {
     access_token: null,
 }
 
-export const getAccessToken = createAsyncThunk(
+export const login = createAsyncThunk(
     'token',
     async ({email, password}: LoginState) => {
-        return fetch('http://localhost:8080/v1/login', {
+        return fetch(environment.apiBasepoint + 'login', {
             method: 'POST',
             body: JSON.stringify({
                 email,
@@ -43,16 +44,16 @@ const authSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(getAccessToken.pending, (state) => {
+            .addCase(login.pending, (state) => {
                     console.log(state)
                 }
             )
-            .addCase(getAccessToken.fulfilled, (state, action: any ) => {
+            .addCase(login.fulfilled, (state, action: any ) => {
                     console.log(action.payload)
                     state.access_token = action.payload.accessToken;
                 }
             )
-            .addCase(getAccessToken.rejected, (state) => {
+            .addCase(login.rejected, (state) => {
                 console.log(state)
                 }
             )

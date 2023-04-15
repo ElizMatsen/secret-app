@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useForm} from 'react-hook-form'
 import {style} from "../../assets/form-styles/formErrorStyle";
 import FormErrorField from "../../components/form-error-field/FormErrorField";
-import {getAccessToken, LoginState, setAccessToken} from "../../app/authSlice";
+import {login, LoginState, setAccessToken} from "../../app/authSlice";
 import {useAppDispatch} from "../../app/hooks";
 import {NavLink} from "react-router-dom";
 
@@ -18,7 +18,7 @@ function SingIn() {
 
     const onSubmit = handleSubmit((data: LoginState) => {
         setUserData(data)
-        dispatch(getAccessToken(data))
+        dispatch(login(data))
     })
 
     return (
