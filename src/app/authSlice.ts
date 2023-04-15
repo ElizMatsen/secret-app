@@ -15,9 +15,26 @@ const initialState = {
 }
 
 export const login = createAsyncThunk(
-    'token',
+    'login',
     async ({email, password}: LoginState) => {
         return fetch(environment.apiBasepoint + 'login', {
+            method: 'POST',
+            body: JSON.stringify({
+                email,
+                password,
+            }),
+        })
+            .then((response) => response.json())
+            .catch((err) => {
+                console.log(err.message);
+            });
+    },
+)
+
+export const registration = createAsyncThunk(
+    'registration',
+    async ({email, password}: LoginState) => {
+        return fetch(environment.apiBasepoint + 'create-user', {
             method: 'POST',
             body: JSON.stringify({
                 email,
@@ -54,6 +71,18 @@ const authSlice = createSlice({
                 }
             )
             .addCase(login.rejected, (state) => {
+                console.log(state)
+                }
+            )
+            .addCase(registration.pending, (state) => {
+                    console.log(state)
+                }
+            )
+            .addCase(registration.fulfilled, (state, action: any ) => {
+                    console.log(action.payload)
+                }
+            )
+            .addCase(registration.rejected, (state) => {
                 console.log(state)
                 }
             )

@@ -2,13 +2,14 @@ import React, {useState} from 'react';
 import {useForm} from 'react-hook-form'
 import {style} from "../../assets/form-styles/formErrorStyle";
 import FormErrorField from "../../components/form-error-field/FormErrorField";
-import {LoginState, setAccessToken} from "../../app/authSlice";
+import {LoginState, registration, setAccessToken} from "../../app/authSlice";
 import {useAppDispatch} from "../../app/hooks";
 import {toast} from "react-toastify";
 import {NavLink, useNavigate} from "react-router-dom";
 
 function SingUp() {
     const currentYear = new Date().getFullYear();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const {
         register,
@@ -17,19 +18,7 @@ function SingUp() {
     } = useForm<LoginState>({mode: "all"})
 
     const onSubmit = handleSubmit((data: LoginState) => {
-        fetch('http://localhost:8080/v1/create-user', {
-            method: 'POST',
-            body: JSON.stringify(data),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                toast.error(data.message)
-                navigate('/sing-in')
-            })
-            .catch((err) => {
-                console.log(err.message);
-                toast.error(err.message)
-            });
+        dispatch(registration(data))
     })
 
     return (
