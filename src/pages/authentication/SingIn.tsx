@@ -2,9 +2,8 @@ import React, {useState} from 'react';
 import {useForm} from 'react-hook-form'
 import {style} from "../../assets/form-styles/formErrorStyle";
 import FormErrorField from "../../components/form-error-field/FormErrorField";
-import {LoginState, setAccessToken} from "../../app/authSlice";
+import {getAccessToken, LoginState, setAccessToken} from "../../app/authSlice";
 import {useAppDispatch} from "../../app/hooks";
-import {toast} from "react-toastify";
 import {NavLink} from "react-router-dom";
 
 function SingIn() {
@@ -19,20 +18,7 @@ function SingIn() {
 
     const onSubmit = handleSubmit((data: LoginState) => {
         setUserData(data)
-        fetch('http://localhost:8080/v1/login', {
-            method: 'POST',
-            body: JSON.stringify(data),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                dispatch(setAccessToken(data.accessToken))
-                console.log(data)
-                toast.error(data.message)
-            })
-            .catch((err) => {
-                console.log(err.message);
-                toast.error(err.message)
-            });
+        dispatch(getAccessToken(data))
     })
 
     return (
