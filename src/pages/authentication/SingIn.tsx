@@ -8,7 +8,6 @@ import {NavLink} from "react-router-dom";
 
 function SingIn() {
     const currentYear = new Date().getFullYear();
-    const [userData, setUserData] = useState<LoginState | null>(null);
     const dispatch = useAppDispatch();
     const {
         register,
@@ -17,16 +16,12 @@ function SingIn() {
     } = useForm<LoginState>({mode: "all"})
 
     const onSubmit = handleSubmit((data: LoginState) => {
-        setUserData(data)
         dispatch(login(data))
     })
 
     return (
         <div className="login wh-100">
-            <div>
-                <span data-testid={'dataEmail'}> {userData?.email}</span>
-            </div>
-
+            <span></span>
             <div className="login__container">
                 <div className="login__body">
                     <form className="form" onSubmit={onSubmit}>
