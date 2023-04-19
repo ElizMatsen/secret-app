@@ -1,20 +1,26 @@
 import React from 'react';
-import {render, screen, waitFor} from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import SingIn from "./SingIn";
+import reducer, {login} from "../../app/authSlice";
 
-test('render test component', () => {
-    render(
-        <SingIn/>
-    )
-    const enterButton = screen.getByTestId('submit-button');
-    const emailInput = screen.getByTestId('email');
-    const passwordInput = screen.getByTestId('password');
-    userEvent.type(emailInput, 'eliz_matsen@gmail.com');
-    userEvent.type(passwordInput, '0987654321');
+describe('exampleSlice', () => {
+    describe('reducers', () => {
+        const initialState = {access_token: null}
 
-    userEvent.click(enterButton);
-    waitFor(() => {
-        expect(enterButton).toHaveBeenCalled();
+        it('login is pending', () => {
+            const action = {type: login.pending.type};
+            const state = reducer(initialState, action);
+            expect(state).toEqual({access_token: null});
+        });
+
+        it('login is fulfilled', () => {
+            const action = {type: login.fulfilled.type, payload: {accessToken: 'sfsdfsdfsdfsdf'}};
+            const state = reducer(initialState, action);
+            expect(state).toEqual({access_token: 'sfsdfsdfsdfsdf'});
+        });
+
+        it('login is rejected', () => {
+            const action = {type: login.rejected.type};
+            const state = reducer(initialState, action);
+            expect(state).toEqual({access_token: null});
+        });
     });
 });

@@ -10,7 +10,7 @@ export interface LoginState {
     password: string
 }
 
-const initialState = {
+export const initialState = {
     access_token: null,
 }
 
