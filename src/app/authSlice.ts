@@ -12,6 +12,7 @@ export interface LoginState {
 
 export const initialState = {
     access_token: null,
+    user: {email: ''},
 }
 
 export const login = createAsyncThunk(
@@ -65,25 +66,26 @@ const authSlice = createSlice({
                     console.log(state)
                 }
             )
-            .addCase(login.fulfilled, (state, action: any ) => {
+            .addCase(login.fulfilled, (state, action: any) => {
                     console.log(action.payload)
                     state.access_token = action.payload.accessToken;
                 }
             )
             .addCase(login.rejected, (state) => {
-                console.log(state)
+                    console.log(state)
                 }
             )
             .addCase(registration.pending, (state) => {
                     console.log(state)
                 }
             )
-            .addCase(registration.fulfilled, (state, action: any ) => {
+            .addCase(registration.fulfilled, (state, action: any) => {
                     console.log(action.payload)
+                    state.user = action.payload.user;
                 }
             )
             .addCase(registration.rejected, (state) => {
-                console.log(state)
+                    console.log(state)
                 }
             )
     }
