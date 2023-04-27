@@ -7,11 +7,16 @@ import Layout from "./pages/layout/Layout";
 import SecretsList from "./pages/secrets-list/SecretsList";
 import SecretCreate from "./pages/secrets-list/SecretCreate";
 import Secrets from "./pages/secrets-list/Secrets";
-import {useAppSelector} from "./app/hooks";
+import {useAppDispatch, useAppSelector} from "./app/hooks";
 import {RootState} from "./app/store";
 import SingUp from "./pages/authentication/SingUp";
+import {login, LoginState} from "./app/authSlice";
 
 function App() {
+    const dispatch = useAppDispatch();
+    const onSubmit = ((data: LoginState) => {
+        dispatch(login(data))
+    })
     const token = useAppSelector((state: RootState) => state.auth.access_token);
 //     const token = localStorage.getItem('access_token');
     return (
@@ -32,7 +37,7 @@ function App() {
             {
                 !token && (
                     <Routes>
-                        <Route path="sing-in" element={<SingIn/>}/>
+                        <Route path="sing-in" element={<SingIn onSubmitLoginForm={onSubmit}/>}/>
                         <Route path="sing-up" element={<SingUp/>}/>
                         <Route path="*" element={<Navigate replace to="/sing-in"/>}/>
                     </Routes>
