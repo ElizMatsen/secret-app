@@ -3,7 +3,6 @@ import {useForm} from 'react-hook-form'
 import {style} from "../../assets/form-styles/formErrorStyle";
 import FormErrorField from "../../components/form-error-field/FormErrorField";
 import {LoginState} from "../../app/authSlice";
-import {useAppDispatch} from "../../app/hooks";
 import {NavLink} from "react-router-dom";
 
 type LoginFormProps = {
@@ -12,14 +11,13 @@ type LoginFormProps = {
 
 function SingIn({onSubmitLoginForm}: LoginFormProps) {
     const currentYear = new Date().getFullYear();
-    const dispatch = useAppDispatch();
     const {
         register,
         handleSubmit,
         formState: {errors, isValid}
     } = useForm<LoginState>({mode: "all"})
 
-    const onSubmit =  handleSubmit((data: LoginState) => {
+    const onSubmit = handleSubmit((data: LoginState) => {
         onSubmitLoginForm(data)
     })
 

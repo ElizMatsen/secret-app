@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useForm} from 'react-hook-form'
 import {style} from "../../assets/form-styles/formErrorStyle";
 import FormErrorField from "../../components/form-error-field/FormErrorField";
-import {LoginState, registration, setAccessToken} from "../../app/authSlice";
-import {useAppDispatch} from "../../app/hooks";
-import {toast} from "react-toastify";
-import {NavLink, useNavigate} from "react-router-dom";
+import {LoginState} from "../../app/authSlice";
+import {NavLink} from "react-router-dom";
 
-function SingUp() {
+type RegistrationFormProps = {
+    onSubmitRegistrationForm: any;
+}
+
+function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
     const currentYear = new Date().getFullYear();
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -18,7 +18,7 @@ function SingUp() {
     } = useForm<LoginState>({mode: "all"})
 
     const onSubmit = handleSubmit((data: LoginState) => {
-        dispatch(registration(data))
+        onSubmitRegistrationForm(data)
     })
 
     return (

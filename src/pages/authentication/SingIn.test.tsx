@@ -39,13 +39,18 @@ describe('authSlice', () => {
                     </BrowserRouter>
                 </Provider>
             )
-            userEvent.type(await screen.getByTestId(/email/i), 'eliz_skakun@mail.ru')
-            userEvent.type(await screen.getByTestId(/password/i), '0987654321');
-
+            await act(async () => {
+                userEvent.type(await screen.getByTestId(/email/i), 'eliz_skakun@mail.ru')
+                userEvent.type(await screen.getByTestId(/password/i), '0987654321');
+            })
             await act(async () => {
                 userEvent.click(await screen.getByTestId(/submit-button/i));
             });
             await expect(onSubmit).toHaveBeenCalledTimes(1)
+            await expect(onSubmit).toHaveBeenCalledWith({
+                email: 'eliz_skakun@mail.ru',
+                password: '0987654321'
+            })
         })
     });
 });
