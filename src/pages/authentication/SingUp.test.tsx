@@ -1,11 +1,20 @@
 import React from 'react';
 import reducer, {registration} from "../../app/authSlice";
-import configureStore from "redux-mock-store";
 import {act, render, screen} from "@testing-library/react";
 import {Provider} from "react-redux";
 import {BrowserRouter} from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import SingUp from "./SingUp";
+import store from "../../app/store";
+
+function renderWithContext(element: any) {
+    render(
+        <BrowserRouter>
+            <Provider store={store}>{element}</Provider>
+        </BrowserRouter>
+    );
+    return {store};
+}
 
 describe('authSlice', () => {
     describe('reducers', () => {
@@ -30,14 +39,8 @@ describe('authSlice', () => {
         });
         it('registration form', async () => {
             const onSubmit = jest.fn()
-            const mockStore = configureStore([]);
-            render(
-                <Provider store={mockStore({userApi: {}})}>
-                    <BrowserRouter>
-                        <SingUp onSubmitRegistrationForm={onSubmit}/>
-                    </BrowserRouter>
-                </Provider>
-            )
+            const {store} = renderWithContext(<SingUp onSubmitRegistrationForm={onSubmit}/>);
+            expect(store.getState().auth.access_token).toEqual(null);
             await act(async () => {
                 userEvent.type(await screen.getByTestId(/email/i), 'new@mail.ru')
                 userEvent.type(await screen.getByTestId(/password/i), '0987654321');
