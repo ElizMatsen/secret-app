@@ -32,7 +32,7 @@ function SingIn({onSubmitLoginForm}: LoginFormProps) {
                                 <FormErrorField error={errors.email}/>
                                 <input
                                     {...register('email', {
-                                        required: 'Обязательное поле',
+                                        required: 'Required field',
                                     })}
                                     className="form__input"
                                     style={style(errors?.email)}
@@ -44,11 +44,11 @@ function SingIn({onSubmitLoginForm}: LoginFormProps) {
                                 <FormErrorField error={errors.password}/>
                                 <input
                                     {...register('password', {
-                                        required: 'Обязательное поле',
+                                        required: 'Required field',
                                     })}
                                     className="form__input"
                                     style={style(errors?.password)}
-                                    placeholder='Ведите пароль'
+                                    placeholder='Enter password'
                                     type="password"
                                     data-testid={'password'}/>
                             </div>
@@ -60,18 +60,18 @@ function SingIn({onSubmitLoginForm}: LoginFormProps) {
                                 disabled={!isValid}
                                 data-testid={'submit-button'}
                             >
-                                Войти
+                                Log in
                             </button>
                         </div>
                     </form>
                 </div>
                 <div className="login__footer">
-                    <p className="login__footer-text"> У Вас нет акаунта?</p>
-                    <NavLink className="login__footer-link pointer" to="/sing-up">Зарегистрироваться</NavLink>
+                    <p className="login__footer-text"> You don't have an account?</p>
+                    <NavLink className="login__footer-link pointer" to="/sing-up">Sign up</NavLink>
                 </div>
 
             </div>
-            <div className="copyright mt-1">{currentYear} &#169; Solomon</div>
+            <div className="copyright mt-1">{currentYear} &#169; KikLi Production</div>
         </div>
     )
 }

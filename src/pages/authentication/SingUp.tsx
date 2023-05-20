@@ -32,10 +32,10 @@ function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
                                 <FormErrorField error={errors.email}/>
                                 <input
                                     {...register('email', {
-                                        required: 'Обязательное поле',
+                                        required: 'Required field',
                                         pattern: {
                                             value: /\S+@\S+\.\S+/,
-                                            message: 'Некорректный email адрес'
+                                            message: 'Incorrect email address'
                                         }
                                     })}
                                     className="form__input"
@@ -48,11 +48,11 @@ function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
                                 <FormErrorField error={errors.password}/>
                                 <input
                                     {...register('password', {
-                                        required: 'Обязательное поле',
+                                        required: 'Required field',
                                     })}
                                     className="form__input"
                                     style={style(errors?.password)}
-                                    placeholder='Ведите пароль'
+                                    placeholder='Enter password'
                                     type="password"
                                     data-testid={'password'}/>
                             </div>
@@ -64,18 +64,18 @@ function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
                                 disabled={!isValid}
                                 data-testid={'submit-button'}
                             >
-                                Войти
+                                Log in
                             </button>
                         </div>
                     </form>
                 </div>
                 <div className="login__footer">
-                    <p className="login__footer-text"> У Вас есть акаунт?</p>
-                    <NavLink className="login__footer-link pointer" to="/sing-in">Войти</NavLink>
+                    <p className="login__footer-text"> Do you have an account?</p>
+                    <NavLink className="login__footer-link pointer" to="/sing-in">Log in</NavLink>
                 </div>
 
             </div>
-            <div className="copyright mt-1">{currentYear} &#169; Solomon</div>
+            <div className="copyright mt-1">{currentYear} &#169; KikLi Production</div>
         </div>
     )
 }
