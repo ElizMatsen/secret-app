@@ -5,8 +5,8 @@ on:
   pull_request:
     branches: [ main ]
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build_test:
+    runs-on: windows-latest
 
     strategy:
       matrix:
