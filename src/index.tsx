@@ -6,10 +6,25 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import store from "./app/store";
 import {Provider} from "react-redux";
+import axios from "axios";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
+
+axios.interceptors.request.use(
+    config => {
+        config.headers['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);
+axios.interceptors.response.use(response => {
+    console.log(response)
+    return response;
+}, error => Promise.reject(error));
 
 root.render(
     <React.StrictMode>
