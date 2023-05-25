@@ -1,18 +1,35 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {environment} from "../../environments/environment";
 import axios from "axios";
+import {environment} from "../../environments/environment";
+
+export interface CreateSecretState {
+    title: string,
+    body: string
+}
 
 export const initialState = {
     secrets: null,
 }
+
 export const secrets = createAsyncThunk(
-    'login',
+    'secrets',
     async () => {
-        return axios(environment.apiBasepoint + 'secrets')
+        return axios.get(environment.apiBasepoint + 'secrets')
             .then((res) => res)
     },
 )
 
+export const createSecret = createAsyncThunk(
+    'createSecret',
+    async ({title, body}: CreateSecretState) => {
+        return axios.post(environment.apiBasepoint + 'secrets', {
+            title: title,
+            body: body
+        }).then((response) => {
+            console.log(response);
+        });
+    },
+)
 const secretsSlice = createSlice({
     name: 'secrets',
     initialState,
