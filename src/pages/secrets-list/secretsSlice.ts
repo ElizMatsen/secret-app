@@ -8,7 +8,7 @@ export interface CreateSecretState {
 }
 
 export const initialState = {
-    secrets: null,
+    secretsList: [],
 }
 
 export const secrets = createAsyncThunk(
@@ -41,8 +41,7 @@ const secretsSlice = createSlice({
                 }
             )
             .addCase(secrets.fulfilled, (state, action: any) => {
-                    console.log(action.payload)
-
+                    state.secretsList = action.payload.data.secrets
                 }
             )
             .addCase(secrets.rejected, (state) => {
