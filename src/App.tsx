@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import SingIn from "./pages/authentication/SingIn";
 import {Navigate, Route, Routes} from "react-router-dom";
@@ -8,9 +8,9 @@ import SecretsList from "./pages/secrets-list/SecretsList";
 import SecretCreate from "./pages/secrets-list/SecretCreate";
 import Secrets from "./pages/secrets-list/Secrets";
 import {useAppDispatch, useAppSelector} from "./app/hooks";
-import {RootState} from "./app/store";
 import SingUp from "./pages/authentication/SingUp";
-import {login, LoginState, registration} from "./app/authSlice";
+import {login, LoginState, registration, setAccessToken} from "./app/authSlice";
+import {RootState} from "./app/store";
 
 function App() {
     const dispatch = useAppDispatch();
@@ -21,7 +21,12 @@ function App() {
         dispatch(registration(data))
     })
     const token = useAppSelector((state: RootState) => state.auth.access_token);
-//     const token = localStorage.getItem('access_token');
+    const tokenFromLocalstorage = localStorage.getItem('access_token');
+    useEffect(() => {
+        if (tokenFromLocalstorage) {
+            dispatch(setAccessToken(tokenFromLocalstorage))
+        }
+    }, [tokenFromLocalstorage]);
     return (
         <>
             {

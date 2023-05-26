@@ -9,10 +9,11 @@ import {setAccessToken} from "../../app/authSlice";
 
 function Layout() {
     const dispatch = useAppDispatch();
+
     const logOut = () => {
-        // localStorage.removeItem('access_token');
         dispatch(setAccessToken(null))
     }
+
     return (
         <div className="container">
             <header className="header">
@@ -26,7 +27,7 @@ function Layout() {
                             <div className="icon icon_wh-20">
                                 <img className="user__dropdown-img" src={off} alt="icon"/>
                             </div>
-                            <p className="navigation__item-text alarm-text">Выйти</p>
+                            <p className="navigation__item-text alarm-text">Log out</p>
                         </div>
                     </div>
                 </div>

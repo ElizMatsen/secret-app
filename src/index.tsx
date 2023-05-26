@@ -14,7 +14,7 @@ const root = ReactDOM.createRoot(
 
 axios.interceptors.request.use(
     config => {
-        config.headers['Authorization'] = localStorage.getItem('access_token');
+        config.headers['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
         return config;
     },
     error => {
