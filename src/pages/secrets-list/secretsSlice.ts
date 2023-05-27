@@ -30,6 +30,15 @@ export const createSecret = createAsyncThunk(
         });
     },
 )
+
+export const deleteSecret = createAsyncThunk(
+    'deleteSecret',
+    async (id: { id: string }) => {
+        return axios.delete(environment.apiBasepoint + 'secrets/' + id.id).then((response) => {
+            console.log(response);
+        });
+    },
+)
 const secretsSlice = createSlice({
     name: 'secrets',
     initialState,
@@ -45,6 +54,18 @@ const secretsSlice = createSlice({
                 }
             )
             .addCase(secrets.rejected, (state) => {
+                    console.log(state)
+                }
+            )
+            .addCase(deleteSecret.pending, (state) => {
+                    console.log(state)
+                }
+            )
+            .addCase(deleteSecret.fulfilled, (state, action: any) => {
+                    console.log(action.payload)
+                }
+            )
+            .addCase(deleteSecret.rejected, (state) => {
                     console.log(state)
                 }
             )

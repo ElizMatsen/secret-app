@@ -23,7 +23,7 @@ function SingIn({onSubmitLoginForm}: LoginFormProps) {
 
     return (
         <div className="login wh-100">
-            <span></span>
+            <span/>
             <div className="login__container">
                 <div className="login__body">
                     <form className="form" onSubmit={onSubmit}>

@@ -113,7 +113,7 @@ button:focus {
   transition: all 0.2s ease;
 }
 
-@mixin main-box-shadow {
+.main-box-shadow {
   box-shadow: rgb(0, 0, 0, 0.09) 0 0.1875rem 0.3125rem -0.0625rem, rgb(0, 0, 0, 0.07) 0rem 0.125rem 0.3125rem -0.0625rem;
 }
 
@@ -155,7 +155,7 @@ input {
   text-transform: uppercase;
   padding: 0.75rem 1.5rem;
   @extend .secondary-border-radius;
-  @include main-box-shadow;
+  @extend .main-box-shadow;
   transition: transform 0.2s ease;
   flex-shrink: 0;
 
@@ -245,7 +245,7 @@ input {
   @extend .main-border-radius;
   height: 100%;
   background: $primary_clr;
-  box-shadow: 0 5px 35px 0 $separator;
+  @extend .main-box-shadow;
   padding: 1rem;
 }
 
@@ -260,7 +260,7 @@ input {
   @extend .transition;
   display: flex;
   flex-direction: column;
-  @include main-box-shadow;
+  @extend .main-box-shadow;
   z-index: 2;
 }
 
@@ -317,7 +317,7 @@ input {
   min-width: 320px;
   background: $primary_clr;
   @extend .main-border-radius;
-  @include main-box-shadow;
+  @extend .main-box-shadow;
 }
 
 .login__body {
@@ -371,10 +371,126 @@ input {
 
 .secrets-list-row {
   display: grid;
+  align-items: center;
   grid-gap: 0.5rem;
   padding: 1rem;
-  grid-template-columns: 1fr 1fr 50px;
+  grid-template-columns: 100px 1fr 1fr 60px;
   border-bottom: 1px solid $separator;
+}
+
+// DELETE BUTTON
+.button-delete {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: $alarm_clr;
+  padding: 0 0.5rem;
+  height: 60px;
+  width: 60px;
+  transition: 0.3s;
+}
+
+.button-delete-animation {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+}
+
+.button-delete-can {
+  overflow: hidden;
+  position: relative;
+  transform: translate(0px, 2px);
+  width: 20px;
+  height: 22px;
+  border-radius: 0 0 5px 5px;
+  border: 2px solid $primary_clr;
+  border-top: 0;
+}
+
+@keyframes lid-open {
+  15%,
+  90% {
+    transform: rotate(-75deg) translate(-6px, -12px);
+    width: 20px;
+  }
+}
+
+.button-delete-lid {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  transform-origin: 0 0;
+  width: 24px;
+  height: 2px;
+  background: $primary_clr;
+}
+
+@keyframes balls-drop {
+  0%,
+  20% {
+    transform: translate(-50%, 0);
+  }
+  40%,
+  100% {
+    transform: translate(-50%, 44px);
+  }
+}
+
+.button-delete-balls {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: $primary_clr;
+}
+
+@keyframes fill {
+  0%,
+  20% {
+    transform: translate(0, 0);
+  }
+  50%,
+  70% {
+    transform: translate(0, -50%);
+  }
+  90%,
+  100% {
+    transform: translate(0, -100%);
+  }
+}
+
+.button-delete-filler {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -32px;
+  width: 60px;
+  height: 120%;
+  background: $primary_clr;
+}
+
+.button-delete:disabled {
+  opacity: 0.8;
+}
+
+.button-delete.deleting .button-delete-balls {
+  animation: balls-drop 1.25s infinite;
+}
+
+.button-delete.deleting .button-delete-filler {
+  animation: fill 2.5s both infinite;
+}
+
+.button-delete.deleting .button-delete-lid {
+  animation: lid-open 2.5s both infinite;
 }
 
 ////////////////////
