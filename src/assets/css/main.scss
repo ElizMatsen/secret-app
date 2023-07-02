@@ -1,5 +1,6 @@
 @import "color";
 @import "font";
+@import "keyframes";
 
 * {
   padding: 0;
@@ -211,11 +212,16 @@ input {
 }
 
 .header {
-  padding: 1rem 0;
+  padding: 2rem 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   min-height: 50px;
+}
+
+.header__logo-img {
+  width: 50px;
+  height: 50px;
 }
 
 .container {
@@ -367,6 +373,14 @@ input {
 
 .secrets-list {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.secrets-list-body {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
 }
 
 .secrets-list-row {
@@ -376,6 +390,12 @@ input {
   padding: 1rem;
   grid-template-columns: 100px 1fr 1fr 60px;
   border-bottom: 1px solid $separator;
+}
+
+.secrets-create {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 0;
 }
 
 // DELETE BUTTON
@@ -411,14 +431,6 @@ input {
   border-top: 0;
 }
 
-@keyframes lid-open {
-  15%,
-  90% {
-    transform: rotate(-75deg) translate(-6px, -12px);
-    width: 20px;
-  }
-}
-
 .button-delete-lid {
   position: absolute;
   top: 10px;
@@ -430,17 +442,6 @@ input {
   background: $primary_clr;
 }
 
-@keyframes balls-drop {
-  0%,
-  20% {
-    transform: translate(-50%, 0);
-  }
-  40%,
-  100% {
-    transform: translate(-50%, 44px);
-  }
-}
-
 .button-delete-balls {
   position: absolute;
   top: -22px;
@@ -450,21 +451,6 @@ input {
   height: 9px;
   border-radius: 50%;
   background: $primary_clr;
-}
-
-@keyframes fill {
-  0%,
-  20% {
-    transform: translate(0, 0);
-  }
-  50%,
-  70% {
-    transform: translate(0, -50%);
-  }
-  90%,
-  100% {
-    transform: translate(0, -100%);
-  }
 }
 
 .button-delete-filler {
@@ -514,4 +500,51 @@ input {
   margin-top: 1rem;
 }
 
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1, 1);
+  background: $bg_modal;
+  @extend .transition;
+  z-index: 10;
+}
 
+.modal-open .modal-background {
+  visibility: visible;
+  opacity: 1;
+  animation: background-in 1s both;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background: $primary_clr;
+  padding: 48px 40px;
+  width: 300px;
+  border-radius: 12px;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  z-index: 11;
+}
+
+.modal-open .modal {
+  opacity: 1;
+  visibility: visible;
+  animation: modal-in 1s;
+}
+
+.modal-closed .modal {
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -50%);
+}

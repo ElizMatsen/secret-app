@@ -69,9 +69,10 @@ const authSlice = createSlice({
                 }
             )
             .addCase(login.fulfilled, (state, action: any) => {
-                    console.log(action.payload)
-                    state.access_token = action.payload.accessToken;
-                    localStorage.setItem('access_token', action.payload.accessToken);
+                    if (action.payload && action.payload.accessToken) {
+                        state.access_token = action.payload.accessToken;
+                        localStorage.setItem('access_token', action.payload.accessToken);
+                    }
                 }
             )
             .addCase(login.rejected, (state) => {

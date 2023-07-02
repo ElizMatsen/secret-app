@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import './App.css';
 import SingIn from "./pages/authentication/SingIn";
 import {Navigate, Route, Routes} from "react-router-dom";
 import "./assets/css/main.scss";
@@ -11,6 +10,7 @@ import {useAppDispatch, useAppSelector} from "./app/hooks";
 import SingUp from "./pages/authentication/SingUp";
 import {login, LoginState, registration, setAccessToken} from "./app/authSlice";
 import {RootState} from "./app/store";
+import axios from "axios";
 
 function App() {
     const dispatch = useAppDispatch();
@@ -27,6 +27,16 @@ function App() {
             dispatch(setAccessToken(tokenFromLocalstorage))
         }
     }, [tokenFromLocalstorage]);
+
+    axios.interceptors.response.use(response => {
+        return response;
+    }, error => {
+        if (error.response.status === 401 || error.response.status === 500) {
+            dispatch(setAccessToken(null))
+        }
+        return Promise.reject(error)
+    });
+
     return (
         <>
             {

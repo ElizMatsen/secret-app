@@ -6,7 +6,7 @@ import SecretCreate from "../secrets-list/SecretCreate";
 import off from "../../assets/icons/off.svg";
 import {useAppDispatch} from "../../app/hooks";
 import {setAccessToken} from "../../app/authSlice";
-
+import logo from "../../assets/icons/kikly-prodaction-logo.svg";
 function Layout() {
     const dispatch = useAppDispatch();
 
@@ -17,7 +17,9 @@ function Layout() {
     return (
         <div className="container">
             <header className="header">
-                <div className="header__logo">logo</div>
+                <div className="header__logo">
+                    <img className="header__logo-img" src={logo} alt=""/>
+                </div>
                 <div className="user__info">
                     <div className="user__description">
                         <div className="user__name">userName</div>

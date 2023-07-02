@@ -21,10 +21,6 @@ axios.interceptors.request.use(
         return Promise.reject(error);
     }
 );
-axios.interceptors.response.use(response => {
-    console.log(response)
-    return response;
-}, error => Promise.reject(error));
 
 root.render(
     <React.StrictMode>

@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "axios";
 import {environment} from "../../environments/environment";
 
@@ -9,13 +9,14 @@ export interface CreateSecretState {
 
 export const initialState = {
     secretsList: [],
+    deleted: false,
+    created: false,
 }
 
 export const secrets = createAsyncThunk(
     'secrets',
     async () => {
         return axios.get(environment.apiBasepoint + 'secrets')
-            .then((res) => res)
     },
 )
 
@@ -25,9 +26,7 @@ export const createSecret = createAsyncThunk(
         return axios.post(environment.apiBasepoint + 'secrets', {
             title: title,
             body: body
-        }).then((response) => {
-            console.log(response);
-        });
+        })
     },
 )
 
@@ -42,7 +41,14 @@ export const deleteSecret = createAsyncThunk(
 const secretsSlice = createSlice({
     name: 'secrets',
     initialState,
-    reducers: {},
+    reducers: {
+        setDeleteAction: (state: any, action: PayloadAction<boolean>) => {
+            state.deleted = action.payload;
+        },
+        setCreateAction: (state: any, action: PayloadAction<boolean>) => {
+            state.created = action.payload;
+        }
+    },
     extraReducers(builder) {
         builder
             .addCase(secrets.pending, (state) => {
@@ -62,15 +68,31 @@ const secretsSlice = createSlice({
                 }
             )
             .addCase(deleteSecret.fulfilled, (state, action: any) => {
-                    console.log(action.payload)
+                    state.deleted = true;
                 }
             )
             .addCase(deleteSecret.rejected, (state) => {
                     console.log(state)
                 }
             )
+            .addCase(createSecret.pending, (state) => {
+                    console.log(state)
+                }
+            )
+            .addCase(createSecret.fulfilled, (state, action: any) => {
+                    state.created = true;
+                }
+            )
+            .addCase(createSecret.rejected, (state) => {
+                    console.log(state)
+                }
+            )
     }
 })
+export const {
+    setDeleteAction,
+    setCreateAction,
+} = secretsSlice.actions;
 
 export default secretsSlice.reducer;
 

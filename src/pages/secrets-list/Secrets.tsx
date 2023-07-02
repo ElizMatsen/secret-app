@@ -1,17 +1,38 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {deleteSecret, secrets} from "./secretsSlice";
+import {deleteSecret, secrets, setCreateAction, setDeleteAction} from "./secretsSlice";
 import {RootState} from "../../app/store";
 import classNames from "classnames";
+import SecretCreate from "./SecretCreate";
 
 function Secrets() {
     const dispatch = useAppDispatch();
+    const deleted = useAppSelector((state: RootState) => state.secrets.deleted);
+    const created = useAppSelector((state: RootState) => state.secrets.created);
     const secretsList = useAppSelector((state: RootState) => state.secrets.secretsList);
-    const [deletableSecretId, setDeletableSecretId] = React.useState('');
-
+    const [deletableSecretId, setDeletableSecretId] = React.useState<string | null>(null);
+    const bodyClassList = document.body.classList;
     useEffect(() => {
         dispatch(secrets())
     }, [])
+
+    useEffect(() => {
+        console.log(deleted)
+        if (deleted) {
+            console.log(deletableSecretId)
+            setDeletableSecretId(null)
+            dispatch(setDeleteAction(false))
+            dispatch(secrets())
+        }
+    }, [deleted]);
+
+    useEffect(() => {
+        if (created) {
+            toggleModal();
+            dispatch(setCreateAction(false))
+            dispatch(secrets())
+        }
+    }, [created]);
 
     const deleteSecretItem = (id: string) => {
         if (window.confirm(
@@ -25,23 +46,43 @@ function Secrets() {
             }, 1000);
         }
     }
+
+    const toggleModal = () => {
+        if (bodyClassList.contains('modal-open')) {
+            bodyClassList.remove('modal-open');
+            bodyClassList.add('closed');
+        } else {
+            bodyClassList.remove('modal-closed');
+            bodyClassList.add('modal-open');
+        }
+    }
+
     return (
-        <div className="secrets-list">
-            <div className="secrets-list-row">
-                <div>ID</div>
-                <div>TITLE</div>
-                <div>BODY</div>
-            </div>
-            {
-                secretsList.map((item: any) =>
-                    <div className="secrets-list-row" key={item.id}>
-                        <div>{item.id}</div>
-                        <div>{item.title}</div>
-                        <div>{item.body}</div>
-                        <button
-                            onClick={() => deleteSecretItem(item.id)}
-                            className={classNames('button-delete', deletableSecretId === item.id ? ' deleting' : '')}
-                        >
+        <>
+            <SecretCreate modal={toggleModal}/>
+            <div className="secrets-list">
+                <div className="secrets-create">
+                    <button className="button" onClick={() => toggleModal()} type="button">
+                        Create secret
+                    </button>
+                </div>
+                <div className="secrets-list-body">
+
+                    <div className="secrets-list-row">
+                        <div>ID</div>
+                        <div>TITLE</div>
+                        <div>BODY</div>
+                    </div>
+                    {
+                        secretsList.map((item: any) =>
+                            <div className="secrets-list-row" key={item.id}>
+                                <div>{item.id}</div>
+                                <div>{item.title}</div>
+                                <div>{item.body}</div>
+                                <button
+                                    onClick={() => deleteSecretItem(item.id)}
+                                    className={classNames('button-delete', deletableSecretId === item.id ? ' deleting' : '')}
+                                >
                             <span className="button-delete-animation">
                                   <span className="button-delete-balls"/>
                                   <span className="button-delete-lid"/>
@@ -49,11 +90,13 @@ function Secrets() {
                                       <span className="button-delete-filler"/>
                                   </span>
                             </span>
-                        </button>
-                    </div>
-                )
-            }
-        </div>
+                                </button>
+                            </div>
+                        )
+                    }
+                </div>
+            </div>
+        </>
     )
 }
 
