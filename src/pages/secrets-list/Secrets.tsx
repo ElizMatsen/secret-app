@@ -17,9 +17,7 @@ function Secrets() {
     }, [])
 
     useEffect(() => {
-        console.log(deleted)
         if (deleted) {
-            console.log(deletableSecretId)
             setDeletableSecretId(null)
             dispatch(setDeleteAction(false))
             dispatch(secrets())

@@ -12,30 +12,28 @@ export const initialState = {
     deleted: false,
     created: false,
 }
-
 export const secrets = createAsyncThunk(
     'secrets',
     async () => {
         return axios.get(environment.apiBasepoint + 'secrets')
+            .then((response) => response.data);
     },
 )
-
 export const createSecret = createAsyncThunk(
     'createSecret',
     async ({title, body}: CreateSecretState) => {
         return axios.post(environment.apiBasepoint + 'secrets', {
             title: title,
             body: body
-        })
+        }).then((response) => response.data);
     },
 )
 
 export const deleteSecret = createAsyncThunk(
     'deleteSecret',
     async (id: { id: string }) => {
-        return axios.delete(environment.apiBasepoint + 'secrets/' + id.id).then((response) => {
-            console.log(response);
-        });
+        return axios.delete(environment.apiBasepoint + 'secrets/' + id.id)
+            .then((response) => response.data);
     },
 )
 const secretsSlice = createSlice({
@@ -56,7 +54,7 @@ const secretsSlice = createSlice({
                 }
             )
             .addCase(secrets.fulfilled, (state, action: any) => {
-                    state.secretsList = action.payload.data.secrets
+                    state.secretsList = action.payload.secrets
                 }
             )
             .addCase(secrets.rejected, (state) => {

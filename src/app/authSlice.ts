@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {environment} from "../environments/environment";
+import axios from "axios";
 
 export interface AccessTokenState {
     access_token: string | null
@@ -18,34 +19,20 @@ export const initialState = {
 export const login = createAsyncThunk(
     'login',
     async ({email, password}: LoginState) => {
-        return fetch(environment.apiBasepoint + 'login', {
-            method: 'POST',
-            body: JSON.stringify({
-                email,
-                password,
-            }),
-        })
-            .then((response) => response.json())
-            .catch((err) => {
-                console.log(err.message);
-            });
+        return axios.post(environment.apiBasepoint + 'login', {
+            email: email,
+            password: password
+        }).then((response) => response.data)
     },
 )
 
 export const registration = createAsyncThunk(
     'registration',
     async ({email, password}: LoginState) => {
-        return fetch(environment.apiBasepoint + 'create-user', {
-            method: 'POST',
-            body: JSON.stringify({
-                email,
-                password,
-            }),
-        })
-            .then((response) => response.json())
-            .catch((err) => {
-                console.log(err.message);
-            });
+        return axios.post(environment.apiBasepoint + 'create-user', {
+            email: email,
+            password: password
+        }).then((response) => response.data)
     },
 )
 
