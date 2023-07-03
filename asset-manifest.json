@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/secret-app/static/css/main.76d9dda4.css",
+    "main.js": "/secret-app/static/js/main.5ea8d695.js",
+    "static/js/787.e2d1e9ea.chunk.js": "/secret-app/static/js/787.e2d1e9ea.chunk.js",
+    "static/media/kikly-prodaction-logo.svg": "/secret-app/static/media/kikly-prodaction-logo.ea9b050758bdfaf0e25b7654593c70db.svg",
+    "static/media/off.svg": "/secret-app/static/media/off.f85461e5d154737f9a5c5a1edf38fb4e.svg",
+    "index.html": "/secret-app/index.html",
+    "main.76d9dda4.css.map": "/secret-app/static/css/main.76d9dda4.css.map",
+    "main.5ea8d695.js.map": "/secret-app/static/js/main.5ea8d695.js.map",
+    "787.e2d1e9ea.chunk.js.map": "/secret-app/static/js/787.e2d1e9ea.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.76d9dda4.css",
+    "static/js/main.5ea8d695.js"
+  ]
+}
