@@ -73,15 +73,15 @@ function Secrets() {
                 <div className="secrets-list-body">
 
                     <div className="secrets-list-row">
-                        <div>ID</div>
-                        <div>TITLE</div>
-                        <div>BODY</div>
+                        <div className="secrets-list-item">ID</div>
+                        <div className="secrets-list-item">TITLE</div>
+                        <div className="secrets-list-item">BODY</div>
                     </div>
                     {
                         secretsList.map((item: any) =>
                             <div className="secrets-list-row" key={item.id}>
-                                <div>{item.id}</div>
-                                <div>{item.title}</div>
+                                <div className="secrets-list-item">{item.id}</div>
+                                <div className="secrets-list-item">{item.title}</div>
                                 <div className="button_s" onClick={() => showSecretEvent(item.id)}>Show</div>
                                 <button
                                     onClick={() => deleteSecretItem(item.id)}

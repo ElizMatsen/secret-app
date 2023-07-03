@@ -396,6 +396,10 @@ input {
   border-bottom: 1px solid $separator;
 }
 
+.secrets-list-item {
+  min-width: 100px;
+}
+
 .secrets-create {
   display: flex;
   justify-content: flex-end;
@@ -404,6 +408,7 @@ input {
 
 // DELETE BUTTON
 .button-delete {
+  overflow: hidden;
   cursor: pointer;
   display: flex;
   align-items: center;
