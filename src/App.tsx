@@ -11,6 +11,8 @@ import SingUp from "./pages/authentication/SingUp";
 import {login, LoginState, registration, setAccessToken} from "./app/authSlice";
 import {RootState} from "./app/store";
 import axios from "axios";
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     const dispatch = useAppDispatch();
@@ -31,7 +33,14 @@ function App() {
     axios.interceptors.response.use(response => {
         return response;
     }, error => {
-        if (error.response.status === 401 || error.response.status === 500) {
+        console.log(error);
+        if (error.response.status === 500) {
+            toast.error('Server error');
+        }
+        if (error.response.status === 404) {
+            toast.error('Data entry error');
+        }
+        if (error.response.status === 401) {
             dispatch(setAccessToken(null))
         }
         return Promise.reject(error)
@@ -61,6 +70,7 @@ function App() {
                     </Routes>
                 )
             }
+            <ToastContainer/>
         </>
     )
 }

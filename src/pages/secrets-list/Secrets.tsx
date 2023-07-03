@@ -4,6 +4,7 @@ import {deleteSecret, secrets, setCreateAction, setDeleteAction} from "./secrets
 import {RootState} from "../../app/store";
 import classNames from "classnames";
 import SecretCreate from "./SecretCreate";
+import {toast} from "react-toastify";
 
 function Secrets() {
     const dispatch = useAppDispatch();
@@ -18,6 +19,7 @@ function Secrets() {
 
     useEffect(() => {
         if (deleted) {
+            toast.success('Saved');
             setDeletableSecretId(null)
             dispatch(setDeleteAction(false))
             dispatch(secrets())
@@ -26,6 +28,7 @@ function Secrets() {
 
     useEffect(() => {
         if (created) {
+            toast.success('Saved');
             toggleModal();
             dispatch(setCreateAction(false))
             dispatch(secrets())
