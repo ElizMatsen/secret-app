@@ -17,7 +17,7 @@ function renderWithContext(element: any) {
 }
 
 describe('authSlice', () => {
-    const initialState = {access_token: null, user: {email: ''}}
+    const initialState = {access_token: null, user: {email: ''}, created: false}
 
     it('login is pending', () => {
         const action = {type: login.pending.type};

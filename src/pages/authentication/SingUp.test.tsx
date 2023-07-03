@@ -19,7 +19,7 @@ function renderWithContext(element: any) {
 describe('authSlice', () => {
     describe('reducers', () => {
 
-        const initialState = {access_token: null, user: {email: ''}}
+        const initialState = {access_token: null, user: {email: ''}, created: false}
         it('registration is pending', () => {
             const action = {type: registration.pending.type};
             const state = reducer(initialState, action);

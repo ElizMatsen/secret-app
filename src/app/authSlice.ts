@@ -14,6 +14,7 @@ export interface LoginState {
 export const initialState = {
     access_token: null,
     user: {email: ''},
+    created: false,
 }
 
 export const login = createAsyncThunk(
@@ -47,6 +48,9 @@ const authSlice = createSlice({
             } else {
                 localStorage.removeItem('access_token');
             }
+        },
+        setCreateAction: (state: any, action: PayloadAction<boolean>) => {
+            state.created = action.payload;
         }
     },
     extraReducers(builder) {
@@ -73,6 +77,7 @@ const authSlice = createSlice({
             .addCase(registration.fulfilled, (state, action: any) => {
                     console.log(action.payload)
                     state.user = action.payload.user;
+                    state.created = true;
                 }
             )
             .addCase(registration.rejected, (state) => {
@@ -84,6 +89,7 @@ const authSlice = createSlice({
 
 export const {
     setAccessToken,
+    setCreateAction,
 } = authSlice.actions;
 
 export default authSlice.reducer;

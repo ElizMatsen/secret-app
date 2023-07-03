@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useForm} from 'react-hook-form'
 import {style} from "../../assets/form-styles/formErrorStyle";
 import FormErrorField from "../../components/form-error-field/FormErrorField";
-import {LoginState} from "../../app/authSlice";
-import {NavLink} from "react-router-dom";
+import {LoginState, setCreateAction} from "../../app/authSlice";
+import {NavLink, useNavigate} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {RootState} from "../../app/store";
+import {toast} from "react-toastify";
 
 type RegistrationFormProps = {
     onSubmitRegistrationForm: any;
@@ -11,6 +14,9 @@ type RegistrationFormProps = {
 
 function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
     const currentYear = new Date().getFullYear();
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const created = useAppSelector((state: RootState) => state.auth.created);
     const {
         register,
         handleSubmit,
@@ -21,6 +27,13 @@ function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
         onSubmitRegistrationForm(data)
     })
 
+    useEffect(() => {
+        if (created) {
+            toast.success('Created successfully');
+            dispatch(setCreateAction(false));
+            navigate('/sing-in')
+        }
+    }, [created]);
     return (
         <div className="login wh-100">
             <span/>
