@@ -28,11 +28,18 @@ export const createSecret = createAsyncThunk(
         }).then((response) => response.data);
     },
 )
+export const showSecret = createAsyncThunk(
+    'showSecret',
+    async (id: number) => {
+        return axios.post(environment.apiBasepoint + 'secrets/' + id)
+            .then((response) => response.data);
+    },
+)
 
 export const deleteSecret = createAsyncThunk(
     'deleteSecret',
-    async (id: { id: string }) => {
-        return axios.delete(environment.apiBasepoint + 'secrets/' + id.id)
+    async (id: string) => {
+        return axios.delete(environment.apiBasepoint + 'secrets/' + id)
             .then((response) => response.data);
     },
 )
@@ -82,6 +89,18 @@ const secretsSlice = createSlice({
                 }
             )
             .addCase(createSecret.rejected, (state) => {
+                    console.log(state)
+                }
+            )
+            .addCase(showSecret.pending, (state) => {
+                    console.log(state)
+                }
+            )
+            .addCase(showSecret.fulfilled, (state, action: any) => {
+                    console.log(action)
+                }
+            )
+            .addCase(showSecret.rejected, (state) => {
                     console.log(state)
                 }
             )

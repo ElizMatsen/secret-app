@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {deleteSecret, secrets, setCreateAction, setDeleteAction} from "./secretsSlice";
+import {deleteSecret, secrets, setCreateAction, setDeleteAction, showSecret} from "./secretsSlice";
 import {RootState} from "../../app/store";
 import classNames from "classnames";
 import SecretCreate from "./SecretCreate";
@@ -43,7 +43,7 @@ function Secrets() {
         )) {
             setDeletableSecretId(id)
             setTimeout(() => {
-                dispatch(deleteSecret({id}));
+                dispatch(deleteSecret(id));
             }, 1000);
         }
     }
@@ -58,6 +58,9 @@ function Secrets() {
         }
     }
 
+    const showSecretEvent = (id: number) => {
+        dispatch(showSecret(id));
+    }
     return (
         <>
             <SecretCreate modal={toggleModal}/>
@@ -79,7 +82,7 @@ function Secrets() {
                             <div className="secrets-list-row" key={item.id}>
                                 <div>{item.id}</div>
                                 <div>{item.title}</div>
-                                <div>{item.body}</div>
+                                <div className="button_s" onClick={() => showSecretEvent(item.id)}>Show</div>
                                 <button
                                     onClick={() => deleteSecretItem(item.id)}
                                     className={classNames('button-delete', deletableSecretId === item.id ? ' deleting' : '')}
