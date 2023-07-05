@@ -2,11 +2,11 @@ import React from 'react';
 import SecretsList from "../secrets-list/SecretsList";
 import {Navigate, Route, Routes} from 'react-router-dom';
 import Secrets from "../secrets-list/Secrets";
-import SecretCreate from "../secrets-list/SecretCreate";
 import off from "../../assets/icons/off.svg";
 import {useAppDispatch} from "../../app/hooks";
 import {setAccessToken} from "../../app/authSlice";
 import logo from "../../assets/icons/kikly-prodaction-logo.svg";
+
 function Layout() {
     const dispatch = useAppDispatch();
 
@@ -38,7 +38,6 @@ function Layout() {
                 <Routes>
                     <Route path="secrets-list/*" element={<SecretsList/>}>
                         <Route path="secrets" element={<Secrets/>}/>
-                        <Route path="secret-create" element={<SecretCreate/>}/>
                     </Route>
                     <Route path="secrets-list" element={<Navigate replace to="/secrets-list/secrets"/>}/>
                 </Routes>

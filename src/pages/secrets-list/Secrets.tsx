@@ -3,8 +3,8 @@ import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {deleteSecret, secrets, setCreateAction, setDeleteAction} from "./secretsSlice";
 import {RootState} from "../../app/store";
 import classNames from "classnames";
-import SecretCreate from "./SecretCreate";
 import {toast} from "react-toastify";
+import SecretModal from "./SecretModal";
 
 function Secrets() {
     const dispatch = useAppDispatch();
@@ -13,7 +13,7 @@ function Secrets() {
     const secretsList = useAppSelector((state: RootState) => state.secrets.secretsList);
     const [deletableSecretId, setDeletableSecretId] = React.useState<string | null>(null);
     const [formType, seFormType] = React.useState<string | null>(null);
-    const [showSecretId, setShowSecretId] = React.useState<number | null>(null);
+    const [showSecretId, setShowSecretId] = React.useState<number>();
     const bodyClassList = document.body.classList;
     useEffect(() => {
         dispatch(secrets())
@@ -72,7 +72,7 @@ function Secrets() {
 
     return (
         <>
-            <SecretCreate modal={toggleModal} formType={formType} showSecretId={showSecretId}/>
+            <SecretModal modal={toggleModal} formType={formType} showSecretId={showSecretId}/>
             <div className="secrets-list">
                 <div className="secrets-create">
                     <button className="button" onClick={() => createSecretEvent()} type="button">
