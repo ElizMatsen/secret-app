@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {deleteSecret, secrets, setCreateAction, setDeleteAction, showSecret} from "./secretsSlice";
+import {deleteSecret, secrets, setCreateAction, setDeleteAction} from "./secretsSlice";
 import {RootState} from "../../app/store";
 import classNames from "classnames";
 import SecretCreate from "./SecretCreate";
@@ -12,6 +12,8 @@ function Secrets() {
     const created = useAppSelector((state: RootState) => state.secrets.created);
     const secretsList = useAppSelector((state: RootState) => state.secrets.secretsList);
     const [deletableSecretId, setDeletableSecretId] = React.useState<string | null>(null);
+    const [formType, seFormType] = React.useState<string | null>(null);
+    const [showSecretId, setShowSecretId] = React.useState<number | null>(null);
     const bodyClassList = document.body.classList;
     useEffect(() => {
         dispatch(secrets())
@@ -59,19 +61,25 @@ function Secrets() {
     }
 
     const showSecretEvent = (id: number) => {
-        dispatch(showSecret(id));
+        seFormType('showSecret');
+        setShowSecretId(id)
+        toggleModal();
     }
+    const createSecretEvent = () => {
+        seFormType('createSecret');
+        toggleModal();
+    }
+
     return (
         <>
-            <SecretCreate modal={toggleModal}/>
+            <SecretCreate modal={toggleModal} formType={formType} showSecretId={showSecretId}/>
             <div className="secrets-list">
                 <div className="secrets-create">
-                    <button className="button" onClick={() => toggleModal()} type="button">
+                    <button className="button" onClick={() => createSecretEvent()} type="button">
                         Create secret
                     </button>
                 </div>
                 <div className="secrets-list-body">
-
                     <div className="secrets-list-row">
                         <div className="secrets-list-item">ID</div>
                         <div className="secrets-list-item">TITLE</div>

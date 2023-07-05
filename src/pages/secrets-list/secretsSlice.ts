@@ -30,8 +30,12 @@ export const createSecret = createAsyncThunk(
 )
 export const showSecret = createAsyncThunk(
     'showSecret',
-    async (id: number) => {
-        return axios.post(environment.apiBasepoint + 'secrets/' + id)
+    async ({id, email, password}: { id: number | null | undefined, email: string, password: string }) => {
+        return axios.post(environment.apiBasepoint + 'secrets/' + id,
+            {
+                email: email,
+                password: password
+            })
             .then((response) => response.data);
     },
 )
