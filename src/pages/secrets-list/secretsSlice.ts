@@ -7,10 +7,17 @@ export interface CreateSecretState {
     body: string
 }
 
+export interface SecretDataState {
+    id: string,
+    title: string,
+    body: string
+}
+
 export const initialState = {
     secretsList: [],
     deleted: false,
     created: false,
+    secretData: null,
 }
 export const secrets = createAsyncThunk(
     'secrets',
@@ -56,6 +63,9 @@ const secretsSlice = createSlice({
         },
         setCreateAction: (state: any, action: PayloadAction<boolean>) => {
             state.created = action.payload;
+        },
+        setSecretDataAction: (state: any, action: PayloadAction<any>) => {
+            state.secretData = action.payload;
         }
     },
     extraReducers(builder) {
@@ -101,7 +111,7 @@ const secretsSlice = createSlice({
                 }
             )
             .addCase(showSecret.fulfilled, (state, action: any) => {
-                    console.log(action)
+                    state.secretData = action.payload.secret;
                 }
             )
             .addCase(showSecret.rejected, (state) => {
@@ -113,6 +123,7 @@ const secretsSlice = createSlice({
 export const {
     setDeleteAction,
     setCreateAction,
+    setSecretDataAction,
 } = secretsSlice.actions;
 
 export default secretsSlice.reducer;

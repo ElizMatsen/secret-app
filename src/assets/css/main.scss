@@ -406,6 +406,16 @@ input {
   padding: 1rem 0;
 }
 
+.secret-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.secret-item {
+  @include font(1.25rem, 400, $clr_1);
+}
+
 // DELETE BUTTON
 .button-delete {
   overflow: hidden;
