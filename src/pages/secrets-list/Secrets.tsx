@@ -4,7 +4,8 @@ import {deleteSecret, secrets, setCreateAction, setDeleteAction} from "./secrets
 import {RootState} from "../../app/store";
 import classNames from "classnames";
 import {toast} from "react-toastify";
-import SecretModal from "./SecretModal";
+import SecretCreateForm from "./SecretCreateForm";
+import ShowSecretForm from "./ShowSecretForm";
 
 function Secrets() {
     const dispatch = useAppDispatch();
@@ -54,6 +55,7 @@ function Secrets() {
         if (bodyClassList.contains('modal-open')) {
             bodyClassList.remove('modal-open');
             bodyClassList.add('closed');
+            seFormType(null);
         } else {
             bodyClassList.remove('modal-closed');
             bodyClassList.add('modal-open');
@@ -61,18 +63,38 @@ function Secrets() {
     }
 
     const showSecretEvent = (id: number) => {
+        toggleModal();
         seFormType('showSecret');
         setShowSecretId(id)
-        toggleModal();
     }
     const createSecretEvent = () => {
-        seFormType('createSecret');
         toggleModal();
+        seFormType('createSecret');
     }
 
     return (
         <>
-            <SecretModal modal={toggleModal} formType={formType} showSecretId={showSecretId}/>
+            {
+                !!formType
+                &&
+                (
+                    <>
+                        <div className="modal-background" onClick={toggleModal}/>
+                        <div className="modal">
+                            {
+                                formType === 'createSecret'
+                                &&
+                                <SecretCreateForm/>
+                            }
+                            {
+                                formType === 'showSecret'
+                                &&
+                                <ShowSecretForm showSecretId={showSecretId}/>
+                            }
+                        </div>
+                    </>
+                )
+            }
             <div className="secrets-list">
                 <div className="secrets-create">
                     <button className="button" onClick={() => createSecretEvent()} type="button">
