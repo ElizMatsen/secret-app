@@ -60,13 +60,6 @@ function Secrets() {
         }
     }
 
-    useEffect(() => {
-        return () => {
-            bodyClassList.remove('modal-open');
-            bodyClassList.add('closed');
-        }
-    }, []);
-
     const showSecretEvent = (id: number) => {
         seFormType('showSecret');
         setShowSecretId(id)

@@ -23,6 +23,7 @@ function ShowSecretForm({showSecretId}: Props) {
 
     useEffect(() => {
         return () => {
+            dispatch(setSecretDataAction(null));
             reset();
         }
     }, []);
@@ -31,6 +32,7 @@ function ShowSecretForm({showSecretId}: Props) {
         if (secretData) {
             setTimeout(() => {
                 dispatch(setSecretDataAction(null));
+                reset();
             }, 5000);
         }
     }, [secretData]);
