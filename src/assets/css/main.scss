@@ -392,7 +392,7 @@ input {
   align-items: center;
   grid-gap: 0.5rem;
   padding: 1rem;
-  grid-template-columns: 100px 1fr 1fr 60px;
+  grid-template-columns: 1fr 1fr 1fr 60px;
   border-bottom: 1px solid $separator;
 }
 
@@ -547,7 +547,8 @@ input {
   left: 50%;
   background: $primary_clr;
   padding: 48px 40px;
-  width: 300px;
+  min-width: 300px;
+  width:fit-content;
   border-radius: 12px;
   transform: translate(-50%, -50%);
   opacity: 0;

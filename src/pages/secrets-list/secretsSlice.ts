@@ -22,14 +22,14 @@ export const initialState = {
 export const secrets = createAsyncThunk(
     'secrets',
     async () => {
-        return axios.get(environment.apiBasepoint + 'secrets')
+        return axios.get(environment.apiBasepointSecret + 'secrets')
             .then((response) => response.data);
     },
 )
 export const createSecret = createAsyncThunk(
     'createSecret',
     async ({title, body}: CreateSecretState) => {
-        return axios.post(environment.apiBasepoint + 'secrets', {
+        return axios.post(environment.apiBasepointSecret + 'secrets', {
             title: title,
             body: body
         }).then((response) => response.data);
@@ -38,7 +38,7 @@ export const createSecret = createAsyncThunk(
 export const showSecret = createAsyncThunk(
     'showSecret',
     async ({id, email, password}: { id: number | null | undefined, email: string, password: string }) => {
-        return axios.post(environment.apiBasepoint + 'secrets/' + id,
+        return axios.post(environment.apiBasepointSecret + 'secrets/' + id,
             {
                 email: email,
                 password: password
@@ -50,7 +50,7 @@ export const showSecret = createAsyncThunk(
 export const deleteSecret = createAsyncThunk(
     'deleteSecret',
     async (id: string) => {
-        return axios.delete(environment.apiBasepoint + 'secrets/' + id)
+        return axios.delete(environment.apiBasepointSecret + 'secrets/' + id)
             .then((response) => response.data);
     },
 )

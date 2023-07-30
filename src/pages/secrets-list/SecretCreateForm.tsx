@@ -33,6 +33,10 @@ function SecretCreateForm() {
                     <input
                         {...register('title', {
                             required: 'Required field',
+                            pattern: {
+                                value: /^[a-zA-Z0-9]+$/,
+                                message: 'Only latin letters'
+                            }
                         })}
                         className="form__input"
                         style={style(errors?.title)}
@@ -44,6 +48,10 @@ function SecretCreateForm() {
                     <input
                         {...register('body', {
                             required: 'Required field',
+                            pattern: {
+                                value: /^[a-zA-Z0-9]+$/,
+                                message: 'Only latin letters'
+                            }
                         })}
                         className="form__input"
                         style={style(errors?.body)}
