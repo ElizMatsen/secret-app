@@ -6,6 +6,7 @@ import {SecretDataState, setSecretDataAction, showSecret} from "./secretsSlice";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {LoginState} from "../../app/authSlice";
 import {RootState} from "../../app/store";
+import {toast} from "react-toastify";
 
 interface Props {
     showSecretId: number | undefined;
@@ -37,6 +38,10 @@ function ShowSecretForm({showSecretId}: Props) {
         }
     }, [secretData]);
 
+    const copy = (data: string) => {
+        navigator.clipboard.writeText(data)
+        toast.success('Copied successfully');
+    }
     const onSubmitShowCreate = handleSubmit((data: LoginState) => {
         const result = Object.assign(data, {id: showSecretId})
         dispatch(showSecret(result))
@@ -88,6 +93,10 @@ function ShowSecretForm({showSecretId}: Props) {
                 secretData
                 &&
                 <div className="secret-container">
+                    <div className="secret-copy-container"
+                         onClick={() => copy(secretData?.body)}>
+                        <div className="secret-copy-text">Copy body</div>
+                    </div>
                     <div className="secret-item">
                         <strong>ID:</strong> {secretData.id}
                     </div>
