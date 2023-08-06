@@ -75,7 +75,7 @@ const secretsSlice = createSlice({
                 }
             )
             .addCase(secrets.fulfilled, (state, action: any) => {
-                    state.secretsList = action.payload.secrets
+                    state.secretsList = action.payload?.secrets
                 }
             )
             .addCase(secrets.rejected, (state) => {
