@@ -20,7 +20,7 @@ export const initialState = {
 export const login = createAsyncThunk(
     'login',
     async ({email, password}: LoginState) => {
-        return axios.post(environment.apiBasepointLogin + 'login', {
+        return await axios.post(environment.apiBasepointLogin + 'login', {
             email: email,
             password: password
         }).then((response) => response.data)
@@ -30,7 +30,7 @@ export const login = createAsyncThunk(
 export const registration = createAsyncThunk(
     'registration',
     async ({email, password}: LoginState) => {
-        return axios.post(environment.apiBasepoint + 'user', {
+        return await axios.post(environment.apiBasepoint + 'user', {
             email: email,
             password: password
         }).then((response) => response.data)

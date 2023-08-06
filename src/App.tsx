@@ -29,21 +29,21 @@ function App() {
         }
     }, [tokenFromLocalstorage]);
 
-    axios.interceptors.response.use(response => {
-        return response;
-    }, error => {
-        console.log(error);
-        if (error.response.status === 500) {
-            toast.error('Server error');
-        }
-        if (error.response.status === 404) {
-            toast.error('Data entry error');
-        }
-        if (error.response.status === 401) {
-            dispatch(setAccessToken(null))
-        }
-        return Promise.reject(error)
-    });
+    axios.interceptors.response.use(
+        (response) => response,
+        async (err) => {
+            if (err.response.status === 500) {
+                toast.error('Server error');
+            }
+            if (err.response.status === 404) {
+                toast.error('Data entry error');
+            }
+            if (err.response.status === 401) {
+                dispatch(setAccessToken(null))
+            }
+            return err;
+        },
+    );
 
     return (
         <>
