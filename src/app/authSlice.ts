@@ -11,7 +11,13 @@ export interface LoginState {
     password: string
 }
 
-export const initialState = {
+export interface InitialState {
+    access_token: null | string,
+    user: any,
+    created: boolean,
+}
+
+export const initialState: InitialState = {
     access_token: null,
     user: {email: ''},
     created: false,
@@ -54,33 +60,16 @@ const authSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(login.pending, (state) => {
-                    console.log(state)
-                }
-            )
-            .addCase(login.fulfilled, (state, action: any) => {
+            .addCase(login.fulfilled, (state: AccessTokenState, action: PayloadAction<any>) => {
                     if (action.payload && action.payload.accessToken) {
                         state.access_token = action.payload.accessToken;
                         localStorage.setItem('access_token', action.payload.accessToken);
                     }
                 }
             )
-            .addCase(login.rejected, (state) => {
-                    console.log(state)
-                }
-            )
-            .addCase(registration.pending, (state) => {
-                    console.log(state)
-                }
-            )
-            .addCase(registration.fulfilled, (state, action: any) => {
-                    console.log(action.payload)
+            .addCase(registration.fulfilled, (state: InitialState, action: PayloadAction<any>) => {
                     state.user = action.payload.user;
                     state.created = true;
-                }
-            )
-            .addCase(registration.rejected, (state) => {
-                    console.log(state)
                 }
             )
     }

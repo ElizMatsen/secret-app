@@ -97,9 +97,7 @@ button.focus,
 button:active.focus,
 button:active:focus,
 button:focus {
-  outline: 0 !important;
-  outline-color: transparent !important;
-  outline-style: none !important;
+  outline: transparent none 0 !important;
 }
 
 .main-border-radius {
