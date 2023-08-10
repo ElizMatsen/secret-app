@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useForm} from 'react-hook-form'
+import {Resolver, SubmitHandler, useForm} from 'react-hook-form'
 import {style} from "../../assets/form-styles/formErrorStyle";
 import FormErrorField from "../../components/form-error-field/FormErrorField";
 import {LoginState, setCreateAction} from "../../app/authSlice";
@@ -11,6 +11,41 @@ import {toast} from "react-toastify";
 type RegistrationFormProps = {
     onSubmitRegistrationForm: any;
 }
+const resolver: Resolver<LoginState> = async (values) => {
+    if (values.email === '') {
+        return {
+            values: {},
+            errors: {
+                email: {
+                    type: "required",
+                    message: "Required field",
+                },
+            },
+        }
+    } else if (values.password === '') {
+        return {
+            values: {},
+            errors: {
+                password: {
+                    type: "required",
+                    message: "Required field",
+                },
+            },
+        }
+    } else {
+        return {
+            values: values,
+            errors: {
+                email: {
+                    pattern: {
+                        value: /\S+@\S+\.\S+/,
+                        message: 'Incorrect email address'
+                    }
+                }
+            },
+        }
+    }
+}
 
 function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
     const currentYear = new Date().getFullYear();
@@ -21,11 +56,12 @@ function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
         register,
         handleSubmit,
         formState: {errors, isValid}
-    } = useForm<LoginState>({mode: "all"})
-
-    const onSubmit = handleSubmit((data: LoginState) => {
-        onSubmitRegistrationForm(data)
+    } = useForm({
+        resolver,
+        mode: "all"
     })
+
+    const onSubmit: SubmitHandler<LoginState> = (data) => onSubmitRegistrationForm(data)
 
     useEffect(() => {
         if (created) {
@@ -39,18 +75,12 @@ function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
             <span/>
             <div className="login__container">
                 <div className="login__body">
-                    <form className="form" onSubmit={onSubmit}>
+                    <form className="form" onSubmit={handleSubmit(onSubmit)}>
                         <div className="form__input-container">
                             <div className="form__input-item">
                                 <FormErrorField error={errors.email}/>
                                 <input
-                                    {...register('email', {
-                                        required: 'Required field',
-                                        pattern: {
-                                            value: /\S+@\S+\.\S+/,
-                                            message: 'Incorrect email address'
-                                        }
-                                    })}
+                                    {...register('email')}
                                     className="form__input"
                                     style={style(errors?.email)}
                                     placeholder='E-mail'
@@ -60,9 +90,7 @@ function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
                             <div className="form__input-item">
                                 <FormErrorField error={errors.password}/>
                                 <input
-                                    {...register('password', {
-                                        required: 'Required field',
-                                    })}
+                                    {...register('password')}
                                     className="form__input"
                                     style={style(errors?.password)}
                                     placeholder='Enter password'

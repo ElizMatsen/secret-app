@@ -54,7 +54,7 @@ const authSlice = createSlice({
             }
             return localStorage.removeItem('access_token');
         },
-        setCreateAction: (state: any, action: PayloadAction<boolean>) => {
+        setCreateAction: (state: InitialState, action: PayloadAction<boolean>) => {
             state.created = action.payload;
         }
     },
