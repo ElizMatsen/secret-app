@@ -54,7 +54,11 @@ const resolver: Resolver<SecretDataState> = async (values) => {
     }
 }
 
-function SecretCreateForm({modalEvent}: any) {
+interface Props {
+    modalEvent: () => void;
+}
+
+function SecretCreateForm({modalEvent}: Props) {
     const dispatch = useAppDispatch();
     const {
         register,

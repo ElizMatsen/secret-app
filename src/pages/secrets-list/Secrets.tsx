@@ -5,6 +5,7 @@ import {RootState} from "../../app/store";
 import classNames from "classnames";
 import {toast} from "react-toastify";
 import SecretCreateForm from "./SecretCreateForm";
+import ShowSecretForm from "./ShowSecretForm";
 
 function Secrets() {
     const dispatch = useAppDispatch();
@@ -14,7 +15,6 @@ function Secrets() {
     const [deletableSecretId, setDeletableSecretId] = React.useState<string | null>(null);
     const [formType, seFormType] = React.useState<string | null>(null);
     const [showSecretId, setShowSecretId] = React.useState<number>();
-    const bodyClassList = document.body.classList;
     useEffect(() => {
         dispatch(secrets())
     }, [])
@@ -67,6 +67,11 @@ function Secrets() {
                 formType === 'createSecret'
                 &&
                 <SecretCreateForm modalEvent={closeModal}/>
+            }
+            {
+                formType === 'showSecret'
+                &&
+                <ShowSecretForm modalEvent={closeModal} showSecretId={showSecretId}/>
             }
             <div className="secrets-list">
                 <div className="secrets-create">

@@ -85,7 +85,9 @@ const secretsSlice = createSlice({
                 }
             )
             .addCase(showSecret.fulfilled, (state: InitialState, action: PayloadAction<{ secret: SecretDataState | null }>) => {
-                    state.secretData = action.payload.secret;
+                    if (action.payload !== undefined) {
+                        state.secretData = action.payload.secret;
+                    }
                 }
             )
     }
