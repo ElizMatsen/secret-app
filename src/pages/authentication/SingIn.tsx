@@ -5,7 +5,7 @@ import {LoginState} from "../../app/authSlice";
 import LoginForm from "../../components/form/Login-form";
 
 type LoginFormProps = {
-    onSubmitLoginForm: any;
+    onSubmitLoginForm: SubmitHandler<LoginState>;
 }
 
 function SingIn({onSubmitLoginForm}: LoginFormProps) {

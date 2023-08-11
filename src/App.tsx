@@ -34,7 +34,7 @@ function App() {
             if (err.response.status === 500) {
                 toast.error('Server error');
             }
-            if (err.response.status === 404) {
+            if (err.response.status === 404 || err.response.status === 400) {
                 toast.error('Data entry error');
             }
             if (err.response.status === 401) {

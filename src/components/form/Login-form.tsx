@@ -5,10 +5,19 @@ import FormErrorField from "../../components/form-error-field/FormErrorField";
 import {LoginState} from "../../app/authSlice";
 
 type LoginFormProps = {
-    onSubmitLoginForm: any;
+    onSubmitLoginForm: SubmitHandler<LoginState>;
 }
-
-const resolver: Resolver<LoginState> = async (values) => {
+const resolver: Resolver<LoginState> = async (values: LoginState) => {
+    if (values.email !== '' && !/\S+@\S+\.\S+/.test(values.email)) {
+        return {
+            values: values,
+            errors: {
+                email: {
+                    message: 'Incorrect email address'
+                }
+            },
+        }
+    }
     if (values.email === '') {
         return {
             values: {},

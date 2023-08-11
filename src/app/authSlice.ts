@@ -64,8 +64,10 @@ const authSlice = createSlice({
                 }
             )
             .addCase(registration.fulfilled, (state: InitialState, action: PayloadAction<any>) => {
-                    state.user = action.payload?.user;
-                    state.created = true;
+                    if (action.payload !== undefined) {
+                        state.created = true;
+                        state.user = action.payload.user;
+                    }
                 }
             )
     }
