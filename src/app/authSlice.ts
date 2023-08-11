@@ -57,7 +57,7 @@ const authSlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(login.fulfilled, (state: InitialState, action: PayloadAction<{ accessToken: string | null }>) => {
-                    if (action.payload !== null && action.payload.accessToken !== null) {
+                    if (action.payload.accessToken !== null) {
                         state.access_token = action.payload.accessToken;
                         localStorage.setItem('access_token', action.payload.accessToken);
                     }

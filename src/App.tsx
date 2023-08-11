@@ -3,7 +3,6 @@ import SingIn from "./pages/authentication/SingIn";
 import {Navigate, Route, Routes} from "react-router-dom";
 import "./assets/css/main.scss";
 import Layout from "./pages/layout/Layout";
-import SecretsList from "./pages/secrets-list/SecretsList";
 import Secrets from "./pages/secrets-list/Secrets";
 import {useAppDispatch, useAppSelector} from "./app/hooks";
 import SingUp from "./pages/authentication/SingUp";
@@ -51,9 +50,7 @@ function App() {
                 token !== null && (
                     <Routes>
                         <Route element={<Layout/>}>
-                            <Route path="secrets-list" element={<SecretsList/>}>
-                                <Route path="secrets" element={<Secrets/>}/>
-                            </Route>
+                            <Route path="secrets-list" element={<Secrets/>}/>
                         </Route>
                         <Route path="*" element={<Navigate replace to="/secrets-list"/>}/>
                     </Routes>

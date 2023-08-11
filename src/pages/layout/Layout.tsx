@@ -1,6 +1,5 @@
 import React from 'react';
-import SecretsList from "../secrets-list/SecretsList";
-import {Navigate, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import Secrets from "../secrets-list/Secrets";
 import off from "../../assets/icons/off.svg";
 import {useAppDispatch} from "../../app/hooks";
@@ -36,10 +35,7 @@ function Layout() {
             </header>
             <div className="main__container">
                 <Routes>
-                    <Route path="secrets-list/*" element={<SecretsList/>}>
-                        <Route path="secrets" element={<Secrets/>}/>
-                    </Route>
-                    <Route path="secrets-list" element={<Navigate replace to="/secrets-list/secrets"/>}/>
+                    <Route path="secrets-list/*" element={<Secrets/>}/>
                 </Routes>
             </div>
         </div>

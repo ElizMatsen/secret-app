@@ -67,7 +67,7 @@ function Secrets() {
         seFormType('showSecret');
         setShowSecretId(id)
     }
-    const createSecretEvent = () => {
+    const showModal = () => {
         toggleModal();
         seFormType('createSecret');
     }
@@ -75,7 +75,7 @@ function Secrets() {
     return (
         <>
             {
-                !!formType
+                formType !== null
                 &&
                 (
                     <>
@@ -97,7 +97,7 @@ function Secrets() {
             }
             <div className="secrets-list">
                 <div className="secrets-create">
-                    <button className="button" onClick={() => createSecretEvent()} type="button">
+                    <button className="button" onClick={() => showModal()} type="button">
                         Create secret
                     </button>
                 </div>
