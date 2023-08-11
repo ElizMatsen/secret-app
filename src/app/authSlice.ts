@@ -49,7 +49,7 @@ const authSlice = createSlice({
     reducers: {
         setAccessToken: (state: AccessTokenState, action: PayloadAction<string | null>) => {
             state.access_token = action.payload;
-            if (action.payload) {
+            if (action.payload !== null) {
                 return localStorage.setItem('access_token', action.payload);
             }
             return localStorage.removeItem('access_token');
@@ -61,7 +61,7 @@ const authSlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(login.fulfilled, (state: AccessTokenState, action: PayloadAction<any>) => {
-                    if (action.payload && action.payload.accessToken) {
+                    if (action.payload !== null && action.payload.accessToken !== null) {
                         state.access_token = action.payload.accessToken;
                         localStorage.setItem('access_token', action.payload.accessToken);
                     }
@@ -75,11 +75,7 @@ const authSlice = createSlice({
     }
 })
 
-export const {
-    setAccessToken,
-    setCreateAction,
-} = authSlice.actions;
-
+export const actions = authSlice.actions;
 export default authSlice.reducer;
 
 

@@ -7,7 +7,7 @@ import SecretsList from "./pages/secrets-list/SecretsList";
 import Secrets from "./pages/secrets-list/Secrets";
 import {useAppDispatch, useAppSelector} from "./app/hooks";
 import SingUp from "./pages/authentication/SingUp";
-import {login, LoginState, registration, setAccessToken} from "./app/authSlice";
+import {actions, login, LoginState, registration} from "./app/authSlice";
 import {RootState} from "./app/store";
 import axios from "axios";
 import {toast, ToastContainer} from "react-toastify";
@@ -24,8 +24,8 @@ function App() {
     const token = useAppSelector((state: RootState) => state.auth.access_token);
     const tokenFromLocalstorage = localStorage.getItem('access_token');
     useEffect(() => {
-        if (tokenFromLocalstorage) {
-            dispatch(setAccessToken(tokenFromLocalstorage))
+        if (tokenFromLocalstorage !== null) {
+            dispatch(actions.setAccessToken(tokenFromLocalstorage))
         }
     }, [tokenFromLocalstorage]);
 
@@ -39,7 +39,7 @@ function App() {
                 toast.error('Data entry error');
             }
             if (err.response.status === 401) {
-                dispatch(setAccessToken(null))
+                dispatch(actions.setAccessToken(null))
             }
             return err;
         },
@@ -48,7 +48,7 @@ function App() {
     return (
         <>
             {
-                token && (
+                token !== null && (
                     <Routes>
                         <Route element={<Layout/>}>
                             <Route path="secrets-list" element={<SecretsList/>}>
@@ -60,7 +60,7 @@ function App() {
                 )
             }
             {
-                !token && (
+                token === null && (
                     <Routes>
                         <Route path="sing-in" element={<SingIn onSubmitLoginForm={onSubmitLogin}/>}/>
                         <Route path="sing-up" element={<SingUp onSubmitRegistrationForm={onSubmitRegistration}/>}/>

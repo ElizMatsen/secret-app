@@ -4,14 +4,14 @@ import {Navigate, Route, Routes} from 'react-router-dom';
 import Secrets from "../secrets-list/Secrets";
 import off from "../../assets/icons/off.svg";
 import {useAppDispatch} from "../../app/hooks";
-import {setAccessToken} from "../../app/authSlice";
+import {actions} from "../../app/authSlice";
 import logo from "../../assets/icons/kikly-prodaction-logo.svg";
 
 function Layout() {
     const dispatch = useAppDispatch();
 
     const logOut = () => {
-        dispatch(setAccessToken(null))
+        dispatch(actions.setAccessToken(null))
     }
 
     return (

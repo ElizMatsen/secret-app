@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Resolver, SubmitHandler, useForm} from 'react-hook-form'
 import {style} from "../../assets/form-styles/formErrorStyle";
 import FormErrorField from "../../components/form-error-field/FormErrorField";
-import {LoginState, setCreateAction} from "../../app/authSlice";
+import {actions, LoginState} from "../../app/authSlice";
 import {NavLink, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {RootState} from "../../app/store";
@@ -11,7 +11,17 @@ import {toast} from "react-toastify";
 type RegistrationFormProps = {
     onSubmitRegistrationForm: any;
 }
-const resolver: Resolver<LoginState> = async (values) => {
+const resolver: Resolver<LoginState> = async (values: LoginState) => {
+    if (values.email !== '' && !/\S+@\S+\.\S+/.test(values.email)) {
+        return {
+            values: values,
+            errors: {
+                email: {
+                    message: 'Incorrect email address'
+                }
+            },
+        }
+    }
     if (values.email === '') {
         return {
             values: {},
@@ -35,14 +45,7 @@ const resolver: Resolver<LoginState> = async (values) => {
     } else {
         return {
             values: values,
-            errors: {
-                email: {
-                    pattern: {
-                        value: /\S+@\S+\.\S+/,
-                        message: 'Incorrect email address'
-                    }
-                }
-            },
+            errors: {},
         }
     }
 }
@@ -66,7 +69,7 @@ function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
     useEffect(() => {
         if (created) {
             toast.success('Created successfully');
-            dispatch(setCreateAction(false));
+            dispatch(actions.setCreateAction(false));
             navigate('/sing-in')
         }
     }, [created]);
