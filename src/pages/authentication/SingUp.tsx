@@ -5,7 +5,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {RootState} from "../../app/store";
 import {toast} from "react-toastify";
-import LoginForm from "../../components/form/Login-form";
+import AuthForm from "../../components/form/Auth-form";
 
 type RegistrationFormProps = {
     onSubmitRegistrationForm: SubmitHandler<LoginState>;
@@ -31,7 +31,7 @@ function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
             <span/>
             <div className="login__container">
                 <div className="login__body">
-                    <LoginForm onSubmitLoginForm={onSubmit}/>
+                    <AuthForm onSubmitLoginForm={onSubmit}/>
                 </div>
                 <div className="login__footer">
                     <p className="login__footer-text"> Do you have an account?</p>

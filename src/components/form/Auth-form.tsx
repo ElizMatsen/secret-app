@@ -45,7 +45,7 @@ const resolver: Resolver<LoginState> = async (values: LoginState) => {
     }
 }
 
-function LoginForm({onSubmitLoginForm}: LoginFormProps) {
+function AuthForm({onSubmitLoginForm}: LoginFormProps) {
     const {
         register,
         handleSubmit,
@@ -92,5 +92,5 @@ function LoginForm({onSubmitLoginForm}: LoginFormProps) {
     )
 }
 
-export default LoginForm;
+export default AuthForm;
 

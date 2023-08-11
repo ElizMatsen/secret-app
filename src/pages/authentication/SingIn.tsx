@@ -2,7 +2,7 @@ import React from 'react';
 import {SubmitHandler} from "react-hook-form"
 import {NavLink} from "react-router-dom";
 import {LoginState} from "../../app/authSlice";
-import LoginForm from "../../components/form/Login-form";
+import AuthForm from "../../components/form/Auth-form";
 
 type LoginFormProps = {
     onSubmitLoginForm: SubmitHandler<LoginState>;
@@ -16,7 +16,7 @@ function SingIn({onSubmitLoginForm}: LoginFormProps) {
             <span/>
             <div className='login__container'>
                 <div className='login__body'>
-                    <LoginForm onSubmitLoginForm={onSubmit}/>
+                    <AuthForm onSubmitLoginForm={onSubmit}/>
                 </div>
                 <div className='login__footer'>
                     <p className='login__footer-text'> You don't have an account?</p>
