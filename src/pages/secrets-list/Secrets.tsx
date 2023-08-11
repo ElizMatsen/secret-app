@@ -5,7 +5,6 @@ import {RootState} from "../../app/store";
 import classNames from "classnames";
 import {toast} from "react-toastify";
 import SecretCreateForm from "./SecretCreateForm";
-import ShowSecretForm from "./ShowSecretForm";
 
 function Secrets() {
     const dispatch = useAppDispatch();
@@ -65,25 +64,9 @@ function Secrets() {
     return (
         <>
             {
-                formType !== null
+                formType === 'createSecret'
                 &&
-                (
-                    <>
-                        <div className="modal-background" onClick={closeModal}/>
-                        <div className="modal">
-                            {
-                                formType === 'createSecret'
-                                &&
-                                <SecretCreateForm/>
-                            }
-                            {
-                                formType === 'showSecret'
-                                &&
-                                <ShowSecretForm showSecretId={showSecretId}/>
-                            }
-                        </div>
-                    </>
-                )
+                <SecretCreateForm modalEvent={closeModal}/>
             }
             <div className="secrets-list">
                 <div className="secrets-create">

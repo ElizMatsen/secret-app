@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import FormErrorField from "../../components/form-error-field/FormErrorField";
 import {style} from "../../assets/form-styles/formErrorStyle";
 import {Resolver, useForm} from "react-hook-form";
@@ -54,7 +54,7 @@ const resolver: Resolver<SecretDataState> = async (values) => {
     }
 }
 
-function SecretCreateForm() {
+function SecretCreateForm({modalEvent}: any) {
     const dispatch = useAppDispatch();
     const {
         register,
@@ -68,47 +68,52 @@ function SecretCreateForm() {
 
     const onSubmitCreateSecret = handleSubmit((data: SecretDataState) => {
         dispatch(createSecret(data));
-        reset();
+        closeModal();
     })
 
-    useEffect(() => {
-        return () => {
-            reset();
-        }
-    }, []);
+    const closeModal = () => {
+        modalEvent();
+        reset();
+    }
 
     return (
-        <form className="form" onSubmit={onSubmitCreateSecret}>
-            <div className="form__input-container">
-                <div className="form__input-item">
-                    <FormErrorField error={errors.title}/>
-                    <input
-                        {...register('title')}
-                        className="form__input"
-                        style={style(errors?.title)}
-                        placeholder='Title'
-                        type="text"/>
-                </div>
-                <div className="form__input-item">
-                    <FormErrorField error={errors.body}/>
-                    <input
-                        {...register('body')}
-                        className="form__input"
-                        style={style(errors?.body)}
-                        placeholder='Body'
-                        type="text"/>
-                </div>
+        <>
+            <div className="modal-background" onClick={closeModal}/>
+            <div className="modal">
+                <form className="form" onSubmit={onSubmitCreateSecret}>
+                    <div className="form__input-container">
+                        <div className="form__input-item">
+                            <FormErrorField error={errors.title}/>
+                            <input
+                                {...register('title')}
+                                className="form__input"
+                                style={style(errors?.title)}
+                                placeholder='Title'
+                                type="text"/>
+                        </div>
+                        <div className="form__input-item">
+                            <FormErrorField error={errors.body}/>
+                            <input
+                                {...register('body')}
+                                className="form__input"
+                                style={style(errors?.body)}
+                                placeholder='Body'
+                                type="text"/>
+                        </div>
+                    </div>
+                    <div className="login__btn-container mt-1">
+                        <button
+                            type="submit"
+                            className="button w-100"
+                            disabled={!isValid}
+                        >
+                            Create
+                        </button>
+                    </div>
+                </form>
             </div>
-            <div className="login__btn-container mt-1">
-                <button
-                    type="submit"
-                    className="button w-100"
-                    disabled={!isValid}
-                >
-                    Create
-                </button>
-            </div>
-        </form>
+        </>
+
     )
 }
 
