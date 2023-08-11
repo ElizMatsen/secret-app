@@ -32,7 +32,6 @@ function Secrets() {
     useEffect(() => {
         if (created) {
             toast.success('Saved');
-            toggleModal();
             dispatch(actions.setCreateAction(false))
             dispatch(secrets())
         }
@@ -51,24 +50,15 @@ function Secrets() {
         }
     }
 
-    const toggleModal = () => {
-        if (bodyClassList.contains('modal-open')) {
-            bodyClassList.remove('modal-open');
-            bodyClassList.add('closed');
-            seFormType(null);
-        } else {
-            bodyClassList.remove('modal-closed');
-            bodyClassList.add('modal-open');
-        }
+    const closeModal = () => {
+        seFormType(null);
     }
 
     const showSecretEvent = (id: number) => {
-        toggleModal();
         seFormType('showSecret');
         setShowSecretId(id)
     }
     const showModal = () => {
-        toggleModal();
         seFormType('createSecret');
     }
 
@@ -79,7 +69,7 @@ function Secrets() {
                 &&
                 (
                     <>
-                        <div className="modal-background" onClick={toggleModal}/>
+                        <div className="modal-background" onClick={closeModal}/>
                         <div className="modal">
                             {
                                 formType === 'createSecret'

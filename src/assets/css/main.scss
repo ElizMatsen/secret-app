@@ -535,20 +535,10 @@ input {
   left: 0;
   width: 100%;
   height: 100%;
-  display: grid;
-  place-items: center;
-  opacity: 0;
-  visibility: hidden;
-  transform: scale(1, 1);
   background: $bg_modal;
-  @extend .transition;
+  transition: all 0.2s ease;
+  animation: background-in 0.8s both;
   z-index: 10;
-}
-
-.modal-open .modal-background {
-  visibility: visible;
-  opacity: 1;
-  animation: background-in 1s both;
 }
 
 .modal {
@@ -561,20 +551,7 @@ input {
   width: fit-content;
   border-radius: 12px;
   transform: translate(-50%, -50%);
-  opacity: 0;
-  visibility: hidden;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  animation: modal-in 0.8s;
   z-index: 11;
-}
-
-.modal-open .modal {
-  opacity: 1;
-  visibility: visible;
-  animation: modal-in 1s;
-}
-
-.modal-closed .modal {
-  opacity: 0;
-  visibility: hidden;
-  transform: translate(-50%, -50%);
 }
