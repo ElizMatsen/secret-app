@@ -15,7 +15,7 @@ export interface InitialState {
 
 export const initialState: InitialState = {
     access_token: null,
-    user: {email: ''},
+    user: null,
     created: false,
 }
 

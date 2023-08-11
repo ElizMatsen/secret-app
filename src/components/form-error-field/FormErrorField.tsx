@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FormErrorField = (formDataError: any) => {
+const FormErrorField = (formDataError: { error: any }) => {
     return (
         <>
             {
