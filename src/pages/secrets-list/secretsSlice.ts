@@ -3,7 +3,7 @@ import axios from "axios";
 import {environment} from "../../environments/environment";
 
 export interface SecretDataState {
-    id?: string,
+    id: string,
     title: string,
     body: string
 }
@@ -39,7 +39,7 @@ export const createSecret = createAsyncThunk(
 )
 export const showSecret = createAsyncThunk(
     'showSecret',
-    async ({id, email, password}: { id: number | null | undefined, email: string, password: string }) => {
+    async ({id, email, password}: { id?: string, email: string, password: string }) => {
         return await axios.post(environment.apiBasepointSecret + 'secrets/' + id,
             {
                 email: email,

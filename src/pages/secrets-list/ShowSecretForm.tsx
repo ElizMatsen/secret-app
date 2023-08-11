@@ -8,7 +8,7 @@ import {toast} from "react-toastify";
 import AuthForm from "../../components/form/Auth-form";
 
 interface Props {
-    showSecretId: number | undefined;
+    showSecretId?: string;
     modalEvent: () => void;
 }
 
