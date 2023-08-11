@@ -2,10 +2,6 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {environment} from "../environments/environment";
 import axios from "axios";
 
-export interface AccessTokenState {
-    access_token: string | null
-}
-
 export interface LoginState {
     email: string,
     password: string
@@ -47,7 +43,7 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setAccessToken: (state: AccessTokenState, action: PayloadAction<string | null>) => {
+        setAccessToken: (state: InitialState, action: PayloadAction<string | null>) => {
             state.access_token = action.payload;
             if (action.payload !== null) {
                 return localStorage.setItem('access_token', action.payload);
@@ -60,7 +56,7 @@ const authSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(login.fulfilled, (state: AccessTokenState, action: PayloadAction<any>) => {
+            .addCase(login.fulfilled, (state: InitialState, action: PayloadAction<{ accessToken: string | null }>) => {
                     if (action.payload !== null && action.payload.accessToken !== null) {
                         state.access_token = action.payload.accessToken;
                         localStorage.setItem('access_token', action.payload.accessToken);
@@ -68,7 +64,7 @@ const authSlice = createSlice({
                 }
             )
             .addCase(registration.fulfilled, (state: InitialState, action: PayloadAction<any>) => {
-                    state.user = action.payload.user;
+                    state.user = action.payload?.user;
                     state.created = true;
                 }
             )

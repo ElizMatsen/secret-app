@@ -42,11 +42,10 @@ const resolver: Resolver<LoginState> = async (values: LoginState) => {
                 },
             },
         }
-    } else {
-        return {
-            values: values,
-            errors: {},
-        }
+    }
+    return {
+        values: values,
+        errors: {},
     }
 }
 

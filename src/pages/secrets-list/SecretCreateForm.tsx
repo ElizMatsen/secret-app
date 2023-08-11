@@ -1,9 +1,58 @@
 import React, {useEffect} from 'react';
 import FormErrorField from "../../components/form-error-field/FormErrorField";
 import {style} from "../../assets/form-styles/formErrorStyle";
-import {useForm} from "react-hook-form";
-import {createSecret, CreateSecretState} from "./secretsSlice";
+import {Resolver, useForm} from "react-hook-form";
+import {createSecret, SecretDataState} from "./secretsSlice";
 import {useAppDispatch} from "../../app/hooks";
+
+const resolver: Resolver<SecretDataState> = async (values) => {
+    if (values.title === '') {
+        return {
+            values: {},
+            errors: {
+                title: {
+                    type: "required",
+                    message: "Required field",
+                },
+            },
+        }
+    }
+    if (values.body === '') {
+        return {
+            values: {},
+            errors: {
+                body: {
+                    type: "required",
+                    message: "Required field",
+                },
+            },
+        }
+    }
+    if (values.title !== '' && !/^[a-zA-Z0-9]+$/.test(values.title)) {
+        return {
+            values: values,
+            errors: {
+                email: {
+                    message: 'Only latin letters'
+                }
+            },
+        }
+    }
+    if (values.body !== '' && !/^[a-zA-Z0-9]+$/.test(values.body)) {
+        return {
+            values: values,
+            errors: {
+                email: {
+                    message: 'Only latin letters'
+                }
+            },
+        }
+    }
+    return {
+        values: values,
+        errors: {},
+    }
+}
 
 function SecretCreateForm() {
     const dispatch = useAppDispatch();
@@ -12,9 +61,12 @@ function SecretCreateForm() {
         handleSubmit,
         reset,
         formState: {errors, isValid}
-    } = useForm<CreateSecretState>({mode: "all"})
+    } = useForm({
+        resolver,
+        mode: 'all'
+    })
 
-    const onSubmitCreateSecret = handleSubmit((data: CreateSecretState) => {
+    const onSubmitCreateSecret = handleSubmit((data: SecretDataState) => {
         dispatch(createSecret(data));
         reset();
     })
@@ -31,13 +83,7 @@ function SecretCreateForm() {
                 <div className="form__input-item">
                     <FormErrorField error={errors.title}/>
                     <input
-                        {...register('title', {
-                            required: 'Required field',
-                            pattern: {
-                                value: /^[a-zA-Z0-9]+$/,
-                                message: 'Only latin letters'
-                            }
-                        })}
+                        {...register('title')}
                         className="form__input"
                         style={style(errors?.title)}
                         placeholder='Title'
@@ -46,13 +92,7 @@ function SecretCreateForm() {
                 <div className="form__input-item">
                     <FormErrorField error={errors.body}/>
                     <input
-                        {...register('body', {
-                            required: 'Required field',
-                            pattern: {
-                                value: /^[a-zA-Z0-9]+$/,
-                                message: 'Only latin letters'
-                            }
-                        })}
+                        {...register('body')}
                         className="form__input"
                         style={style(errors?.body)}
                         placeholder='Body'

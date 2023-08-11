@@ -2,18 +2,20 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "axios";
 import {environment} from "../../environments/environment";
 
-export interface CreateSecretState {
-    title: string,
-    body: string
-}
-
 export interface SecretDataState {
-    id: string,
+    id?: string,
     title: string,
     body: string
 }
 
-export const initialState = {
+export interface InitialState {
+    secretsList: Array<SecretDataState>,
+    deleted: boolean,
+    created: boolean,
+    secretData: SecretDataState | null,
+}
+
+export const initialState: InitialState = {
     secretsList: [],
     deleted: false,
     created: false,
@@ -28,7 +30,7 @@ export const secrets = createAsyncThunk(
 )
 export const createSecret = createAsyncThunk(
     'createSecret',
-    async ({title, body}: CreateSecretState) => {
+    async ({title, body}: SecretDataState) => {
         return await axios.post(environment.apiBasepointSecret + 'secrets', {
             title: title,
             body: body
@@ -58,74 +60,38 @@ const secretsSlice = createSlice({
     name: 'secrets',
     initialState,
     reducers: {
-        setDeleteAction: (state: any, action: PayloadAction<boolean>) => {
+        setDeleteAction: (state: InitialState, action: PayloadAction<boolean>) => {
             state.deleted = action.payload;
         },
-        setCreateAction: (state: any, action: PayloadAction<boolean>) => {
+        setCreateAction: (state: InitialState, action: PayloadAction<boolean>) => {
             state.created = action.payload;
         },
-        setSecretDataAction: (state: any, action: PayloadAction<any>) => {
+        setSecretDataAction: (state: InitialState, action: PayloadAction<SecretDataState | null>) => {
             state.secretData = action.payload;
         }
     },
     extraReducers(builder) {
         builder
-            .addCase(secrets.pending, (state) => {
-                    console.log(state)
+            .addCase(secrets.fulfilled, (state: InitialState, action: PayloadAction<{ secrets: Array<SecretDataState> }>) => {
+                    state.secretsList = action.payload.secrets
                 }
             )
-            .addCase(secrets.fulfilled, (state, action: any) => {
-                    state.secretsList = action.payload?.secrets
-                }
-            )
-            .addCase(secrets.rejected, (state) => {
-                    console.log(state)
-                }
-            )
-            .addCase(deleteSecret.pending, (state) => {
-                    console.log(state)
-                }
-            )
-            .addCase(deleteSecret.fulfilled, (state, action: any) => {
+            .addCase(deleteSecret.fulfilled, (state: InitialState) => {
                     state.deleted = true;
                 }
             )
-            .addCase(deleteSecret.rejected, (state) => {
-                    console.log(state)
-                }
-            )
-            .addCase(createSecret.pending, (state) => {
-                    console.log(state)
-                }
-            )
-            .addCase(createSecret.fulfilled, (state, action: any) => {
+            .addCase(createSecret.fulfilled, (state: InitialState) => {
                     state.created = true;
                 }
             )
-            .addCase(createSecret.rejected, (state) => {
-                    console.log(state)
-                }
-            )
-            .addCase(showSecret.pending, (state) => {
-                    console.log(state)
-                }
-            )
-            .addCase(showSecret.fulfilled, (state, action: any) => {
-                    state.secretData = action.payload?.secret;
-                }
-            )
-            .addCase(showSecret.rejected, (state) => {
-                    console.log(state)
+            .addCase(showSecret.fulfilled, (state: InitialState, action: PayloadAction<{ secret: SecretDataState | null }>) => {
+                    state.secretData = action.payload.secret;
                 }
             )
     }
 })
-export const {
-    setDeleteAction,
-    setCreateAction,
-    setSecretDataAction,
-} = secretsSlice.actions;
 
+export const actions = secretsSlice.actions;
 export default secretsSlice.reducer;
 
 

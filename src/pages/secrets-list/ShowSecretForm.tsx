@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import FormErrorField from "../../components/form-error-field/FormErrorField";
 import {style} from "../../assets/form-styles/formErrorStyle";
-import {useForm} from "react-hook-form";
-import {SecretDataState, setSecretDataAction, showSecret} from "./secretsSlice";
+import {Resolver, useForm} from "react-hook-form";
+import {actions, SecretDataState, showSecret} from "./secretsSlice";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {LoginState} from "../../app/authSlice";
 import {RootState} from "../../app/store";
@@ -10,6 +10,35 @@ import {toast} from "react-toastify";
 
 interface Props {
     showSecretId: number | undefined;
+}
+
+
+const resolver: Resolver<LoginState> = async (values) => {
+    if (values.email === '') {
+        return {
+            values: {},
+            errors: {
+                email: {
+                    type: "required",
+                    message: "Required field",
+                },
+            },
+        }
+    } else if (values.password === '') {
+        return {
+            values: {},
+            errors: {
+                password: {
+                    type: "required",
+                    message: "Required field",
+                },
+            },
+        }
+    }
+    return {
+        values: values,
+        errors: {},
+    }
 }
 
 function ShowSecretForm({showSecretId}: Props) {
@@ -20,11 +49,14 @@ function ShowSecretForm({showSecretId}: Props) {
         handleSubmit,
         reset,
         formState: {errors, isValid}
-    } = useForm<LoginState>({mode: "all"})
+    } = useForm({
+        resolver,
+        mode: "all"
+    })
 
     useEffect(() => {
         return () => {
-            dispatch(setSecretDataAction(null));
+            dispatch(actions.setSecretDataAction(null));
             reset();
         }
     }, []);
@@ -32,7 +64,7 @@ function ShowSecretForm({showSecretId}: Props) {
     useEffect(() => {
         if (secretData) {
             setTimeout(() => {
-                dispatch(setSecretDataAction(null));
+                dispatch(actions.setSecretDataAction(null));
                 reset();
             }, 5000);
         }
@@ -46,6 +78,7 @@ function ShowSecretForm({showSecretId}: Props) {
         const result = Object.assign(data, {id: showSecretId})
         dispatch(showSecret(result))
     })
+
     return (
         <>
             {
@@ -55,9 +88,7 @@ function ShowSecretForm({showSecretId}: Props) {
                         <div className="form__input-item">
                             <FormErrorField error={errors.email}/>
                             <input
-                                {...register('email', {
-                                    required: 'Required field',
-                                })}
+                                {...register('email')}
                                 className="form__input"
                                 style={style(errors?.email)}
                                 placeholder='E-mail'
@@ -67,9 +98,7 @@ function ShowSecretForm({showSecretId}: Props) {
                         <div className="form__input-item">
                             <FormErrorField error={errors.password}/>
                             <input
-                                {...register('password', {
-                                    required: 'Required field',
-                                })}
+                                {...register('password')}
                                 className="form__input"
                                 style={style(errors?.password)}
                                 placeholder='Enter password'

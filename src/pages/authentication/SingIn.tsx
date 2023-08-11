@@ -30,11 +30,10 @@ const resolver: Resolver<LoginState> = async (values) => {
                 },
             },
         }
-    } else {
-        return {
-            values: values,
-            errors: {},
-        }
+    }
+    return {
+        values: values,
+        errors: {},
     }
 }
 
