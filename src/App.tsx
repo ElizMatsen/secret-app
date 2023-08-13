@@ -8,8 +8,7 @@ import {useAppDispatch, useAppSelector} from "./app/hooks";
 import SingUp from "./pages/authentication/sing-up/Sing-up";
 import {actions, login, registration} from "./app/auth-slice";
 import {RootState} from "./app/store";
-import axios from "axios";
-import {toast, ToastContainer} from "react-toastify";
+import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {LoginType} from "./types/auth";
 
@@ -28,22 +27,6 @@ function App() {
             dispatch(actions.setAccessToken(tokenFromLocalstorage))
         }
     }, [tokenFromLocalstorage]);
-
-    axios.interceptors.response.use(
-        (response) => response,
-        async (err) => {
-            if (err.response.status === 500) {
-                toast.error('Server error');
-            }
-            if (err.response.status === 404 || err.response.status === 400) {
-                toast.error('Data entry error');
-            }
-            if (err.response.status === 401) {
-                dispatch(actions.setAccessToken(null))
-            }
-            return err;
-        },
-    );
 
     return (
         <>
