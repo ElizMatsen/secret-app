@@ -24,7 +24,6 @@ function Secrets() {
         if (deleted) {
             toast.success('Saved');
             setDeletableSecretId(null)
-            dispatch(actions.setDeleteAction(false))
             dispatch(secrets())
         }
     }, [deleted]);
@@ -38,15 +37,17 @@ function Secrets() {
     }, [created]);
 
     const deleteSecretItem = (id: string) => {
-        if (window.confirm(
-            'Do you really want to delete secret?' + '\n'
-            + 'The next element will be removed' + '\n'
-            + 'ID: ' + id
-        )) {
-            setDeletableSecretId(id)
-            setTimeout(() => {
-                dispatch(deleteSecret(id));
-            }, 1000);
+        if (deletableSecretId !== id) {
+            if (window.confirm(
+                'Do you really want to delete secret?' + '\n'
+                + 'The next element will be removed' + '\n'
+                + 'ID: ' + id
+            )) {
+                setDeletableSecretId(id)
+                setTimeout(() => {
+                    dispatch(deleteSecret(id));
+                }, 1000);
+            }
         }
     }
 

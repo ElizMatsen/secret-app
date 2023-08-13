@@ -55,9 +55,6 @@ const secretsSlice = createSlice({
     name: 'secrets',
     initialState,
     reducers: {
-        setDeleteAction: (state: SecretState, action: PayloadAction<boolean>) => {
-            state.deleted = action.payload;
-        },
         setCreateAction: (state: SecretState, action: PayloadAction<boolean>) => {
             state.created = action.payload;
         },
@@ -71,8 +68,16 @@ const secretsSlice = createSlice({
                     state.secretsList = action.payload.secrets
                 }
             )
-            .addCase(deleteSecret.fulfilled, (state: SecretState) => {
+            .addCase(deleteSecret.pending, (state: SecretState) => {
                     state.deleted = true;
+                }
+            )
+            .addCase(deleteSecret.fulfilled, (state: SecretState) => {
+                    state.deleted = false;
+                }
+            )
+            .addCase(deleteSecret.rejected, (state: SecretState) => {
+                    state.deleted = false;
                 }
             )
             .addCase(createSecret.fulfilled, (state: SecretState) => {
