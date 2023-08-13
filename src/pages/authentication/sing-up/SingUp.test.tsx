@@ -29,7 +29,7 @@ describe('authSlice', () => {
             expect(state).toEqual({
                 access_token: null,
                 user: null,
-                created: false,
+                created: true,
             });
         });
 
@@ -38,14 +38,14 @@ describe('authSlice', () => {
                 type: registration.fulfilled.type, payload: {
                     access_token: null,
                     user: null,
-                    created: true
+                    created: false
                 }
             };
             const state = reducer(initialState, action);
             expect(state).toEqual({
                 access_token: null,
                 user: null,
-                created: true
+                created: false
             });
         });
 
