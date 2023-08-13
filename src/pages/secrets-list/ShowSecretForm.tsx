@@ -5,7 +5,7 @@ import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {RootState} from "../../app/store";
 import {toast} from "react-toastify";
 import AuthForm from "../../components/form/Auth-form";
-import {LoginType} from "../../types/Types";
+import {LoginType} from "../../types/auth";
 
 interface Props {
     showSecretId?: string;

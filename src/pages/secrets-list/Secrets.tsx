@@ -6,7 +6,7 @@ import classNames from "classnames";
 import {toast} from "react-toastify";
 import SecretCreateForm from "./SecretCreateForm";
 import ShowSecretForm from "./ShowSecretForm";
-import {SecretType} from "../../types/Types";
+import {SecretType} from "../../types/secrets";
 
 function Secrets() {
     const dispatch = useAppDispatch();

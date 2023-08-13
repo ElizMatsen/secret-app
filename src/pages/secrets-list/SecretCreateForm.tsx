@@ -4,7 +4,7 @@ import {style} from "../../assets/form-styles/formErrorStyle";
 import {Resolver, useForm} from "react-hook-form";
 import {createSecret} from "./secretsSlice";
 import {useAppDispatch} from "../../app/hooks";
-import {SecretType} from "../../types/Types";
+import {SecretType} from "../../types/secrets";
 
 const resolver: Resolver<SecretType> = async (values) => {
     if (values.title === '') {

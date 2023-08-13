@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {environment} from "../environments/environment";
 import axios from "axios";
-import {LoginType} from "../types/Types";
+import {LoginType} from "../types/auth";
 
 export interface AuthState {
     access_token: null | string,

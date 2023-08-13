@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "axios";
 import {environment} from "../../environments/environment";
-import {SecretType} from "../../types/Types";
+import {SecretType} from "../../types/secrets";
 
 export interface SecretState {
     secretsList: Array<SecretType>,

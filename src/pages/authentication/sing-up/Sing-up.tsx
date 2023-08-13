@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
 import {SubmitHandler} from 'react-hook-form'
-import {actions} from "../../../app/authSlice";
+import {actions} from "../../../app/auth-slice";
 import {NavLink, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../app/hooks";
 import {RootState} from "../../../app/store";
 import {toast} from "react-toastify";
 import AuthForm from "../../../components/form/Auth-form";
-import {LoginType} from "../../../types/Types";
+import {LoginType} from "../../../types/auth";
 
 type RegistrationFormProps = {
     onSubmitRegistrationForm: SubmitHandler<LoginType>;

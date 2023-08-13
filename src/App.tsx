@@ -6,12 +6,12 @@ import Layout from "./pages/layout/Layout";
 import Secrets from "./pages/secrets-list/Secrets";
 import {useAppDispatch, useAppSelector} from "./app/hooks";
 import SingUp from "./pages/authentication/sing-up/Sing-up";
-import {actions, login, registration} from "./app/authSlice";
+import {actions, login, registration} from "./app/auth-slice";
 import {RootState} from "./app/store";
 import axios from "axios";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {LoginType} from "./types/Types";
+import {LoginType} from "./types/auth";
 
 function App() {
     const dispatch = useAppDispatch();

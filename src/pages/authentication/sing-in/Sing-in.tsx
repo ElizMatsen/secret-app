@@ -2,7 +2,7 @@ import React from 'react';
 import {SubmitHandler} from "react-hook-form"
 import {NavLink} from "react-router-dom";
 import AuthForm from "../../../components/form/Auth-form";
-import {LoginType} from "../../../types/Types";
+import {LoginType} from "../../../types/auth";
 
 type LoginFormProps = {
     onSubmitLoginForm: SubmitHandler<LoginType>;

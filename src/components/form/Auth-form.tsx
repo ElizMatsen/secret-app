@@ -2,7 +2,7 @@ import React from 'react';
 import {Resolver, SubmitHandler, useForm} from "react-hook-form"
 import {style} from "../../assets/form-styles/formErrorStyle";
 import FormErrorField from "../../components/form-error-field/FormErrorField";
-import {LoginType} from "../../types/Types";
+import {LoginType} from "../../types/auth";
 
 type LoginFormProps = {
     onSubmitLoginForm: SubmitHandler<LoginType>;

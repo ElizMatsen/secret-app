@@ -3,7 +3,7 @@ import {Route, Routes} from 'react-router-dom';
 import Secrets from "../secrets-list/Secrets";
 import off from "../../assets/icons/off.svg";
 import {useAppDispatch} from "../../app/hooks";
-import {actions} from "../../app/authSlice";
+import {actions} from "../../app/auth-slice";
 import logo from "../../assets/icons/kikly-prodaction-logo.svg";
 
 function Layout() {
