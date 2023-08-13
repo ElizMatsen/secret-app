@@ -1,5 +1,5 @@
 import React from 'react';
-import reducer, {AuthState, login} from "../../../app/auth-slice";
+import reducer, {AuthState, login} from "../../../app/authSlice";
 import {act, render, screen} from "@testing-library/react";
 import {Provider} from "react-redux";
 import SingIn from "./SingIn";

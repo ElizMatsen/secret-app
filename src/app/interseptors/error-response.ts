@@ -1,6 +1,6 @@
 import axios from "axios";
 import {toast} from "react-toastify";
-import {actions} from "../auth-slice";
+import {actions} from "../authSlice";
 import store from "../store";
 
 axios.interceptors.response.use(

@@ -86,7 +86,7 @@ const secretsSlice = createSlice({
                 }
             )
             .addCase(createSecret.rejected, (state: SecretState) => {
-                    state.created = true;
+                    state.created = false;
                 }
             )
             .addCase(showSecret.fulfilled, (state: SecretState, action: PayloadAction<{ secret: SecretType | null }>) => {

@@ -5,7 +5,7 @@ import "./assets/css/main.scss";
 import Layout from "./pages/layout/Layout";
 import {useAppDispatch, useAppSelector} from "./app/hooks";
 import SingUp from "./pages/authentication/sing-up/SingUp";
-import {actions, login, registration} from "./app/auth-slice";
+import {actions, login, registration} from "./app/authSlice";
 import {RootState} from "./app/store";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';

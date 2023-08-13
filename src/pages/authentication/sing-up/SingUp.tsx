@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
 import {SubmitHandler} from 'react-hook-form'
-import {actions} from "../../../app/auth-slice";
 import {NavLink, useNavigate} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../../app/hooks";
+import {useAppSelector} from "../../../app/hooks";
 import {RootState} from "../../../app/store";
 import {toast} from "react-toastify";
 import AuthForm from "../../../components/form/Auth-form";
@@ -15,7 +14,6 @@ type RegistrationFormProps = {
 function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
     const currentYear = new Date().getFullYear();
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
     const created = useAppSelector((state: RootState) => state.auth.created);
 
     const onSubmit: SubmitHandler<LoginType> = (data) => onSubmitRegistrationForm(data)
@@ -23,7 +21,6 @@ function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
     useEffect(() => {
         if (created) {
             toast.success('Created successfully');
-            dispatch(actions.setCreateAction(false));
             navigate('/sing-in')
         }
     }, [created]);
