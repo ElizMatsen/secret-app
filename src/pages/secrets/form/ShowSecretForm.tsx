@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import {SubmitHandler} from "react-hook-form";
-import {actions, showSecret} from "./secretsSlice";
-import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {RootState} from "../../app/store";
+import {actions, showSecret} from "../secretsSlice";
+import {useAppDispatch, useAppSelector} from "../../../app/hooks";
+import {RootState} from "../../../app/store";
 import {toast} from "react-toastify";
-import AuthForm from "../../components/form/Auth-form";
-import {LoginType} from "../../types/auth";
+import AuthForm from "../../../components/form/Auth-form";
+import {LoginType} from "../../../types/auth";
 
 interface Props {
     showSecretId?: string;

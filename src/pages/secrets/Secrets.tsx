@@ -4,8 +4,8 @@ import {actions, deleteSecret, secrets} from "./secretsSlice";
 import {RootState} from "../../app/store";
 import classNames from "classnames";
 import {toast} from "react-toastify";
-import SecretCreateForm from "./SecretCreateForm";
-import ShowSecretForm from "./ShowSecretForm";
+import SecretCreateForm from "./form/SecretCreateForm";
+import ShowSecretForm from "./form/ShowSecretForm";
 import {SecretType} from "../../types/secrets";
 
 function Secrets() {

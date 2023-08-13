@@ -1,16 +1,16 @@
 import React, {useEffect} from 'react';
-import SingIn from "./pages/authentication/sing-in/Sing-in";
+import SingIn from "./pages/authentication/sing-in/SingIn";
 import {Navigate, Route, Routes} from "react-router-dom";
 import "./assets/css/main.scss";
 import Layout from "./pages/layout/Layout";
-import Secrets from "./pages/secrets-list/Secrets";
 import {useAppDispatch, useAppSelector} from "./app/hooks";
-import SingUp from "./pages/authentication/sing-up/Sing-up";
+import SingUp from "./pages/authentication/sing-up/SingUp";
 import {actions, login, registration} from "./app/auth-slice";
 import {RootState} from "./app/store";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {LoginType} from "./types/auth";
+import Secrets from "./pages/secrets/Secrets";
 
 function App() {
     const dispatch = useAppDispatch();

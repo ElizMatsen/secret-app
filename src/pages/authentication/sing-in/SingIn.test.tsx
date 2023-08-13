@@ -2,7 +2,7 @@ import React from 'react';
 import reducer, {AuthState, login} from "../../../app/auth-slice";
 import {act, render, screen} from "@testing-library/react";
 import {Provider} from "react-redux";
-import SingIn from "./Sing-in";
+import SingIn from "./SingIn";
 import store from "../../../app/store";
 import userEvent from "@testing-library/user-event";
 import {BrowserRouter} from "react-router-dom";
