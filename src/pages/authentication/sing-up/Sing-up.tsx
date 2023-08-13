@@ -1,14 +1,15 @@
 import React, {useEffect} from 'react';
 import {SubmitHandler} from 'react-hook-form'
-import {actions, LoginState} from "../../app/authSlice";
+import {actions} from "../../../app/authSlice";
 import {NavLink, useNavigate} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {RootState} from "../../app/store";
+import {useAppDispatch, useAppSelector} from "../../../app/hooks";
+import {RootState} from "../../../app/store";
 import {toast} from "react-toastify";
-import AuthForm from "../../components/form/Auth-form";
+import AuthForm from "../../../components/form/Auth-form";
+import {LoginType} from "../../../types/Types";
 
 type RegistrationFormProps = {
-    onSubmitRegistrationForm: SubmitHandler<LoginState>;
+    onSubmitRegistrationForm: SubmitHandler<LoginType>;
 }
 
 function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
@@ -17,7 +18,7 @@ function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
     const dispatch = useAppDispatch();
     const created = useAppSelector((state: RootState) => state.auth.created);
 
-    const onSubmit: SubmitHandler<LoginState> = (data) => onSubmitRegistrationForm(data)
+    const onSubmit: SubmitHandler<LoginType> = (data) => onSubmitRegistrationForm(data)
 
     useEffect(() => {
         if (created) {

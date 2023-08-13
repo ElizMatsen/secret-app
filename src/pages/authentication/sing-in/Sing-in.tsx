@@ -1,16 +1,16 @@
 import React from 'react';
 import {SubmitHandler} from "react-hook-form"
 import {NavLink} from "react-router-dom";
-import {LoginState} from "../../app/authSlice";
-import AuthForm from "../../components/form/Auth-form";
+import AuthForm from "../../../components/form/Auth-form";
+import {LoginType} from "../../../types/Types";
 
 type LoginFormProps = {
-    onSubmitLoginForm: SubmitHandler<LoginState>;
+    onSubmitLoginForm: SubmitHandler<LoginType>;
 }
 
 function SingIn({onSubmitLoginForm}: LoginFormProps) {
     const currentYear = new Date().getFullYear();
-    const onSubmit: SubmitHandler<LoginState> = (data) => onSubmitLoginForm(data)
+    const onSubmit: SubmitHandler<LoginType> = (data) => onSubmitLoginForm(data)
     return (
         <div className='login wh-100'>
             <span/>

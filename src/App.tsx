@@ -1,23 +1,24 @@
 import React, {useEffect} from 'react';
-import SingIn from "./pages/authentication/SingIn";
+import SingIn from "./pages/authentication/sing-in/Sing-in";
 import {Navigate, Route, Routes} from "react-router-dom";
 import "./assets/css/main.scss";
 import Layout from "./pages/layout/Layout";
 import Secrets from "./pages/secrets-list/Secrets";
 import {useAppDispatch, useAppSelector} from "./app/hooks";
-import SingUp from "./pages/authentication/SingUp";
-import {actions, login, LoginState, registration} from "./app/authSlice";
+import SingUp from "./pages/authentication/sing-up/Sing-up";
+import {actions, login, registration} from "./app/authSlice";
 import {RootState} from "./app/store";
 import axios from "axios";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import {LoginType} from "./types/Types";
 
 function App() {
     const dispatch = useAppDispatch();
-    const onSubmitLogin = ((data: LoginState) => {
+    const onSubmitLogin = ((data: LoginType) => {
         dispatch(login(data))
     })
-    const onSubmitRegistration = ((data: LoginState) => {
+    const onSubmitRegistration = ((data: LoginType) => {
         dispatch(registration(data))
     })
     const token = useAppSelector((state: RootState) => state.auth.access_token);

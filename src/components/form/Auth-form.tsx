@@ -2,12 +2,12 @@ import React from 'react';
 import {Resolver, SubmitHandler, useForm} from "react-hook-form"
 import {style} from "../../assets/form-styles/formErrorStyle";
 import FormErrorField from "../../components/form-error-field/FormErrorField";
-import {LoginState} from "../../app/authSlice";
+import {LoginType} from "../../types/Types";
 
 type LoginFormProps = {
-    onSubmitLoginForm: SubmitHandler<LoginState>;
+    onSubmitLoginForm: SubmitHandler<LoginType>;
 }
-const resolver: Resolver<LoginState> = async (values: LoginState) => {
+const resolver: Resolver<LoginType> = async (values: LoginType) => {
     if (values.email !== '' && !/\S+@\S+\.\S+/.test(values.email)) {
         return {
             values: values,
@@ -54,7 +54,7 @@ function AuthForm({onSubmitLoginForm}: LoginFormProps) {
         resolver,
         mode: 'all'
     })
-    const onSubmit: SubmitHandler<LoginState> = (data) => onSubmitLoginForm(data)
+    const onSubmit: SubmitHandler<LoginType> = (data) => onSubmitLoginForm(data)
     return (
         <form className='form' onSubmit={handleSubmit(onSubmit)}>
             <div className='form__input-container'>

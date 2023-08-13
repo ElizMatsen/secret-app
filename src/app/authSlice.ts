@@ -1,19 +1,15 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {environment} from "../environments/environment";
 import axios from "axios";
+import {LoginType} from "../types/Types";
 
-export interface LoginState {
-    email: string,
-    password: string
-}
-
-export interface InitialState {
+export interface AuthState {
     access_token: null | string,
     user: any,
     created: boolean,
 }
 
-export const initialState: InitialState = {
+export const initialState: AuthState = {
     access_token: null,
     user: null,
     created: false,
@@ -21,7 +17,7 @@ export const initialState: InitialState = {
 
 export const login = createAsyncThunk(
     'login',
-    async ({email, password}: LoginState) => {
+    async ({email, password}: LoginType) => {
         return await axios.post(environment.apiBasepointLogin + 'login', {
             email: email,
             password: password
@@ -31,7 +27,7 @@ export const login = createAsyncThunk(
 
 export const registration = createAsyncThunk(
     'registration',
-    async ({email, password}: LoginState) => {
+    async ({email, password}: LoginType) => {
         return await axios.post(environment.apiBasepoint + 'user', {
             email: email,
             password: password
@@ -43,27 +39,27 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setAccessToken: (state: InitialState, action: PayloadAction<string | null>) => {
+        setAccessToken: (state: AuthState, action: PayloadAction<string | null>) => {
             state.access_token = action.payload;
             if (action.payload !== null) {
                 return localStorage.setItem('access_token', action.payload);
             }
             return localStorage.removeItem('access_token');
         },
-        setCreateAction: (state: InitialState, action: PayloadAction<boolean>) => {
+        setCreateAction: (state: AuthState, action: PayloadAction<boolean>) => {
             state.created = action.payload;
         }
     },
     extraReducers(builder) {
         builder
-            .addCase(login.fulfilled, (state: InitialState, action: PayloadAction<{ accessToken: string | null }>) => {
+            .addCase(login.fulfilled, (state: AuthState, action: PayloadAction<{ accessToken: string | null }>) => {
                     if (action.payload.accessToken !== null) {
                         state.access_token = action.payload.accessToken;
                         localStorage.setItem('access_token', action.payload.accessToken);
                     }
                 }
             )
-            .addCase(registration.fulfilled, (state: InitialState, action: PayloadAction<any>) => {
+            .addCase(registration.fulfilled, (state: AuthState, action: PayloadAction<any>) => {
                     if (action.payload !== undefined) {
                         state.created = true;
                         state.user = action.payload.user;

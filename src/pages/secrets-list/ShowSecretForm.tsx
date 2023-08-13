@@ -2,10 +2,10 @@ import React, {useEffect} from 'react';
 import {SubmitHandler} from "react-hook-form";
 import {actions, showSecret} from "./secretsSlice";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {LoginState} from "../../app/authSlice";
 import {RootState} from "../../app/store";
 import {toast} from "react-toastify";
 import AuthForm from "../../components/form/Auth-form";
+import {LoginType} from "../../types/Types";
 
 interface Props {
     showSecretId?: string;
@@ -34,7 +34,7 @@ function ShowSecretForm({showSecretId, modalEvent}: Props) {
         navigator.clipboard.writeText(data)
         toast.success('Copied successfully');
     }
-    const onSubmit: SubmitHandler<LoginState> = (data) => {
+    const onSubmit: SubmitHandler<LoginType> = (data) => {
         const result = Object.assign(data, {id: showSecretId})
         dispatch(showSecret(result))
     }

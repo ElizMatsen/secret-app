@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {actions, deleteSecret, SecretDataState, secrets} from "./secretsSlice";
+import {actions, deleteSecret, secrets} from "./secretsSlice";
 import {RootState} from "../../app/store";
 import classNames from "classnames";
 import {toast} from "react-toastify";
 import SecretCreateForm from "./SecretCreateForm";
 import ShowSecretForm from "./ShowSecretForm";
+import {SecretType} from "../../types/Types";
 
 function Secrets() {
     const dispatch = useAppDispatch();
@@ -86,7 +87,7 @@ function Secrets() {
                         <div className="secrets-list-item">BODY</div>
                     </div>
                     {
-                        secretsList.map((item: SecretDataState) =>
+                        secretsList.map((item: SecretType) =>
                             <div className="secrets-list-row" key={item.id}>
                                 <div className="secrets-list-item">{item.id}</div>
                                 <div className="secrets-list-item">{item.title}</div>
