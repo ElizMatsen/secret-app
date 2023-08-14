@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {createSecret, deleteSecret, secrets} from "./secretsSlice";
+import {createSecret, deleteSecret, secrets, showSecret} from "./secretsSlice";
 import {RootState} from "../../app/store";
 import classNames from "classnames";
 import {toast} from "react-toastify";
@@ -8,6 +8,7 @@ import SecretCreateForm from "./form/SecretCreateForm";
 import ShowSecretForm from "./form/ShowSecretForm";
 import {SecretType} from "../../types/secrets";
 import {SubmitHandler} from "react-hook-form";
+import {LoginType} from "../../types/auth";
 
 function Secrets() {
     const dispatch = useAppDispatch();
@@ -68,17 +69,26 @@ function Secrets() {
         dispatch(createSecret(data))
     };
 
+    const onSubmitShowSecret: SubmitHandler<LoginType> = (data) => {
+        const result = Object.assign(data, {id: showSecretId})
+        dispatch(showSecret(result))
+    };
+
     return (
         <>
             {
                 formType === 'createSecret'
                 &&
-                <SecretCreateForm modalEvent={closeModal} onSubmitForm={onSubmit}/>
+                <SecretCreateForm
+                    modalEvent={closeModal}
+                    onSubmitForm={onSubmit}/>
             }
             {
                 formType === 'showSecret'
                 &&
-                <ShowSecretForm modalEvent={closeModal} showSecretId={showSecretId}/>
+                <ShowSecretForm
+                    modalEvent={closeModal}
+                    onSubmitForm={onSubmitShowSecret}/>
             }
             <div className="secrets-list">
                 <div className="secrets-create">
