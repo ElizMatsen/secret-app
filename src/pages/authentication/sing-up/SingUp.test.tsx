@@ -6,7 +6,6 @@ import {BrowserRouter} from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import SingUp from "./SingUp";
 import store from "../../../app/store";
-import SingIn from "../sing-in/SingIn";
 
 function renderWithContext(element: any) {
     render(
@@ -77,9 +76,10 @@ describe('authSlice', () => {
                 password: '0987654321'
             })
         })
+
         it('invalid email', async () => {
             const onSubmit = jest.fn();
-            renderWithContext(<SingIn onSubmitLoginForm={onSubmit}/>);
+            renderWithContext(<SingUp onSubmitRegistrationForm={onSubmit}/>);
             await act(async () => {
                 userEvent.type(await screen.getByTestId('email'), 'eliz')
             })

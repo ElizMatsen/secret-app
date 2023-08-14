@@ -1,9 +1,7 @@
 import React from 'react';
 import FormErrorField from "../../../components/form-error-field/FormErrorField";
 import {style} from "../../../assets/form-styles/formErrorStyle";
-import {Resolver, useForm} from "react-hook-form";
-import {createSecret} from "../secretsSlice";
-import {useAppDispatch} from "../../../app/hooks";
+import {Resolver, SubmitHandler, useForm} from "react-hook-form";
 import {SecretType} from "../../../types/secrets";
 
 const resolver: Resolver<SecretType> = async (values) => {
@@ -57,10 +55,10 @@ const resolver: Resolver<SecretType> = async (values) => {
 
 interface Props {
     modalEvent: () => void;
+    onSubmitForm: SubmitHandler<SecretType>;
 }
 
-function SecretCreateForm({modalEvent}: Props) {
-    const dispatch = useAppDispatch();
+function SecretCreateForm({modalEvent, onSubmitForm}: Props) {
     const {
         register,
         handleSubmit,
@@ -71,10 +69,7 @@ function SecretCreateForm({modalEvent}: Props) {
         mode: 'all'
     })
 
-    const onSubmitCreateSecret = handleSubmit((data: SecretType) => {
-        dispatch(createSecret(data));
-        closeModal();
-    })
+    const onSubmit: SubmitHandler<SecretType> = (data) => onSubmitForm(data)
 
     const closeModal = () => {
         modalEvent();
@@ -85,7 +80,7 @@ function SecretCreateForm({modalEvent}: Props) {
         <>
             <div className="modal-background" onClick={closeModal}/>
             <div className="modal">
-                <form className="form" onSubmit={onSubmitCreateSecret}>
+                <form className="form" onSubmit={handleSubmit(onSubmit)}>
                     <div className="form__input-container">
                         <div className="form__input-item">
                             <FormErrorField error={errors.title}/>

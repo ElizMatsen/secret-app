@@ -1,12 +1,13 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {deleteSecret, secrets} from "./secretsSlice";
+import {createSecret, deleteSecret, secrets} from "./secretsSlice";
 import {RootState} from "../../app/store";
 import classNames from "classnames";
 import {toast} from "react-toastify";
 import SecretCreateForm from "./form/SecretCreateForm";
 import ShowSecretForm from "./form/ShowSecretForm";
 import {SecretType} from "../../types/secrets";
+import {SubmitHandler} from "react-hook-form";
 
 function Secrets() {
     const dispatch = useAppDispatch();
@@ -62,12 +63,17 @@ function Secrets() {
         seFormType('createSecret');
     }
 
+    const onSubmit: SubmitHandler<SecretType> = (data) => {
+        seFormType(null);
+        dispatch(createSecret(data))
+    };
+
     return (
         <>
             {
                 formType === 'createSecret'
                 &&
-                <SecretCreateForm modalEvent={closeModal}/>
+                <SecretCreateForm modalEvent={closeModal} onSubmitForm={onSubmit}/>
             }
             {
                 formType === 'showSecret'
