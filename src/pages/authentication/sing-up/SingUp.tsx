@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
 import {SubmitHandler} from 'react-hook-form'
 import {NavLink, useNavigate} from "react-router-dom";
-import {useAppSelector} from "../../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../../app/hooks";
 import {RootState} from "../../../app/store";
 import {toast} from "react-toastify";
 import AuthForm from "../../../components/form/Auth-form";
 import {LoginType} from "../../../types/auth";
+import {actions} from "../../../app/authSlice";
 
 type RegistrationFormProps = {
     onSubmitRegistrationForm: SubmitHandler<LoginType>;
@@ -13,6 +14,7 @@ type RegistrationFormProps = {
 
 function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
     const currentYear = new Date().getFullYear();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const created = useAppSelector((state: RootState) => state.auth.created);
 
@@ -21,6 +23,7 @@ function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
     useEffect(() => {
         if (created) {
             toast.success('Created successfully');
+            dispatch(actions.setCreateAction(false));
             navigate('/sing-in')
         }
     }, [created]);
@@ -29,7 +32,9 @@ function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
             <span/>
             <div className="login__container">
                 <div className="login__body">
-                    <AuthForm onSubmitLoginForm={onSubmit}/>
+                    <AuthForm
+                        buttonName={'Sing up'}
+                        onSubmitLoginForm={onSubmit}/>
                 </div>
                 <div className="login__footer">
                     <p className="login__footer-text"> Do you have an account?</p>

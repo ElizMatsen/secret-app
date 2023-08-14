@@ -5,6 +5,7 @@ import FormErrorField from "../../components/form-error-field/FormErrorField";
 import {LoginType} from "../../types/auth";
 
 type LoginFormProps = {
+    buttonName: string;
     onSubmitLoginForm: SubmitHandler<LoginType>;
 }
 const resolver: Resolver<LoginType> = async (values: LoginType) => {
@@ -45,7 +46,7 @@ const resolver: Resolver<LoginType> = async (values: LoginType) => {
     }
 }
 
-function AuthForm({onSubmitLoginForm}: LoginFormProps) {
+function AuthForm({buttonName, onSubmitLoginForm}: LoginFormProps) {
     const {
         register,
         handleSubmit,
@@ -85,7 +86,7 @@ function AuthForm({onSubmitLoginForm}: LoginFormProps) {
                     disabled={!isValid}
                     data-testid={'submit-button'}
                 >
-                    Log in
+                    {buttonName}
                 </button>
             </div>
         </form>

@@ -48,7 +48,9 @@ function ShowSecretForm({modalEvent, onSubmitForm}: Props) {
             <div className="modal">
                 {
                     !secretData &&
-                    <AuthForm onSubmitLoginForm={onSubmit}/>
+                    <AuthForm
+                        buttonName={'Log in'}
+                        onSubmitLoginForm={onSubmit}/>
                 }
                 {
                     secretData

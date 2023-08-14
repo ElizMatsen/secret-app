@@ -46,6 +46,9 @@ const authSlice = createSlice({
             }
             return localStorage.removeItem('access_token');
         },
+        setCreateAction: (state: AuthState, action: PayloadAction<boolean>) => {
+            state.created = action.payload;
+        }
     },
     extraReducers(builder) {
         builder
@@ -56,19 +59,11 @@ const authSlice = createSlice({
                     }
                 }
             )
-            .addCase(registration.pending, (state: AuthState) => {
-                    state.created = true;
-                }
-            )
             .addCase(registration.fulfilled, (state: AuthState, action: PayloadAction<any>) => {
-                    state.created = false;
                     if (action.payload !== undefined) {
+                        state.created = true;
                         state.user = action.payload.user;
                     }
-                }
-            )
-            .addCase(registration.rejected, (state: AuthState) => {
-                    state.created = false;
                 }
             )
     }

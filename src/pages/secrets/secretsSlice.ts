@@ -57,7 +57,10 @@ const secretsSlice = createSlice({
     reducers: {
         setSecretDataAction: (state: SecretState, action: PayloadAction<SecretType | null>) => {
             state.secretData = action.payload;
-        }
+        },
+        setCreateAction: (state: SecretState, action: PayloadAction<boolean>) => {
+            state.created = action.payload;
+        },
     },
     extraReducers(builder) {
         builder
@@ -77,16 +80,8 @@ const secretsSlice = createSlice({
                     state.deleted = false;
                 }
             )
-            .addCase(createSecret.pending, (state: SecretState) => {
-                    state.created = true;
-                }
-            )
             .addCase(createSecret.fulfilled, (state: SecretState) => {
-                    state.created = false;
-                }
-            )
-            .addCase(createSecret.rejected, (state: SecretState) => {
-                    state.created = false;
+                    state.created = true;
                 }
             )
             .addCase(showSecret.fulfilled, (state: SecretState, action: PayloadAction<{ secret: SecretType | null }>) => {

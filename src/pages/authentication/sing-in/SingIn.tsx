@@ -16,7 +16,9 @@ function SingIn({onSubmitLoginForm}: LoginFormProps) {
             <span/>
             <div className='login__container'>
                 <div className='login__body'>
-                    <AuthForm onSubmitLoginForm={onSubmit}/>
+                    <AuthForm
+                        buttonName={'Log in'}
+                        onSubmitLoginForm={onSubmit}/>
                 </div>
                 <div className='login__footer'>
                     <p className='login__footer-text'> You don't have an account?</p>

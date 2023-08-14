@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {createSecret, deleteSecret, secrets, showSecret} from "./secretsSlice";
+import {actions, createSecret, deleteSecret, secrets, showSecret} from "./secretsSlice";
 import {RootState} from "../../app/store";
 import classNames from "classnames";
 import {toast} from "react-toastify";
@@ -33,6 +33,7 @@ function Secrets() {
     useEffect(() => {
         if (created) {
             toast.success('Saved');
+            dispatch(actions.setCreateAction(false))
             dispatch(secrets())
         }
     }, [created]);
