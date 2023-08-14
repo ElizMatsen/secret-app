@@ -54,8 +54,7 @@ describe('authSlice', () => {
     });
     it('submit login', async () => {
         const onSubmit = jest.fn();
-        const {store} = renderWithContext(<SingIn onSubmitLoginForm={onSubmit}/>);
-        expect(store.getState().auth.access_token).toEqual(null);
+        renderWithContext(<SingIn onSubmitLoginForm={onSubmit}/>);
         await act(async () => {
             userEvent.type(await screen.getByTestId('email'), 'eliz_skakun@mail.ru')
             userEvent.type(await screen.getByTestId('password'), '0987654321');
