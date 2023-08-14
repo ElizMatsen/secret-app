@@ -69,4 +69,19 @@ describe('authSlice', () => {
             password: '0987654321'
         })
     });
+
+    it('invalid email', async () => {
+        const onSubmit = jest.fn();
+        renderWithContext(<SingIn onSubmitLoginForm={onSubmit}/>);
+        await act(async () => {
+            userEvent.type(await screen.getByTestId('email'), 'eliz')
+        })
+        await act(async () => {
+            userEvent.click(await screen.getByTestId('submit-button'));
+        });
+        expect(await screen.getByTestId('email')).toBeInTheDocument();
+        expect(await screen.getByTestId('error-message')).toHaveTextContent(
+            'Incorrect email address',
+        );
+    });
 });

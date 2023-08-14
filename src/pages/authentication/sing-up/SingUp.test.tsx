@@ -6,6 +6,7 @@ import {BrowserRouter} from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import SingUp from "./SingUp";
 import store from "../../../app/store";
+import SingIn from "../sing-in/SingIn";
 
 function renderWithContext(element: any) {
     render(
@@ -58,6 +59,7 @@ describe('authSlice', () => {
                 created: false,
             });
         });
+
         it('registration form', async () => {
             const onSubmit = jest.fn()
             const {store} = renderWithContext(<SingUp onSubmitRegistrationForm={onSubmit}/>);
@@ -75,5 +77,19 @@ describe('authSlice', () => {
                 password: '0987654321'
             })
         })
+        it('invalid email', async () => {
+            const onSubmit = jest.fn();
+            renderWithContext(<SingIn onSubmitLoginForm={onSubmit}/>);
+            await act(async () => {
+                userEvent.type(await screen.getByTestId('email'), 'eliz')
+            })
+            await act(async () => {
+                userEvent.click(await screen.getByTestId('submit-button'));
+            });
+            expect(await screen.getByTestId('email')).toBeInTheDocument();
+            expect(await screen.getByTestId('error-message')).toHaveTextContent(
+                'Incorrect email address',
+            );
+        });
     });
 });
