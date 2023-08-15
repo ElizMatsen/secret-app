@@ -4,7 +4,7 @@ import {actions, createSecret, deleteSecret, secrets, showSecret} from "./secret
 import {RootState} from "../../app/store";
 import classNames from "classnames";
 import {toast} from "react-toastify";
-import SecretCreateForm from "./form/SecretCreateForm";
+import SecretCreateForm from "./form/create/SecretCreateForm";
 import ShowSecretForm from "./form/ShowSecretForm";
 import {SecretType} from "../../types/secrets";
 import {SubmitHandler} from "react-hook-form";
@@ -108,9 +108,11 @@ function Secrets() {
                             <div className="secrets-list-row" key={item.id}>
                                 <div className="secrets-list-item">{item.id}</div>
                                 <div className="secrets-list-item">{item.title}</div>
-                                <div className="button_s" onClick={() => showSecretEvent(item.id)}>Show</div>
+                                <div className="button_s"
+                                     onClick={() => showSecretEvent(item.id !== undefined ? item.id : '')}>Show
+                                </div>
                                 <button
-                                    onClick={() => deleteSecretItem(item.id)}
+                                    onClick={() => deleteSecretItem(item.id !== undefined ? item.id : '')}
                                     className={classNames('button-delete', deletableSecretId === item.id ? ' deleting' : '')}
                                 >
                             <span className="button-delete-animation">

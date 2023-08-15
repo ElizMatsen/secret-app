@@ -1,62 +1,29 @@
 import React from 'react';
-import FormErrorField from "../../../components/form-error-field/FormErrorField";
-import {style} from "../../../assets/form-styles/formErrorStyle";
-import {Resolver, SubmitHandler, useForm} from "react-hook-form";
-import {SecretType} from "../../../types/secrets";
-
-const resolver: Resolver<SecretType> = async (values) => {
-    if (values.title === '') {
-        return {
-            values: {},
-            errors: {
-                title: {
-                    type: "required",
-                    message: "Required field",
-                },
-            },
-        }
-    }
-    if (values.body === '') {
-        return {
-            values: {},
-            errors: {
-                body: {
-                    type: "required",
-                    message: "Required field",
-                },
-            },
-        }
-    }
-    if (values.title !== '' && !/^[a-zA-Z0-9]+$/.test(values.title)) {
-        return {
-            values: values,
-            errors: {
-                email: {
-                    message: 'Only latin letters'
-                }
-            },
-        }
-    }
-    if (values.body !== '' && !/^[a-zA-Z0-9]+$/.test(values.body)) {
-        return {
-            values: values,
-            errors: {
-                email: {
-                    message: 'Only latin letters'
-                }
-            },
-        }
-    }
-    return {
-        values: values,
-        errors: {},
-    }
-}
+import FormErrorField from "../../../../components/form-error-field/FormErrorField";
+import {style} from "../../../../assets/form-styles/formErrorStyle";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {SecretType} from "../../../../types/secrets";
+import * as yup from "yup";
+import {yupResolver} from "@hookform/resolvers/yup";
 
 interface Props {
     modalEvent: () => void;
     onSubmitForm: SubmitHandler<SecretType>;
 }
+
+const validationSchema = yup.object({
+    title: yup.string()
+        .required("Required field")
+        .matches(
+            /^[a-zA-Z0-9]+$/,
+            'Only latin letters'
+        ),
+    body: yup.string().required("Required field")
+        .matches(
+            /^[a-zA-Z0-9]+$/,
+            'Only latin letters'
+        ),
+});
 
 function SecretCreateForm({modalEvent, onSubmitForm}: Props) {
     const {
@@ -65,7 +32,7 @@ function SecretCreateForm({modalEvent, onSubmitForm}: Props) {
         reset,
         formState: {errors, isValid}
     } = useForm({
-        resolver,
+        resolver: yupResolver(validationSchema),
         mode: 'all'
     })
 
@@ -89,7 +56,8 @@ function SecretCreateForm({modalEvent, onSubmitForm}: Props) {
                                 className="form__input"
                                 style={style(errors?.title)}
                                 placeholder='Title'
-                                type="text"/>
+                                type="text"
+                                data-testid={'title'}/>
                         </div>
                         <div className="form__input-item">
                             <FormErrorField error={errors.body}/>
@@ -98,7 +66,8 @@ function SecretCreateForm({modalEvent, onSubmitForm}: Props) {
                                 className="form__input"
                                 style={style(errors?.body)}
                                 placeholder='Body'
-                                type="text"/>
+                                type="text"
+                                data-testid={'body'}/>
                         </div>
                     </div>
                     <div className="login__btn-container mt-1">
@@ -106,6 +75,7 @@ function SecretCreateForm({modalEvent, onSubmitForm}: Props) {
                             type="submit"
                             className="button w-100"
                             disabled={!isValid}
+                            data-testid={'submit-button'}
                         >
                             Create
                         </button>
