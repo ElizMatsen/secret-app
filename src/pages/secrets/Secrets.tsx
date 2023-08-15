@@ -5,7 +5,7 @@ import {RootState} from "../../app/store";
 import classNames from "classnames";
 import {toast} from "react-toastify";
 import SecretCreateForm from "./form/create/SecretCreateForm";
-import ShowSecretForm from "./form/ShowSecretForm";
+import ShowSecretForm from "./form/show/ShowSecretForm";
 import {SecretType} from "../../types/secrets";
 import {SubmitHandler} from "react-hook-form";
 import {LoginType} from "../../types/auth";
