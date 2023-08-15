@@ -1,50 +1,25 @@
 import React from 'react';
-import {Resolver, SubmitHandler, useForm} from "react-hook-form"
+import {SubmitHandler, useForm} from "react-hook-form"
 import {style} from "../../assets/form-styles/formErrorStyle";
 import FormErrorField from "../../components/form-error-field/FormErrorField";
 import {LoginType} from "../../types/auth";
+import * as yup from "yup";
+import {yupResolver} from "@hookform/resolvers/yup";
 
 type LoginFormProps = {
     buttonName: string;
     onSubmitLoginForm: SubmitHandler<LoginType>;
 }
-const resolver: Resolver<LoginType> = async (values: LoginType) => {
-    if (values.email !== '' && !/\S+@\S+\.\S+/.test(values.email)) {
-        return {
-            values: values,
-            errors: {
-                email: {
-                    message: 'Incorrect email address'
-                }
-            },
-        }
-    }
-    if (values.email === '') {
-        return {
-            values: {},
-            errors: {
-                email: {
-                    type: "required",
-                    message: "Required field",
-                },
-            },
-        }
-    } else if (values.password === '') {
-        return {
-            values: {},
-            errors: {
-                password: {
-                    type: "required",
-                    message: "Required field",
-                },
-            },
-        }
-    }
-    return {
-        values: values,
-        errors: {},
-    }
-}
+
+const validationSchema = yup.object({
+    email: yup.string()
+        .required("Required field")
+        .matches(
+            /\S+@\S+\.\S+/,
+            'Incorrect email address'
+        ),
+    password: yup.string().required("Required field"),
+});
 
 function AuthForm({buttonName, onSubmitLoginForm}: LoginFormProps) {
     const {
@@ -52,7 +27,7 @@ function AuthForm({buttonName, onSubmitLoginForm}: LoginFormProps) {
         handleSubmit,
         formState: {errors, isValid}
     } = useForm({
-        resolver,
+        resolver: yupResolver(validationSchema),
         mode: 'all'
     })
     const onSubmit: SubmitHandler<LoginType> = (data) => onSubmitLoginForm(data)
