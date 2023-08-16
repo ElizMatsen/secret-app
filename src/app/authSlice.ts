@@ -15,15 +15,14 @@ export const initialState: State = {
     created: false,
 }
 
-export const login = createAsyncThunk(
-    'login',
-    async ({email, password}: LoginRequest) => {
-        return await axios.post(environment.apiBasepointLogin + 'login', {
+export const login = createAsyncThunk<{ accessToken: string | null }, LoginRequest>(
+    'login', async ({email, password}: LoginRequest) => {
+        const response = await axios.post(environment.apiBasepointLogin + 'login', {
             email: email,
             password: password
-        }).then((response) => response.data)
-    },
-)
+        })
+        return response.data
+    })
 
 export const registration = createAsyncThunk(
     'registration',
@@ -52,10 +51,10 @@ const authSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(login.fulfilled, (state: State, action: PayloadAction<{ accessToken: string | null }>) => {
-                    if (action.payload.accessToken !== null) {
-                        state.access_token = action.payload.accessToken;
-                        localStorage.setItem('access_token', action.payload.accessToken);
+            .addCase(login.fulfilled, (state: State, {payload}: PayloadAction<{ accessToken: string | null }>) => {
+                    if (payload.accessToken !== null) {
+                        state.access_token = payload.accessToken;
+                        localStorage.setItem('access_token', payload.accessToken);
                     }
                 }
             )
