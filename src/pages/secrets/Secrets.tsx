@@ -2,12 +2,12 @@ import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {actions, createSecret, deleteSecret, secrets, showSecret} from "./secretsSlice";
 import {RootState} from "../../app/store";
-import classNames from "classnames";
 import {toast} from "react-toastify";
 import SecretCreateForm from "./form/create/SecretCreateForm";
 import ShowSecretForm from "./form/show/ShowSecretForm";
 import {SecretType, ShowSecretRequest} from "../../types/secrets";
 import {SubmitHandler} from "react-hook-form";
+import Secret from "../../components/Secret";
 
 function Secrets() {
     const dispatch = useAppDispatch();
@@ -107,26 +107,12 @@ function Secrets() {
                         <div className="secrets-list-item">BODY</div>
                     </div>
                     {
-                        secretsList.map((item: SecretType) =>
-                            <div className="secrets-list-row" key={item.id}>
-                                <div className="secrets-list-item">{item.id}</div>
-                                <div className="secrets-list-item">{item.title}</div>
-                                <div className="button_s"
-                                     onClick={() => showSecretEvent(item.id !== undefined ? item.id : '')}>Show
-                                </div>
-                                <button
-                                    onClick={() => deleteSecretItem(item.id !== undefined ? item.id : '')}
-                                    className={classNames('button-delete', deletableSecretId === item.id ? ' deleting' : '')}
-                                >
-                            <span className="button-delete-animation">
-                                  <span className="button-delete-balls"/>
-                                  <span className="button-delete-lid"/>
-                                  <span className="button-delete-can">
-                                      <span className="button-delete-filler"/>
-                                  </span>
-                            </span>
-                                </button>
-                            </div>
+                        secretsList.map((secret: SecretType) =>
+                            <Secret key={secret.id}
+                                    secret={secret}
+                                    showSecretModal={showSecretEvent}
+                                    deleteSecret={deleteSecretItem}
+                                    deletableSecretId={deletableSecretId}/>
                         )
                     }
                 </div>
