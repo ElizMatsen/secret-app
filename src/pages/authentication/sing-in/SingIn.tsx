@@ -2,15 +2,15 @@ import React from 'react';
 import {SubmitHandler} from "react-hook-form"
 import {NavLink} from "react-router-dom";
 import AuthForm from "../../../components/form/Auth-form";
-import {LoginType} from "../../../types/auth";
+import {LoginRequest} from "../../../types/auth";
 
 type LoginFormProps = {
-    onSubmitLoginForm: SubmitHandler<LoginType>;
+    onSubmitLoginForm: SubmitHandler<LoginRequest>;
 }
 
 function SingIn({onSubmitLoginForm}: LoginFormProps) {
     const currentYear = new Date().getFullYear();
-    const onSubmit: SubmitHandler<LoginType> = (data) => onSubmitLoginForm(data)
+    const onSubmit: SubmitHandler<LoginRequest> = (data) => onSubmitLoginForm(data)
     return (
         <div className='login wh-100'>
             <span/>

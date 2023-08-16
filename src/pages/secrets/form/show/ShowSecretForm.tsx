@@ -5,11 +5,11 @@ import {useAppDispatch, useAppSelector} from "../../../../app/hooks";
 import {RootState} from "../../../../app/store";
 import {toast} from "react-toastify";
 import AuthForm from "../../../../components/form/Auth-form";
-import {LoginType} from "../../../../types/auth";
+import {ShowSecretRequest} from "../../../../types/secrets";
 
 interface Props {
     modalEvent: () => void;
-    onSubmitForm: SubmitHandler<LoginType>;
+    onSubmitForm: SubmitHandler<ShowSecretRequest>;
 }
 
 function ShowSecretForm({modalEvent, onSubmitForm}: Props) {
@@ -35,7 +35,7 @@ function ShowSecretForm({modalEvent, onSubmitForm}: Props) {
         toast.success('Copied successfully');
     }
 
-    const onSubmit: SubmitHandler<LoginType> = (data) => onSubmitForm(data)
+    const onSubmit: SubmitHandler<ShowSecretRequest> = (data) => onSubmitForm(data)
 
     const closeModal = () => {
         modalEvent()

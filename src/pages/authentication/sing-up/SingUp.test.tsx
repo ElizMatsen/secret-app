@@ -1,5 +1,5 @@
 import React from 'react';
-import reducer, {AuthState, registration} from "../../../app/authSlice";
+import reducer, {State, registration} from "../../../app/authSlice";
 import {act, render, screen} from "@testing-library/react";
 import {Provider} from "react-redux";
 import {BrowserRouter} from "react-router-dom";
@@ -17,7 +17,7 @@ function renderWithContext(element: any) {
 }
 
 describe('authSlice', () => {
-    const initialState: AuthState = {
+    const initialState: State = {
         access_token: null,
         user: null,
         created: false,

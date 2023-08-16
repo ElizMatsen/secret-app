@@ -6,9 +6,8 @@ import classNames from "classnames";
 import {toast} from "react-toastify";
 import SecretCreateForm from "./form/create/SecretCreateForm";
 import ShowSecretForm from "./form/show/ShowSecretForm";
-import {SecretType} from "../../types/secrets";
+import {SecretType, ShowSecretRequest} from "../../types/secrets";
 import {SubmitHandler} from "react-hook-form";
-import {LoginType} from "../../types/auth";
 
 function Secrets() {
     const dispatch = useAppDispatch();
@@ -70,9 +69,13 @@ function Secrets() {
         dispatch(createSecret(data))
     };
 
-    const onSubmitShowSecret: SubmitHandler<LoginType> = (data) => {
-        const result = Object.assign(data, {id: showSecretId})
-        dispatch(showSecret(result))
+    const onSubmitShowSecret: SubmitHandler<ShowSecretRequest> = (data) => {
+        const requestData = {
+            id: showSecretId,
+            email: data.email,
+            password: data.password
+        }
+        dispatch(showSecret(requestData))
     };
 
     return (

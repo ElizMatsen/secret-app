@@ -9,15 +9,15 @@ import {actions, login, registration} from "./app/authSlice";
 import {RootState} from "./app/store";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {LoginType} from "./types/auth";
+import {LoginRequest} from "./types/auth";
 import Secrets from "./pages/secrets/Secrets";
 
 function App() {
     const dispatch = useAppDispatch();
-    const onSubmitLogin = ((data: LoginType) => {
+    const onSubmitLogin = ((data: LoginRequest) => {
         dispatch(login(data))
     })
-    const onSubmitRegistration = ((data: LoginType) => {
+    const onSubmitRegistration = ((data: LoginRequest) => {
         dispatch(registration(data))
     })
     const token = useAppSelector((state: RootState) => state.auth.access_token);

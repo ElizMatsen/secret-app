@@ -1,16 +1,16 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "axios";
 import {environment} from "../../environments/environment";
-import {SecretType} from "../../types/secrets";
+import {SecretType, ShowSecretRequest} from "../../types/secrets";
 
-export interface SecretState {
+export interface State {
     secretsList: Array<SecretType>,
     deleted: boolean,
     created: boolean,
     secretData: SecretType | null,
 }
 
-export const initialState: SecretState = {
+export const initialState: State = {
     secretsList: [],
     deleted: false,
     created: false,
@@ -34,7 +34,7 @@ export const createSecret = createAsyncThunk(
 )
 export const showSecret = createAsyncThunk(
     'showSecret',
-    async ({id, email, password}: { id?: string, email: string, password: string }) => {
+    async ({id, email, password}: ShowSecretRequest) => {
         return await axios.post(environment.apiBasepointSecret + 'secrets/' + id,
             {
                 email: email,
@@ -55,36 +55,36 @@ const secretsSlice = createSlice({
     name: 'secrets',
     initialState,
     reducers: {
-        setSecretDataAction: (state: SecretState, action: PayloadAction<SecretType | null>) => {
+        setSecretDataAction: (state: State, action: PayloadAction<SecretType | null>) => {
             state.secretData = action.payload;
         },
-        setCreateAction: (state: SecretState, action: PayloadAction<boolean>) => {
+        setCreateAction: (state: State, action: PayloadAction<boolean>) => {
             state.created = action.payload;
         },
     },
     extraReducers(builder) {
         builder
-            .addCase(secrets.fulfilled, (state: SecretState, action: PayloadAction<{ secrets: Array<SecretType> }>) => {
+            .addCase(secrets.fulfilled, (state: State, action: PayloadAction<{ secrets: Array<SecretType> }>) => {
                     state.secretsList = action.payload.secrets
                 }
             )
-            .addCase(deleteSecret.pending, (state: SecretState) => {
+            .addCase(deleteSecret.pending, (state: State) => {
                     state.deleted = true;
                 }
             )
-            .addCase(deleteSecret.fulfilled, (state: SecretState) => {
+            .addCase(deleteSecret.fulfilled, (state: State) => {
                     state.deleted = false;
                 }
             )
-            .addCase(deleteSecret.rejected, (state: SecretState) => {
+            .addCase(deleteSecret.rejected, (state: State) => {
                     state.deleted = false;
                 }
             )
-            .addCase(createSecret.fulfilled, (state: SecretState) => {
+            .addCase(createSecret.fulfilled, (state: State) => {
                     state.created = true;
                 }
             )
-            .addCase(showSecret.fulfilled, (state: SecretState, action: PayloadAction<{ secret: SecretType | null }>) => {
+            .addCase(showSecret.fulfilled, (state: State, action: PayloadAction<{ secret: SecretType | null }>) => {
                     if (action.payload !== undefined) {
                         state.secretData = action.payload.secret;
                     }

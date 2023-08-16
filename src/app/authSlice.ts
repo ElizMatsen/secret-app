@@ -1,15 +1,15 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {environment} from "../environments/environment";
 import axios from "axios";
-import {LoginType} from "../types/auth";
+import {LoginRequest} from "../types/auth";
 
-export interface AuthState {
+export interface State {
     access_token: null | string,
     user: any,
     created: boolean,
 }
 
-export const initialState: AuthState = {
+export const initialState: State = {
     access_token: null,
     user: null,
     created: false,
@@ -17,7 +17,7 @@ export const initialState: AuthState = {
 
 export const login = createAsyncThunk(
     'login',
-    async ({email, password}: LoginType) => {
+    async ({email, password}: LoginRequest) => {
         return await axios.post(environment.apiBasepointLogin + 'login', {
             email: email,
             password: password
@@ -27,7 +27,7 @@ export const login = createAsyncThunk(
 
 export const registration = createAsyncThunk(
     'registration',
-    async ({email, password}: LoginType) => {
+    async ({email, password}: LoginRequest) => {
         return await axios.post(environment.apiBasepoint + 'user', {
             email: email,
             password: password
@@ -39,27 +39,27 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setAccessToken: (state: AuthState, action: PayloadAction<string | null>) => {
+        setAccessToken: (state: State, action: PayloadAction<string | null>) => {
             state.access_token = action.payload;
             if (action.payload !== null) {
                 return localStorage.setItem('access_token', action.payload);
             }
             return localStorage.removeItem('access_token');
         },
-        setCreateAction: (state: AuthState, action: PayloadAction<boolean>) => {
+        setCreateAction: (state: State, action: PayloadAction<boolean>) => {
             state.created = action.payload;
         }
     },
     extraReducers(builder) {
         builder
-            .addCase(login.fulfilled, (state: AuthState, action: PayloadAction<{ accessToken: string | null }>) => {
+            .addCase(login.fulfilled, (state: State, action: PayloadAction<{ accessToken: string | null }>) => {
                     if (action.payload.accessToken !== null) {
                         state.access_token = action.payload.accessToken;
                         localStorage.setItem('access_token', action.payload.accessToken);
                     }
                 }
             )
-            .addCase(registration.fulfilled, (state: AuthState, action: PayloadAction<any>) => {
+            .addCase(registration.fulfilled, (state: State, action: PayloadAction<any>) => {
                     if (action.payload !== undefined) {
                         state.created = true;
                         state.user = action.payload.user;

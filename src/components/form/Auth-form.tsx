@@ -2,13 +2,13 @@ import React from 'react';
 import {SubmitHandler, useForm} from "react-hook-form"
 import {style} from "../../assets/form-styles/formErrorStyle";
 import FormErrorField from "../../components/form-error-field/FormErrorField";
-import {LoginType} from "../../types/auth";
+import {LoginRequest} from "../../types/auth";
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 
 type LoginFormProps = {
     buttonName: string;
-    onSubmitLoginForm: SubmitHandler<LoginType>;
+    onSubmitLoginForm: SubmitHandler<LoginRequest>;
 }
 
 const validationSchema = yup.object({
@@ -30,7 +30,7 @@ function AuthForm({buttonName, onSubmitLoginForm}: LoginFormProps) {
         resolver: yupResolver(validationSchema),
         mode: 'all'
     })
-    const onSubmit: SubmitHandler<LoginType> = (data) => onSubmitLoginForm(data)
+    const onSubmit: SubmitHandler<LoginRequest> = (data) => onSubmitLoginForm(data)
     return (
         <form className='form' onSubmit={handleSubmit(onSubmit)}>
             <div className='form__input-container'>
