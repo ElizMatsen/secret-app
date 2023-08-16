@@ -1,4 +1,4 @@
-export interface SecretType {
+export interface SecretRequest {
     id?: string,
     title: string,
     body: string

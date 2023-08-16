@@ -1,9 +1,9 @@
 import React from 'react';
 import classNames from "classnames";
-import {SecretType} from "../types/secrets";
+import {SecretRequest} from "../types/secrets";
 
 interface Props {
-    secret: SecretType;
+    secret: SecretRequest;
     deletableSecretId: string | null;
     showSecretModal: (id: string) => void;
     deleteSecret: (id: string) => void;
