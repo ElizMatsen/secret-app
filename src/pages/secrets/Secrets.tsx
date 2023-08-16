@@ -15,7 +15,8 @@ function Secrets() {
     const created = useAppSelector((state: RootState) => state.secrets.created);
     const secretsList = useAppSelector((state: RootState) => state.secrets.secretsList);
     const [deletableSecretId, setDeletableSecretId] = React.useState<string | null>(null);
-    const [formType, seFormType] = React.useState<string | null>(null);
+    const [createSecretForm, setCreateSecretForm] = React.useState<boolean>(false);
+    const [showSecretFrom, setShowSecretFrom] = React.useState<boolean>(false);
     const [showSecretId, setShowSecretId] = React.useState<string>();
     useEffect(() => {
         dispatch(secrets())
@@ -52,22 +53,23 @@ function Secrets() {
         }
     }
 
-    const closeModal = () => {
-        seFormType(null);
+    const showSecretEvent = (id: string) => {
+        setShowSecretId(id)
+        toggleShowSecret();
     }
 
-    const showSecretEvent = (id: string) => {
-        seFormType('showSecret');
-        setShowSecretId(id)
-    }
-    const showModal = () => {
-        seFormType('createSecret');
+    const toggleShowSecret = () => {
+        setShowSecretFrom(!showSecretFrom)
     }
 
     const onSubmit: SubmitHandler<SecretType> = (data) => {
-        seFormType(null);
         dispatch(createSecret(data))
+        toggleCreateSecretForm();
     };
+
+    const toggleCreateSecretForm = () => {
+        setCreateSecretForm(!createSecretForm)
+    }
 
     const onSubmitShowSecret: SubmitHandler<ShowSecretRequest> = (data) => {
         const requestData = {
@@ -81,22 +83,22 @@ function Secrets() {
     return (
         <>
             {
-                formType === 'createSecret'
+                createSecretForm
                 &&
                 <SecretCreateForm
-                    modalEvent={closeModal}
+                    modalEvent={toggleCreateSecretForm}
                     onSubmitForm={onSubmit}/>
             }
             {
-                formType === 'showSecret'
+                showSecretFrom
                 &&
                 <ShowSecretForm
-                    modalEvent={closeModal}
+                    modalEvent={toggleShowSecret}
                     onSubmitForm={onSubmitShowSecret}/>
             }
             <div className="secrets-list">
                 <div className="secrets-create">
-                    <button className="button" onClick={() => showModal()} type="button">
+                    <button className="button" onClick={() => toggleCreateSecretForm()} type="button">
                         Create secret
                     </button>
                 </div>
