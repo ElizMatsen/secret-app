@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {environment} from "../environments/environment";
 import axios from "axios";
-import {LoginRequest} from "../types/auth";
+import {LoginRequest, UserRequest} from "../types/auth";
 
 export interface State {
     access_token: null | string,
@@ -24,13 +24,14 @@ export const login = createAsyncThunk<{ accessToken: string | null }, LoginReque
         return response.data
     })
 
-export const registration = createAsyncThunk(
+export const registration = createAsyncThunk<{ user: UserRequest }, LoginRequest>(
     'registration',
     async ({email, password}: LoginRequest) => {
-        return await axios.post(environment.apiBasepoint + 'user', {
+        const response = await axios.post(environment.apiBasepoint + 'user', {
             email: email,
             password: password
-        }).then((response) => response.data)
+        })
+        return response.data;
     },
 )
 
@@ -58,10 +59,10 @@ const authSlice = createSlice({
                     }
                 }
             )
-            .addCase(registration.fulfilled, (state: State, action: PayloadAction<any>) => {
-                    if (action.payload !== undefined) {
+            .addCase(registration.fulfilled, (state: State, {payload}: PayloadAction<{ user: UserRequest }>) => {
+                    if (payload !== undefined) {
                         state.created = true;
-                        state.user = action.payload.user;
+                        state.user = payload.user;
                     }
                 }
             )
