@@ -43,8 +43,9 @@ const authSlice = createSlice({
             state.access_token = action.payload;
             if (action.payload !== null) {
                 localStorage.setItem('access_token', action.payload);
+            } else {
+                localStorage.removeItem('access_token');
             }
-            localStorage.removeItem('access_token');
         },
         setCreateAction: (state: State, action: PayloadAction<boolean>) => {
             state.created = action.payload;
