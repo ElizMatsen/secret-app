@@ -3,9 +3,10 @@ import {SubmitHandler} from "react-hook-form";
 import {actions} from "../../secretsSlice";
 import {useAppDispatch, useAppSelector} from "../../../../app/hooks";
 import {RootState} from "../../../../app/store";
-import {toast} from "react-toastify";
 import AuthForm from "../../../../components/form/Auth-form";
 import {ShowSecretRequest} from "../../../../types/secrets";
+import Modal from "../../../../components/modals/Modal";
+import ShowSecretData from "./ShowSecretData";
 
 interface Props {
     modalEvent: () => void;
@@ -30,11 +31,6 @@ function ShowSecretForm({modalEvent, onSubmitForm}: Props) {
         }
     }, [secretData]);
 
-    const copy = (data: string) => {
-        navigator.clipboard.writeText(data)
-        toast.success('Copied successfully');
-    }
-
     const onSubmit: SubmitHandler<ShowSecretRequest> = (data) => onSubmitForm(data)
 
     const closeModal = () => {
@@ -44,34 +40,24 @@ function ShowSecretForm({modalEvent, onSubmitForm}: Props) {
 
     return (
         <>
-            <div className="modal-background" onClick={closeModal}/>
-            <div className="modal">
-                {
-                    !secretData &&
-                    <AuthForm
+            {
+                !secretData &&
+                <Modal
+                    modalEvent={closeModal}
+                    children={<AuthForm
                         buttonName={'Log in'}
-                        onSubmitLoginForm={onSubmit}/>
-                }
-                {
-                    secretData
-                    &&
-                    <div className="secret-container">
-                        <div className="secret-copy-container"
-                             onClick={() => copy(secretData.body)}>
-                            <div className="secret-copy-text">Copy body</div>
-                        </div>
-                        <div className="secret-item">
-                            <strong>ID:</strong> {secretData.id}
-                        </div>
-                        <div className="secret-item">
-                            <strong>TITLE:</strong> {secretData.title}
-                        </div>
-                        <div className="secret-item">
-                            <strong>BODY:</strong> {secretData.body}
-                        </div>
-                    </div>
-                }
-            </div>
+                        onSubmitLoginForm={onSubmit}/>}
+                />
+            }
+            {
+                secretData
+                &&
+                <Modal
+                    modalEvent={closeModal}
+                    children={<ShowSecretData
+                        secretData={secretData}/>}
+                />
+            }
         </>
     )
 }
