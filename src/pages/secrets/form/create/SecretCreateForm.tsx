@@ -2,6 +2,7 @@ import React from 'react';
 import {SubmitHandler} from "react-hook-form";
 import {CreateSecretRequest} from "../../../../types/secrets";
 import SecretForm from "../../../../components/form/SecretForm";
+import Modal from "../../../../components/modals/Modal";
 
 interface Props {
     modalEvent: () => void;
@@ -16,14 +17,11 @@ function SecretCreateForm({modalEvent, onSubmitForm}: Props) {
     }
 
     return (
-        <>
-            <div className="modal-background" onClick={closeModal}/>
-            <div className="modal">
-                <SecretForm
-                    onSubmitForm={onSubmit}/>
-            </div>
-        </>
-
+        <Modal
+            modalEvent={closeModal}
+            children={<SecretForm
+                onSubmitForm={onSubmit}/>}
+        />
     )
 }
 
