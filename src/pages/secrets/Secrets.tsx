@@ -5,7 +5,7 @@ import {RootState} from "../../app/store";
 import {toast} from "react-toastify";
 import SecretCreateForm from "./form/create/SecretCreateForm";
 import ShowSecretForm from "./form/show/ShowSecretForm";
-import {SecretRequest, ShowSecretRequest} from "../../types/secrets";
+import {CreateSecretRequest, SecretRequest, ShowSecretRequest} from "../../types/secrets";
 import {SubmitHandler} from "react-hook-form";
 import Secret from "../../components/Secret";
 
@@ -62,7 +62,7 @@ function Secrets() {
         setShowSecretFrom(!showSecretFrom)
     }
 
-    const onSubmit: SubmitHandler<SecretRequest> = (data) => {
+    const onSubmit: SubmitHandler<CreateSecretRequest> = (data) => {
         dispatch(createSecret(data))
         toggleCreateSecretForm();
     };

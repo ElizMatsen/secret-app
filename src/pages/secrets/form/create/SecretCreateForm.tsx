@@ -1,15 +1,15 @@
 import React from 'react';
 import {SubmitHandler} from "react-hook-form";
-import {SecretRequest} from "../../../../types/secrets";
+import {CreateSecretRequest} from "../../../../types/secrets";
 import SecretForm from "../../../../components/form/SecretForm";
 
 interface Props {
     modalEvent: () => void;
-    onSubmitForm: SubmitHandler<SecretRequest>;
+    onSubmitForm: SubmitHandler<CreateSecretRequest>;
 }
 
 function SecretCreateForm({modalEvent, onSubmitForm}: Props) {
-    const onSubmit: SubmitHandler<SecretRequest> = (data) => onSubmitForm(data)
+    const onSubmit: SubmitHandler<CreateSecretRequest> = (data) => onSubmitForm(data)
 
     const closeModal = () => {
         modalEvent();

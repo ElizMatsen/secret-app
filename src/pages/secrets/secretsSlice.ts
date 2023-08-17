@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "axios";
 import {environment} from "../../environments/environment";
-import {SecretRequest, ShowSecretRequest} from "../../types/secrets";
+import {CreateSecretRequest, SecretRequest, ShowSecretRequest} from "../../types/secrets";
 
 export interface State {
     secretsList: Array<SecretRequest>,
@@ -25,7 +25,7 @@ export const secrets = createAsyncThunk<{ secrets: Array<SecretRequest> }>(
 )
 export const createSecret = createAsyncThunk(
     'createSecret',
-    async ({title, body}: SecretRequest) => {
+    async ({title, body}: CreateSecretRequest) => {
         const response = await axios.post(environment.apiBasepointSecret + 'secrets', {
             title: title,
             body: body

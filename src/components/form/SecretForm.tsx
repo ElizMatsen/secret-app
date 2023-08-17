@@ -2,12 +2,12 @@ import React from 'react';
 import FormErrorField from "../../components/form-error-field/FormErrorField";
 import {style} from "../../assets/form-styles/formErrorStyle";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {SecretRequest} from "../../types/secrets";
+import {CreateSecretRequest} from "../../types/secrets";
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 
 interface Props {
-    onSubmitForm: SubmitHandler<SecretRequest>;
+    onSubmitForm: SubmitHandler<CreateSecretRequest>;
 }
 
 const validationSchema = yup.object({
@@ -34,7 +34,7 @@ function SecretForm({onSubmitForm}: Props) {
         mode: 'all'
     })
 
-    const onSubmit: SubmitHandler<SecretRequest> = (data) => onSubmitForm(data)
+    const onSubmit: SubmitHandler<CreateSecretRequest> = (data) => onSubmitForm(data)
 
     return (
         <>
