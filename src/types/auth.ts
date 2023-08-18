@@ -3,7 +3,11 @@ export interface LoginRequest {
     password: string
 }
 
-export interface UserRequest {
+export interface AccessToken {
+    accessToken: string | null
+}
+
+export interface User {
     createdAt: string,
     email: string,
     id: string,
