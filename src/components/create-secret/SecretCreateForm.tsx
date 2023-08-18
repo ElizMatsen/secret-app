@@ -1,8 +1,8 @@
 import React from 'react';
 import {SubmitHandler} from "react-hook-form";
-import {CreateSecretRequest} from "../../../../types/secrets";
-import SecretForm from "../../../../components/form/SecretForm";
-import Modal from "../../../../components/modals/Modal";
+import {CreateSecretRequest} from "../../types/secrets";
+import SecretForm from "../form/SecretForm";
+import Modal from "../modals/Modal";
 
 interface Props {
     modalEvent: () => void;

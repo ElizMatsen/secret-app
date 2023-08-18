@@ -1,6 +1,6 @@
 import React from 'react';
 import {toast} from "react-toastify";
-import {SecretRequest} from "../../../../types/secrets";
+import {SecretRequest} from "../types/secrets";
 
 interface Props {
     secretData: SecretRequest;

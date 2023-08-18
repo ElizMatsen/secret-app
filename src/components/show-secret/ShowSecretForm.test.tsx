@@ -1,10 +1,10 @@
 import React from 'react';
 import {Provider} from "react-redux";
 import {BrowserRouter} from "react-router-dom";
-import store from "../../../../app/store";
 import {act, render, screen} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ShowSecretForm from "./ShowSecretForm";
+import store from "../../app/store";
 
 function renderWithContext(element: any) {
     render(

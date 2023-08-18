@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
 import {SubmitHandler} from "react-hook-form";
-import {actions} from "../../secretsSlice";
-import {useAppDispatch, useAppSelector} from "../../../../app/hooks";
-import {RootState} from "../../../../app/store";
-import AuthForm from "../../../../components/form/Auth-form";
-import {ShowSecretRequest} from "../../../../types/secrets";
-import Modal from "../../../../components/modals/Modal";
-import ShowSecretData from "./ShowSecretData";
+import ShowSecretData from "../ShowSecretData";
+import {actions} from "../../pages/secrets/secretsSlice";
+import {ShowSecretRequest} from "../../types/secrets";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {RootState} from "../../app/store";
+import Modal from "../modals/Modal";
+import AuthForm from "../form/Auth-form";
 
 interface Props {
     modalEvent: () => void;
