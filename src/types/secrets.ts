@@ -4,10 +4,7 @@ export interface SecretRequest {
     body: string
 }
 
-export interface CreateSecretRequest {
-    title: string,
-    body: string
-}
+export type CreateSecretRequest = Omit<SecretRequest, 'id'>
 
 export interface ShowSecretRequest {
     id?: string,
