@@ -3,22 +3,36 @@ import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {actions, createSecret, deleteSecret, secrets, showSecret} from "./secretsSlice";
 import {RootState} from "../../app/store";
 import {toast} from "react-toastify";
-import ShowSecretForm from "../../components/show-secret/ShowSecretForm";
 import {CreateSecretRequest, SecretRequest, ShowSecretRequest} from "../../types/secrets";
 import {SubmitHandler} from "react-hook-form";
 import Secret from "../../components/Secret";
 import Modal from "../../components/modals/Modal";
 import SecretForm from "../../components/form/SecretForm";
+import AuthForm from "../../components/form/Auth-form";
+import ShowSecretData from "../../components/ShowSecretData";
 
 function Secrets() {
     const dispatch = useAppDispatch();
     const deleted = useAppSelector((state: RootState) => state.secrets.deleted);
     const created = useAppSelector((state: RootState) => state.secrets.created);
     const secretsList = useAppSelector((state: RootState) => state.secrets.secretsList);
+    const secretData = useAppSelector((state: RootState) => state.secrets.secretData);
     const [deletableSecretId, setDeletableSecretId] = React.useState<string | null>(null);
     const [createSecretForm, setCreateSecretForm] = React.useState<boolean>(false);
     const [showSecretFrom, setShowSecretFrom] = React.useState<boolean>(false);
     const [showSecretId, setShowSecretId] = React.useState<string>();
+    const [secretDataFromServer, setSecretData] = React.useState<SecretRequest | null>();
+
+    useEffect(() => {
+        if (secretData) {
+            setSecretData(secretData)
+            setTimeout(() => {
+                setSecretData(null)
+            }, 5000);
+        }
+    }, [secretData]);
+
+
     useEffect(() => {
         dispatch(secrets())
     }, [])
@@ -60,7 +74,8 @@ function Secrets() {
     }
 
     const toggleShowSecret = () => {
-        setShowSecretFrom(!showSecretFrom)
+        setShowSecretFrom(!showSecretFrom);
+        setSecretData(null);
     }
 
     const toggleCreateSecretForm = () => {
@@ -95,9 +110,26 @@ function Secrets() {
             {
                 showSecretFrom
                 &&
-                <ShowSecretForm
-                    modalEvent={toggleShowSecret}
-                    onSubmitForm={onSubmitShowSecret}/>
+                <>
+                    {
+                        !secretDataFromServer &&
+                        <Modal
+                            modalEvent={toggleShowSecret}
+                            children={<AuthForm
+                                buttonName={'Log in'}
+                                onSubmitLoginForm={onSubmitShowSecret}/>}
+                        />
+                    }
+                    {
+                        secretDataFromServer
+                        &&
+                        <Modal
+                            modalEvent={toggleShowSecret}
+                            children={<ShowSecretData
+                                secretData={secretDataFromServer}/>}
+                        />
+                    }
+                </>
             }
             <div className="secrets-list">
                 <div className="secrets-create">

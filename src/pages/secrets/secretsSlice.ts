@@ -56,9 +56,6 @@ const secretsSlice = createSlice({
     name: 'secrets',
     initialState,
     reducers: {
-        setSecretDataAction: (state: State, action: PayloadAction<SecretRequest | null>) => {
-            state.secretData = action.payload;
-        },
         setCreateAction: (state: State, action: PayloadAction<boolean>) => {
             state.created = action.payload;
         },
