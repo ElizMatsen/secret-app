@@ -3,11 +3,12 @@ import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {actions, createSecret, deleteSecret, secrets, showSecret} from "./secretsSlice";
 import {RootState} from "../../app/store";
 import {toast} from "react-toastify";
-import SecretCreateForm from "../../components/create-secret/SecretCreateForm";
 import ShowSecretForm from "../../components/show-secret/ShowSecretForm";
 import {CreateSecretRequest, SecretRequest, ShowSecretRequest} from "../../types/secrets";
 import {SubmitHandler} from "react-hook-form";
 import Secret from "../../components/Secret";
+import Modal from "../../components/modals/Modal";
+import SecretForm from "../../components/form/SecretForm";
 
 function Secrets() {
     const dispatch = useAppDispatch();
@@ -62,14 +63,14 @@ function Secrets() {
         setShowSecretFrom(!showSecretFrom)
     }
 
-    const onSubmit: SubmitHandler<CreateSecretRequest> = (data) => {
-        dispatch(createSecret(data))
-        toggleCreateSecretForm();
-    };
-
     const toggleCreateSecretForm = () => {
         setCreateSecretForm(!createSecretForm)
     }
+
+    const onSubmitCreateSecret: SubmitHandler<CreateSecretRequest> = (data) => {
+        dispatch(createSecret(data))
+        toggleCreateSecretForm();
+    };
 
     const onSubmitShowSecret: SubmitHandler<ShowSecretRequest> = (data) => {
         const requestData = {
@@ -85,9 +86,11 @@ function Secrets() {
             {
                 createSecretForm
                 &&
-                <SecretCreateForm
+                <Modal
                     modalEvent={toggleCreateSecretForm}
-                    onSubmitForm={onSubmit}/>
+                    children={<SecretForm
+                        onSubmitForm={onSubmitCreateSecret}/>}
+                />
             }
             {
                 showSecretFrom
