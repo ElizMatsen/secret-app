@@ -6,7 +6,7 @@ interface Props {
     secretData: SecretRequest;
 }
 
-function ShowSecretData({secretData}: Props) {
+function SecretData({secretData}: Props) {
 
     const copy = (data: string) => {
         navigator.clipboard.writeText(data)
@@ -32,5 +32,5 @@ function ShowSecretData({secretData}: Props) {
     )
 }
 
-export default ShowSecretData;
+export default SecretData;
 

@@ -9,7 +9,7 @@ import Secret from "../../components/Secret";
 import Modal from "../../components/modals/Modal";
 import SecretForm from "../../components/form/SecretForm";
 import AuthForm from "../../components/form/Auth-form";
-import ShowSecretData from "../../components/ShowSecretData";
+import SecretData from "../../components/SecretData";
 
 function Secrets() {
     const dispatch = useAppDispatch();
@@ -125,7 +125,7 @@ function Secrets() {
                         &&
                         <Modal
                             modalEvent={toggleShowSecret}
-                            children={<ShowSecretData
+                            children={<SecretData
                                 secretData={secretDataFromServer}/>}
                         />
                     }
