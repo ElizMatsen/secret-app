@@ -3,13 +3,14 @@ import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {actions, createSecret, deleteSecret, secrets, showSecret} from "./secretsSlice";
 import {RootState} from "../../app/store";
 import {toast} from "react-toastify";
-import {CreateSecretRequest, SecretRequest, ShowSecretRequest} from "../../types/secrets";
+import {CreateSecretRequest, SecretResponse, ShowSecretRequest} from "../../types/secrets";
 import {SubmitHandler} from "react-hook-form";
 import Secret from "../../components/Secret";
 import Modal from "../../components/modals/Modal";
 import SecretForm from "../../components/form/SecretForm";
 import AuthForm from "../../components/form/Auth-form";
 import SecretData from "../../components/SecretData";
+import {LoginRequest} from "../../types/auth";
 
 function Secrets() {
     const dispatch = useAppDispatch();
@@ -20,7 +21,7 @@ function Secrets() {
     const [deletableSecretId, setDeletableSecretId] = React.useState<string | null>(null);
     const [createSecretForm, setCreateSecretForm] = React.useState<boolean>(false);
     const [showSecretFrom, setShowSecretFrom] = React.useState<boolean>(false);
-    const [showSecretId, setShowSecretId] = React.useState<string>();
+    const [showSecretId, setShowSecretId] = React.useState<string>('');
 
     useEffect(() => {
         if (secretData) {
@@ -85,8 +86,8 @@ function Secrets() {
         toggleCreateSecretForm();
     };
 
-    const onSubmitShowSecret: SubmitHandler<ShowSecretRequest> = (data) => {
-        const requestData = {
+    const onSubmitShowSecret: SubmitHandler<LoginRequest> = (data) => {
+        const requestData: ShowSecretRequest = {
             id: showSecretId,
             email: data.email,
             password: data.password
@@ -142,7 +143,7 @@ function Secrets() {
                         <div className="secrets-list-item">BODY</div>
                     </div>
                     {
-                        secretsList.map((secret: SecretRequest) =>
+                        secretsList.map((secret: SecretResponse) =>
                             <Secret key={secret.id}
                                     secret={secret}
                                     showSecretModal={showSecretEvent}

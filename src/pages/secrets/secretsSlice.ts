@@ -1,13 +1,13 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "axios";
 import {environment} from "../../environments/environment";
-import {CreateSecretRequest, SecretRequest, ShowSecretRequest} from "../../types/secrets";
+import {CreateSecretRequest, SecretResponse, ShowSecretRequest} from "../../types/secrets";
 
 export interface State {
-    secretsList: Array<SecretRequest>,
+    secretsList: Array<SecretResponse>,
     deleted: boolean,
     created: boolean,
-    secretData: SecretRequest | null,
+    secretData: SecretResponse | null,
 }
 
 export const initialState: State = {
@@ -16,7 +16,7 @@ export const initialState: State = {
     created: false,
     secretData: null,
 }
-export const secrets = createAsyncThunk<{ secrets: Array<SecretRequest> }>(
+export const secrets = createAsyncThunk<{ secrets: Array<SecretResponse> }>(
     'secrets',
     async () => {
         const response = await axios.get(environment.apiBasepointSecret + 'secrets');
@@ -33,7 +33,7 @@ export const createSecret = createAsyncThunk(
         return response.data;
     },
 )
-export const showSecret = createAsyncThunk<{ secret: SecretRequest | null }, ShowSecretRequest>(
+export const showSecret = createAsyncThunk<{ secret: SecretResponse | null }, ShowSecretRequest>(
     'showSecret',
     async ({id, email, password}: ShowSecretRequest) => {
         const response = await axios.post(environment.apiBasepointSecret + 'secrets/' + id,
@@ -56,7 +56,7 @@ const secretsSlice = createSlice({
     name: 'secrets',
     initialState,
     reducers: {
-        setSecretDataAction: (state: State, action: PayloadAction<SecretRequest | null>) => {
+        setSecretDataAction: (state: State, action: PayloadAction<SecretResponse | null>) => {
             state.secretData = action.payload;
         },
         setCreateAction: (state: State, action: PayloadAction<boolean>) => {
@@ -65,7 +65,7 @@ const secretsSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(secrets.fulfilled, (state: State, {payload}: PayloadAction<{ secrets: Array<SecretRequest> }>) => {
+            .addCase(secrets.fulfilled, (state: State, {payload}: PayloadAction<{ secrets: Array<SecretResponse> }>) => {
                     if (payload !== undefined) {
                         state.secretsList = payload.secrets
                     }
@@ -87,7 +87,7 @@ const secretsSlice = createSlice({
                     state.created = true;
                 }
             )
-            .addCase(showSecret.fulfilled, (state: State, {payload}: PayloadAction<{ secret: SecretRequest | null }>) => {
+            .addCase(showSecret.fulfilled, (state: State, {payload}: PayloadAction<{ secret: SecretResponse | null }>) => {
                     if (payload !== undefined) {
                         state.secretData = payload.secret;
                     }

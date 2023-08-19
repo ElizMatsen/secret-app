@@ -1,9 +1,9 @@
 import React from 'react';
 import {toast} from "react-toastify";
-import {SecretRequest} from "../types/secrets";
+import {SecretResponse} from "../types/secrets";
 
 interface Props {
-    secretData: SecretRequest;
+    secretData: SecretResponse;
 }
 
 function SecretData({secretData}: Props) {
