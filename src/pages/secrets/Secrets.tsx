@@ -1,24 +1,22 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {actions, createSecret, deleteSecret, secrets} from "./secretsSlice";
+import {deleteSecret, secrets} from "./secretsSlice";
 import {RootState} from "../../app/store";
 import {toast} from "react-toastify";
-import {CreateSecretRequest, SecretResponse} from "../../types/secrets";
-import {SubmitHandler} from "react-hook-form";
+import {SecretResponse} from "../../types/secrets";
 import Secret from "../../components/Secret";
 import Modal from "../../components/modals/Modal";
 import SecretForm from "../../components/form/SecretForm";
 import AuthForm from "../../components/form/Auth-form";
 import SecretData from "../../components/SecretData";
 import {useShowSecretDataHook} from "./show-secret-hooks";
+import {useCreateSecretDataHook} from "./create-secret-hooks";
 
 function Secrets() {
     const dispatch = useAppDispatch();
     const deleted = useAppSelector((state: RootState) => state.secrets.deleted);
-    const created = useAppSelector((state: RootState) => state.secrets.created);
     const secretsList = useAppSelector((state: RootState) => state.secrets.secretsList);
     const [deletableSecretId, setDeletableSecretId] = React.useState<string | null>(null);
-    const [createSecretForm, setCreateSecretForm] = React.useState<boolean>(false);
 
     const {
         secretData,
@@ -27,6 +25,12 @@ function Secrets() {
         showSecretEvent,
         onSubmitShowSecret
     } = useShowSecretDataHook();
+
+    const {
+        createSecretForm,
+        toggleCreateSecretForm,
+        onSubmitCreateSecret
+    } = useCreateSecretDataHook();
 
     useEffect(() => {
         dispatch(secrets())
@@ -39,14 +43,6 @@ function Secrets() {
             dispatch(secrets())
         }
     }, [deleted]);
-
-    useEffect(() => {
-        if (created) {
-            toast.success('Saved');
-            dispatch(actions.setCreateAction(false))
-            dispatch(secrets())
-        }
-    }, [created]);
 
     const deleteSecretItem = (id: string) => {
         if (deletableSecretId !== id) {
@@ -62,17 +58,6 @@ function Secrets() {
             }
         }
     }
-
-
-    const toggleCreateSecretForm = () => {
-        setCreateSecretForm(!createSecretForm)
-    }
-
-    const onSubmitCreateSecret: SubmitHandler<CreateSecretRequest> = (data) => {
-        dispatch(createSecret(data))
-        toggleCreateSecretForm();
-    };
-
 
     return (
         <>
