@@ -21,13 +21,11 @@ function Secrets() {
     const [createSecretForm, setCreateSecretForm] = React.useState<boolean>(false);
     const [showSecretFrom, setShowSecretFrom] = React.useState<boolean>(false);
     const [showSecretId, setShowSecretId] = React.useState<string>();
-    const [secretDataFromServer, setSecretData] = React.useState<SecretRequest | null>();
 
     useEffect(() => {
         if (secretData) {
-            setSecretData(secretData)
             setTimeout(() => {
-                setSecretData(null)
+                dispatch(actions.setSecretDataAction(null))
             }, 5000);
         }
     }, [secretData]);
@@ -75,7 +73,7 @@ function Secrets() {
 
     const toggleShowSecret = () => {
         setShowSecretFrom(!showSecretFrom);
-        setSecretData(null);
+        dispatch(actions.setSecretDataAction(null))
     }
 
     const toggleCreateSecretForm = () => {
@@ -112,7 +110,7 @@ function Secrets() {
                 &&
                 <>
                     {
-                        !secretDataFromServer &&
+                        !secretData &&
                         <Modal
                             modalEvent={toggleShowSecret}
                             children={<AuthForm
@@ -121,12 +119,12 @@ function Secrets() {
                         />
                     }
                     {
-                        secretDataFromServer
+                        secretData
                         &&
                         <Modal
                             modalEvent={toggleShowSecret}
                             children={<SecretData
-                                secretData={secretDataFromServer}/>}
+                                secretData={secretData}/>}
                         />
                     }
                 </>
