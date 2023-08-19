@@ -146,7 +146,7 @@ function Secrets() {
                         secretsList.map((secret: SecretResponse) =>
                             <Secret key={secret.id}
                                     secret={secret}
-                                    showSecretModal={showSecretEvent}
+                                    showSecretEvent={showSecretEvent}
                                     deleteSecret={deleteSecretItem}
                                     deletableSecretId={deletableSecretId}/>
                         )

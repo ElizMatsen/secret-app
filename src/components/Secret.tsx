@@ -5,23 +5,23 @@ import {SecretResponse} from "../types/secrets";
 interface Props {
     secret: SecretResponse;
     deletableSecretId: string | null;
-    showSecretModal: (id: string) => void;
+    showSecretEvent: (id: string) => void;
     deleteSecret: (id: string) => void;
 }
 
-function Secret({secret, showSecretModal, deleteSecret, deletableSecretId}: Props) {
+function Secret({secret, showSecretEvent, deleteSecret, deletableSecretId}: Props) {
 
     const deleteSecretItem = (id: string) => {
         deleteSecret(id);
     }
 
-    const showSecretEvent = (id: string) => showSecretModal(id)
+    const showSecretButtonClick = (id: string) => showSecretEvent(id)
     return (
         <div className="secrets-list-row">
             <div className="secrets-list-item">{secret.id}</div>
             <div className="secrets-list-item">{secret.title}</div>
             <div className="button_s"
-                 onClick={() => showSecretEvent(secret.id !== undefined ? secret.id : '')}>Show
+                 onClick={() => showSecretButtonClick(secret.id !== undefined ? secret.id : '')}>Show
             </div>
             <button
                 onClick={() => deleteSecretItem(secret.id !== undefined ? secret.id : '')}
