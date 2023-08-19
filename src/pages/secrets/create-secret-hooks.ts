@@ -7,7 +7,7 @@ import {toast} from "react-toastify";
 import {RootState} from "../../app/store";
 
 
-export const useCreateSecretDataHook = () => {
+export const useCreateSecretHook = () => {
     const dispatch = useAppDispatch();
     const created = useAppSelector((state: RootState) => state.secrets.created);
     const [createSecretForm, setCreateSecretForm] = React.useState<boolean>(false);

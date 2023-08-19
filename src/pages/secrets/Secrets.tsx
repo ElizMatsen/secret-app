@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {deleteSecret, secrets} from "./secretsSlice";
+import {secrets} from "./secretsSlice";
 import {RootState} from "../../app/store";
-import {toast} from "react-toastify";
 import {SecretResponse} from "../../types/secrets";
 import Secret from "../../components/Secret";
 import Modal from "../../components/modals/Modal";
@@ -10,13 +9,12 @@ import SecretForm from "../../components/form/SecretForm";
 import AuthForm from "../../components/form/Auth-form";
 import SecretData from "../../components/SecretData";
 import {useShowSecretDataHook} from "./show-secret-hooks";
-import {useCreateSecretDataHook} from "./create-secret-hooks";
+import {useCreateSecretHook} from "./create-secret-hooks";
+import {useDeleteSecretHook} from "./delete-secret-hooks";
 
 function Secrets() {
     const dispatch = useAppDispatch();
-    const deleted = useAppSelector((state: RootState) => state.secrets.deleted);
     const secretsList = useAppSelector((state: RootState) => state.secrets.secretsList);
-    const [deletableSecretId, setDeletableSecretId] = React.useState<string | null>(null);
 
     const {
         secretData,
@@ -30,34 +28,16 @@ function Secrets() {
         createSecretForm,
         toggleCreateSecretForm,
         onSubmitCreateSecret
-    } = useCreateSecretDataHook();
+    } = useCreateSecretHook();
+
+    const {
+        deletableSecretId,
+        deleteSecretItem
+    } = useDeleteSecretHook();
 
     useEffect(() => {
         dispatch(secrets())
     }, [])
-
-    useEffect(() => {
-        if (deleted) {
-            toast.success('Saved');
-            setDeletableSecretId(null)
-            dispatch(secrets())
-        }
-    }, [deleted]);
-
-    const deleteSecretItem = (id: string) => {
-        if (deletableSecretId !== id) {
-            if (window.confirm(
-                'Do you really want to delete secret?' + '\n'
-                + 'The next element will be removed' + '\n'
-                + 'ID: ' + id
-            )) {
-                setDeletableSecretId(id)
-                setTimeout(() => {
-                    dispatch(deleteSecret(id));
-                }, 1000);
-            }
-        }
-    }
 
     return (
         <>
