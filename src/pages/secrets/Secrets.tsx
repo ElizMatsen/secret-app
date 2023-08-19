@@ -6,7 +6,7 @@ import {SecretResponse} from "../../types/secrets";
 import Secret from "../../components/Secret";
 import Modal from "../../components/modals/Modal";
 import SecretForm from "../../components/form/SecretForm";
-import AuthForm from "../../components/form/Auth-form";
+import UserAuthForm from "../../components/form/UserAuthForm";
 import SecretData from "../../components/SecretData";
 import {useShowSecretDataHook} from "./show-secret-hooks";
 import {useCreateSecretHook} from "./create-secret-hooks";
@@ -58,7 +58,7 @@ function Secrets() {
                         !secretData &&
                         <Modal
                             modalEvent={toggleShowSecret}
-                            children={<AuthForm
+                            children={<UserAuthForm
                                 buttonName={'Log in'}
                                 onSubmitLoginForm={onSubmitShowSecret}/>}
                         />

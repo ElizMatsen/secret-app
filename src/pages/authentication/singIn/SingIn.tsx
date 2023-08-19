@@ -1,7 +1,7 @@
 import React from 'react';
 import {SubmitHandler} from "react-hook-form"
 import {NavLink} from "react-router-dom";
-import AuthForm from "../../../components/form/Auth-form";
+import UserAuthForm from "../../../components/form/UserAuthForm";
 import {LoginRequest} from "../../../types/auth";
 
 type LoginFormProps = {
@@ -16,7 +16,7 @@ function SingIn({onSubmitLoginForm}: LoginFormProps) {
             <span/>
             <div className='login__container'>
                 <div className='login__body'>
-                    <AuthForm
+                    <UserAuthForm
                         buttonName={'Log in'}
                         onSubmitLoginForm={onSubmit}/>
                 </div>

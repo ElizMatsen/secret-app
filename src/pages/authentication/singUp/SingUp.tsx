@@ -4,7 +4,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../app/hooks";
 import {RootState} from "../../../app/store";
 import {toast} from "react-toastify";
-import AuthForm from "../../../components/form/Auth-form";
+import UserAuthForm from "../../../components/form/UserAuthForm";
 import {LoginRequest} from "../../../types/auth";
 import {actions} from "../../../app/authSlice";
 
@@ -32,7 +32,7 @@ function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
             <span/>
             <div className="login__container">
                 <div className="login__body">
-                    <AuthForm
+                    <UserAuthForm
                         buttonName={'Sing up'}
                         onSubmitLoginForm={onSubmit}/>
                 </div>

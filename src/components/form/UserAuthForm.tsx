@@ -21,7 +21,7 @@ const validationSchema = yup.object({
     password: yup.string().required("Required field"),
 });
 
-function AuthForm({buttonName, onSubmitLoginForm}: LoginFormProps) {
+function UserAuthForm({buttonName, onSubmitLoginForm}: LoginFormProps) {
     const {
         register,
         handleSubmit,
@@ -68,5 +68,5 @@ function AuthForm({buttonName, onSubmitLoginForm}: LoginFormProps) {
     )
 }
 
-export default AuthForm;
+export default UserAuthForm;
 
