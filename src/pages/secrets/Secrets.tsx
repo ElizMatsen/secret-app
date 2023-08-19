@@ -1,36 +1,32 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {actions, createSecret, deleteSecret, secrets, showSecret} from "./secretsSlice";
+import {actions, createSecret, deleteSecret, secrets} from "./secretsSlice";
 import {RootState} from "../../app/store";
 import {toast} from "react-toastify";
-import {CreateSecretRequest, SecretResponse, ShowSecretRequest} from "../../types/secrets";
+import {CreateSecretRequest, SecretResponse} from "../../types/secrets";
 import {SubmitHandler} from "react-hook-form";
 import Secret from "../../components/Secret";
 import Modal from "../../components/modals/Modal";
 import SecretForm from "../../components/form/SecretForm";
 import AuthForm from "../../components/form/Auth-form";
 import SecretData from "../../components/SecretData";
-import {LoginRequest} from "../../types/auth";
+import {useShowSecretDataHook} from "./show-secret-hooks";
 
 function Secrets() {
     const dispatch = useAppDispatch();
     const deleted = useAppSelector((state: RootState) => state.secrets.deleted);
     const created = useAppSelector((state: RootState) => state.secrets.created);
     const secretsList = useAppSelector((state: RootState) => state.secrets.secretsList);
-    const secretData = useAppSelector((state: RootState) => state.secrets.secretData);
     const [deletableSecretId, setDeletableSecretId] = React.useState<string | null>(null);
     const [createSecretForm, setCreateSecretForm] = React.useState<boolean>(false);
-    const [showSecretFrom, setShowSecretFrom] = React.useState<boolean>(false);
-    const [showSecretId, setShowSecretId] = React.useState<string>('');
 
-    useEffect(() => {
-        if (secretData) {
-            setTimeout(() => {
-                dispatch(actions.setSecretDataAction(null))
-            }, 5000);
-        }
-    }, [secretData]);
-
+    const {
+        secretData,
+        showSecretFrom,
+        toggleShowSecret,
+        showSecretEvent,
+        onSubmitShowSecret
+    } = useShowSecretDataHook();
 
     useEffect(() => {
         dispatch(secrets())
@@ -67,15 +63,6 @@ function Secrets() {
         }
     }
 
-    const showSecretEvent = (id: string) => {
-        setShowSecretId(id)
-        toggleShowSecret();
-    }
-
-    const toggleShowSecret = () => {
-        setShowSecretFrom(!showSecretFrom);
-        dispatch(actions.setSecretDataAction(null))
-    }
 
     const toggleCreateSecretForm = () => {
         setCreateSecretForm(!createSecretForm)
@@ -86,14 +73,6 @@ function Secrets() {
         toggleCreateSecretForm();
     };
 
-    const onSubmitShowSecret: SubmitHandler<LoginRequest> = (data) => {
-        const requestData: ShowSecretRequest = {
-            id: showSecretId,
-            email: data.email,
-            password: data.password
-        }
-        dispatch(showSecret(requestData))
-    };
 
     return (
         <>
