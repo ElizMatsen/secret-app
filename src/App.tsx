@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
-import SingIn from "./pages/authentication/singIn/SingIn";
+import SingIn from "./pages/authentication/signIn/SignIn";
 import {Navigate, Route, Routes} from "react-router-dom";
 import "./assets/css/main.scss";
 import Layout from "./pages/layout/Layout";
 import {useAppDispatch, useAppSelector} from "./app/hooks";
-import SingUp from "./pages/authentication/singUp/SingUp";
+import SingUp from "./pages/authentication/signUp/SignUp";
 import {actions, login, registration} from "./app/authSlice";
 import {RootState} from "./app/store";
 import {ToastContainer} from "react-toastify";

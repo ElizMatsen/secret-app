@@ -4,7 +4,7 @@ import {act, render, screen} from "@testing-library/react";
 import {Provider} from "react-redux";
 import {BrowserRouter} from "react-router-dom";
 import userEvent from "@testing-library/user-event";
-import SingUp from "./SingUp";
+import SignUp from "./SignUp";
 import store from "../../../app/store";
 
 function renderWithContext(element: any) {
@@ -60,7 +60,7 @@ describe('authSlice', () => {
 
     it('registration form', async () => {
         const onSubmit = jest.fn()
-        renderWithContext(<SingUp onSubmitRegistrationForm={onSubmit}/>);
+        renderWithContext(<SignUp onSubmitRegistrationForm={onSubmit}/>);
         await act(async () => {
             userEvent.type(await screen.getByTestId('email'), 'new@mail.ru')
             userEvent.type(await screen.getByTestId('password'), '0987654321');
@@ -77,7 +77,7 @@ describe('authSlice', () => {
 
     it('invalid email', async () => {
         const onSubmit = jest.fn();
-        renderWithContext(<SingUp onSubmitRegistrationForm={onSubmit}/>);
+        renderWithContext(<SignUp onSubmitRegistrationForm={onSubmit}/>);
         await act(async () => {
             userEvent.type(await screen.getByTestId('email'), 'eliz')
         })

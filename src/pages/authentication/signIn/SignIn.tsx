@@ -8,7 +8,7 @@ type LoginFormProps = {
     onSubmitLoginForm: SubmitHandler<LoginRequest>;
 }
 
-function SingIn({onSubmitLoginForm}: LoginFormProps) {
+function SignIn({onSubmitLoginForm}: LoginFormProps) {
     const currentYear = new Date().getFullYear();
     const onSubmit: SubmitHandler<LoginRequest> = (data) => onSubmitLoginForm(data)
     return (
@@ -31,5 +31,5 @@ function SingIn({onSubmitLoginForm}: LoginFormProps) {
     )
 }
 
-export default SingIn;
+export default SignIn;
 

@@ -2,7 +2,7 @@ import React from 'react';
 import reducer, {State, login} from "../../../app/authSlice";
 import {act, render, screen} from "@testing-library/react";
 import {Provider} from "react-redux";
-import SingIn from "./SingIn";
+import SignIn from "./SignIn";
 import store from "../../../app/store";
 import userEvent from "@testing-library/user-event";
 import {BrowserRouter} from "react-router-dom";
@@ -54,7 +54,7 @@ describe('authSlice', () => {
     });
     it('submit login', async () => {
         const onSubmit = jest.fn();
-        renderWithContext(<SingIn onSubmitLoginForm={onSubmit}/>);
+        renderWithContext(<SignIn onSubmitLoginForm={onSubmit}/>);
         await act(async () => {
             userEvent.type(await screen.getByTestId('email'), 'eliz_skakun@mail.ru')
             userEvent.type(await screen.getByTestId('password'), '0987654321');
@@ -71,7 +71,7 @@ describe('authSlice', () => {
 
     it('invalid email', async () => {
         const onSubmit = jest.fn();
-        renderWithContext(<SingIn onSubmitLoginForm={onSubmit}/>);
+        renderWithContext(<SignIn onSubmitLoginForm={onSubmit}/>);
         await act(async () => {
             userEvent.type(await screen.getByTestId('email'), 'eliz')
         })

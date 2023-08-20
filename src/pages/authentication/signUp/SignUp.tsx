@@ -12,7 +12,7 @@ type RegistrationFormProps = {
     onSubmitRegistrationForm: SubmitHandler<LoginRequest>;
 }
 
-function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
+function SignUp({onSubmitRegistrationForm}: RegistrationFormProps) {
     const currentYear = new Date().getFullYear();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -47,5 +47,5 @@ function SingUp({onSubmitRegistrationForm}: RegistrationFormProps) {
     )
 }
 
-export default SingUp;
+export default SignUp;
 
