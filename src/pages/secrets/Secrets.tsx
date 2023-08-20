@@ -8,32 +8,24 @@ import Modal from "../../components/modals/Modal";
 import SecretForm from "../../components/form/SecretForm";
 import UserAuthForm from "../../components/form/UserAuthForm";
 import SecretData from "../../components/SecretData";
-import {useShowSecretDataHook} from "./show-secret-hooks";
-import {useCreateSecretHook} from "./create-secret-hooks";
-import {useDeleteSecretHook} from "./delete-secret-hooks";
+import {SecretHook} from "./secret-hook";
 
 function Secrets() {
     const dispatch = useAppDispatch();
     const secretsList = useAppSelector((state: RootState) => state.secrets.secretsList);
 
     const {
+        createSecretForm,
+        toggleCreateSecretForm,
+        onSubmitCreateSecret,
         secretData,
         showSecretFrom,
         toggleShowSecret,
         showSecretEvent,
-        onSubmitShowSecret
-    } = useShowSecretDataHook();
-
-    const {
-        createSecretForm,
-        toggleCreateSecretForm,
-        onSubmitCreateSecret
-    } = useCreateSecretHook();
-
-    const {
+        onSubmitShowSecret,
         deletableSecretId,
         deleteSecretItem
-    } = useDeleteSecretHook();
+    } = SecretHook();
 
     useEffect(() => {
         dispatch(secrets())
