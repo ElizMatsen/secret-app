@@ -151,7 +151,7 @@ input {
   justify-content: center;
   align-items: center;
   background: $main_dark_clr;
-  @include font(0.75rem, 700, $primary_clr);
+  @include font(0.75rem, 400, $primary_clr);
   text-transform: uppercase;
   padding: 0.75rem 1.5rem;
   @extend .secondary-border-radius;
@@ -305,7 +305,7 @@ input {
 }
 
 .user__name {
-  @include font(1.25rem, 600, $clr_1);
+  @include font(1.25rem, 500, $clr_1);
 }
 
 /* FORM */
@@ -426,6 +426,7 @@ input {
   min-width: 100px;
   text-overflow: ellipsis;
   overflow: hidden;
+  @include font(1rem, 400, $clr_1);
 }
 
 .secrets-create {
@@ -486,7 +487,7 @@ input {
   width: 20px;
   height: 22px;
   border-radius: 0 0 5px 5px;
-  border: 2px solid $primary_clr;
+  border: 1px solid $primary_clr;
   border-top: 0;
 }
 
@@ -497,7 +498,7 @@ input {
   transform: translate(-50%, 0);
   transform-origin: 0 0;
   width: 24px;
-  height: 2px;
+  height: 1px;
   background: $primary_clr;
 }
 
