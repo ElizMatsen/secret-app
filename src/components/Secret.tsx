@@ -18,8 +18,8 @@ function Secret({secret, showSecretEvent, deleteSecret, deletableSecretId}: Prop
     const showSecretButtonClick = (id: string) => showSecretEvent(id)
     return (
         <div className="secrets-list-row">
-            <div className="secrets-list-item">{secret.id}</div>
-            <div className="secrets-list-item">{secret.title}</div>
+            <div className="secrets-list-item" title={secret.id}>{secret.id}</div>
+            <div className="secrets-list-item" title={secret.title}>{secret.title}</div>
             <div className="button_s"
                  onClick={() => showSecretButtonClick(secret.id !== undefined ? secret.id : '')}>Show
             </div>
