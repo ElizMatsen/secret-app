@@ -125,6 +125,7 @@ input {
   @extend .secondary-border-radius;
   height: 40px;
   min-width: 220px;
+  width: 100%;
   background: $primary_clr;
 
   &::placeholder {
@@ -359,6 +360,33 @@ input {
   overflow-y: auto;
   overflow-x: hidden;
   background: $primary_clr;
+}
+
+.input_eye {
+  position: relative;
+
+  .form__input {
+    padding-right: 37px;
+  }
+
+  .eye {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: calc(50% - 10px);
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    @extend .transition;
+  }
+
+  .eye_open {
+    background-image: url("../../assets/icons/ic_eye.svg");
+  }
+
+  .eye_close {
+    background-image: url("../../assets/icons/ic_eye-close.svg");
+  }
 }
 
 .form__input-container {

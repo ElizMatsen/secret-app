@@ -5,6 +5,7 @@ import FormErrorField from "../../components/form-error-field/FormErrorField";
 import {LoginRequest} from "../../types/auth";
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
+import classNames from "classnames";
 
 type LoginFormProps = {
     buttonName: string;
@@ -22,6 +23,11 @@ const validationSchema = yup.object({
 });
 
 function UserAuthForm({buttonName, onSubmitLoginForm}: LoginFormProps) {
+    const [passwordType, setPasswordType] = React.useState(false);
+
+    const passwordEyeClick = () => {
+        setPasswordType(!passwordType)
+    }
     const {
         register,
         handleSubmit,
@@ -45,13 +51,19 @@ function UserAuthForm({buttonName, onSubmitLoginForm}: LoginFormProps) {
                 </div>
                 <div className='form__input-item'>
                     <FormErrorField error={errors.password}/>
-                    <input
-                        {...register('password')}
-                        className="form__input"
-                        style={style(errors?.password)}
-                        placeholder='Enter password'
-                        type='password'
-                        data-testid={'password'}/>
+                    <div className="input_eye">
+                        <input
+                            {...register('password')}
+                            className="form__input"
+                            style={style(errors?.password)}
+                            placeholder='Enter password'
+                            type={passwordType ? 'text' : 'password'}
+                            data-testid={'password'}/>
+                        <div
+                            className={classNames('eye', passwordType ? 'eye_open' : 'eye_close')}
+                            onClick={() => passwordEyeClick()}>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className='login__btn-container mt-1'>
