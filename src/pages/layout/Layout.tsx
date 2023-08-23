@@ -3,7 +3,7 @@ import {Route, Routes} from 'react-router-dom';
 import off from "../../assets/icons/off.svg";
 import {useAppDispatch} from "../../app/hooks";
 import {actions} from "../../app/authSlice";
-import logo from "../../assets/icons/kikly-prodaction-logo.svg";
+import logo from "../../assets/icons/matsen-prodaction-logo.svg";
 import Secrets from "../secrets/Secrets";
 
 function Layout() {
