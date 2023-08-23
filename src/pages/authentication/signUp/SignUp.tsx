@@ -42,7 +42,7 @@ function SignUp({onSubmitRegistrationForm}: RegistrationFormProps) {
                 </div>
 
             </div>
-            <div className="copyright mt-1">{currentYear} &#169; KikLi Production</div>
+            <div className="copyright mt-1">{currentYear} &#169; Matsen Production</div>
         </div>
     )
 }
