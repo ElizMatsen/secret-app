@@ -1,5 +1,6 @@
 @import "color";
 @import "font";
+@import "keyframes";
 
 * {
   padding: 0;
@@ -96,9 +97,7 @@ button.focus,
 button:active.focus,
 button:active:focus,
 button:focus {
-  outline: 0 !important;
-  outline-color: transparent !important;
-  outline-style: none !important;
+  outline: transparent none 0 !important;
 }
 
 .main-border-radius {
@@ -113,7 +112,7 @@ button:focus {
   transition: all 0.2s ease;
 }
 
-@mixin main-box-shadow {
+.main-box-shadow {
   box-shadow: rgb(0, 0, 0, 0.09) 0 0.1875rem 0.3125rem -0.0625rem, rgb(0, 0, 0, 0.07) 0rem 0.125rem 0.3125rem -0.0625rem;
 }
 
@@ -126,6 +125,7 @@ input {
   @extend .secondary-border-radius;
   height: 40px;
   min-width: 220px;
+  width: 100%;
   background: $primary_clr;
 
   &::placeholder {
@@ -151,11 +151,11 @@ input {
   justify-content: center;
   align-items: center;
   background: $main_dark_clr;
-  @include font(0.75rem, 700, $primary_clr);
+  @include font(0.75rem, 400, $primary_clr);
   text-transform: uppercase;
   padding: 0.75rem 1.5rem;
   @extend .secondary-border-radius;
-  @include main-box-shadow;
+  @extend .main-box-shadow;
   transition: transform 0.2s ease;
   flex-shrink: 0;
 
@@ -173,6 +173,10 @@ input {
   }
 }
 
+.button_s {
+  @extend .button;
+  width: fit-content;
+}
 
 .copyright {
   @include font(1rem, 400, $clr_1);
@@ -211,11 +215,16 @@ input {
 }
 
 .header {
-  padding: 0.5rem 0;
+  padding: 2rem 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   min-height: 50px;
+}
+
+.header__logo-img {
+  width: 130px;
+  height: 50px;
 }
 
 .container {
@@ -244,6 +253,9 @@ input {
   overflow: hidden;
   @extend .main-border-radius;
   height: 100%;
+  background: $primary_clr;
+  @extend .main-box-shadow;
+  padding: 1rem;
 }
 
 .dropdown__body {
@@ -257,7 +269,7 @@ input {
   @extend .transition;
   display: flex;
   flex-direction: column;
-  @include main-box-shadow;
+  @extend .main-box-shadow;
   z-index: 2;
 }
 
@@ -293,7 +305,7 @@ input {
 }
 
 .user__name {
-  @include font(1.25rem, 600, $clr_1);
+  @include font(1.25rem, 500, $clr_1);
 }
 
 /* FORM */
@@ -314,7 +326,7 @@ input {
   min-width: 320px;
   background: $primary_clr;
   @extend .main-border-radius;
-  @include main-box-shadow;
+  @extend .main-box-shadow;
 }
 
 .login__body {
@@ -350,6 +362,33 @@ input {
   background: $primary_clr;
 }
 
+.input_eye {
+  position: relative;
+
+  .form__input {
+    padding-right: 37px;
+  }
+
+  .eye {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: calc(50% - 10px);
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    @extend .transition;
+  }
+
+  .eye_open {
+    background-image: url("../../assets/icons/ic_eye.svg");
+  }
+
+  .eye_close {
+    background-image: url("../../assets/icons/ic_eye-close.svg");
+  }
+}
+
 .form__input-container {
   display: flex;
   flex-direction: column;
@@ -360,6 +399,144 @@ input {
   display: flex;
   flex-direction: column;
   gap: 2px;
+}
+
+.secrets-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.secrets-list-body {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.secrets-list-row {
+  display: grid;
+  align-items: center;
+  grid-gap: 0.5rem;
+  padding: 1rem;
+  grid-template-columns: 1fr 1fr 1fr 60px;
+  border-bottom: 1px solid $separator;
+}
+
+.secrets-list-item {
+  min-width: 100px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  @include font(1rem, 400, $clr_1);
+}
+
+.secrets-create {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 0;
+}
+
+.secret-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.secret-item {
+  @include font(1.25rem, 400, $clr_1);
+}
+
+.secret-copy-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.secret-copy-text {
+  cursor: pointer;
+  @include font(1rem, 400, $clr_1);
+  width: fit-content;
+  border-bottom: 1px solid;
+}
+
+// DELETE BUTTON
+.button-delete {
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: $alarm_clr;
+  padding: 0 0.5rem;
+  height: 60px;
+  width: 60px;
+  transition: 0.3s;
+}
+
+.button-delete-animation {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+}
+
+.button-delete-can {
+  overflow: hidden;
+  position: relative;
+  transform: translate(0px, 2px);
+  width: 20px;
+  height: 22px;
+  border-radius: 0 0 5px 5px;
+  border: 1px solid $primary_clr;
+  border-top: 0;
+}
+
+.button-delete-lid {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  transform-origin: 0 0;
+  width: 24px;
+  height: 1px;
+  background: $primary_clr;
+}
+
+.button-delete-balls {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: $primary_clr;
+}
+
+.button-delete-filler {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -32px;
+  width: 60px;
+  height: 120%;
+  background: $primary_clr;
+}
+
+.button-delete:disabled {
+  opacity: 0.8;
+}
+
+.button-delete.deleting .button-delete-balls {
+  animation: balls-drop 1.25s infinite;
+}
+
+.button-delete.deleting .button-delete-filler {
+  animation: fill 2.5s both infinite;
+}
+
+.button-delete.deleting .button-delete-lid {
+  animation: lid-open 2.5s both infinite;
 }
 
 ////////////////////
@@ -383,4 +560,29 @@ input {
   margin-top: 1rem;
 }
 
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: $bg_modal;
+  transition: all 0.2s ease;
+  animation: background-in 0.8s both;
+  z-index: 10;
+}
 
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background: $primary_clr;
+  padding: 30px;
+  min-width: 300px;
+  width: fit-content;
+  border-radius: 12px;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+  animation: modal-in 0.8s;
+  z-index: 11;
+}

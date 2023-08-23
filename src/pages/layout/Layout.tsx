@@ -1,22 +1,24 @@
 import React from 'react';
-import SecretsList from "../secrets-list/SecretsList";
-import {Navigate, Route, Routes} from 'react-router-dom';
-import Secrets from "../secrets-list/Secrets";
-import SecretCreate from "../secrets-list/SecretCreate";
+import {Route, Routes} from 'react-router-dom';
 import off from "../../assets/icons/off.svg";
 import {useAppDispatch} from "../../app/hooks";
-import {setAccessToken} from "../../app/authSlice";
+import {actions} from "../../app/authSlice";
+import logo from "../../assets/icons/matsen-prodaction-logo.svg";
+import Secrets from "../secrets/Secrets";
 
 function Layout() {
     const dispatch = useAppDispatch();
+
     const logOut = () => {
-        // localStorage.removeItem('access_token');
-        dispatch(setAccessToken(null))
+        dispatch(actions.setAccessToken(null))
     }
+
     return (
         <div className="container">
             <header className="header">
-                <div className="header__logo">logo</div>
+                <div className="header__logo">
+                    <img className="header__logo-img" src={logo} alt=""/>
+                </div>
                 <div className="user__info">
                     <div className="user__description">
                         <div className="user__name">userName</div>
@@ -26,18 +28,14 @@ function Layout() {
                             <div className="icon icon_wh-20">
                                 <img className="user__dropdown-img" src={off} alt="icon"/>
                             </div>
-                            <p className="navigation__item-text alarm-text">Выйти</p>
+                            <p className="navigation__item-text alarm-text">Log out</p>
                         </div>
                     </div>
                 </div>
             </header>
             <div className="main__container">
                 <Routes>
-                    <Route path="secrets-list/*" element={<SecretsList/>}>
-                        <Route path="secrets" element={<Secrets/>}/>
-                        <Route path="secret-create" element={<SecretCreate/>}/>
-                    </Route>
-                    <Route path="secrets-list" element={<Navigate replace to="/secrets-list/secrets"/>}/>
+                    <Route path="secrets-list/*" element={<Secrets/>}/>
                 </Routes>
             </div>
         </div>
